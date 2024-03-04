@@ -1,0 +1,62 @@
+---
+interface Props {
+    title: string;
+    description?: string;
+    sideWidth?: "full" | "half";
+    headerImage?: string;
+}
+
+const navItems = [
+    { name: "Home", href: "/" },
+    { name: "Blog", href: "/blog" }
+];
+
+import Glow from "~components/Glow.astro";
+const { title, description, sideWidth = "full", headerImage } = Astro.props;
+---
+
+<html lang="en" class="h-full antialiased" style="color-scheme: dark;">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+    </head>
+    <body
+        class="flex h-screen flex-col bg-white text-slate-900 lg:flex-row lg:overflow-hidden dark:bg-gray-950 dark:text-slate-50"
+    >
+        <section
+            class:list={[
+                "z-100 relative flex items-center justify-center transition duration-500 lg:flex-shrink-0",
+                sideWidth === "full" ? "lg:w-1/2" : "lg:w-1/3",
+                "text-slate-50"
+            ]}
+        >
+            <Glow />
+            <div class="flex flex-col items-center justify-center gap-4 lg:items-start">
+                <h1>Christopher Vachon</h1>
+                <nav>
+                    <ul class="flex gap-6 lg:flex-col lg:gap-2">
+                        {
+                            navItems.map((item) => (
+                                <li>
+                                    <a href={item.href}>{item.name}</a>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </nav>
+            </div>
+        </section>
+        <main class="max-h-full flex-grow p-6 lg:overflow-auto lg:py-24">
+            {
+                headerImage && (
+                    <figure class="-mx-6 -mt-6 mb-6 overflow-hidden lg:-mt-24 ">
+                        <img src={headerImage} class="w-full object-cover md:aspect-video" />
+                    </figure>
+                )
+            }
+            <slot />
+        </main>
+    </body>
+</html>

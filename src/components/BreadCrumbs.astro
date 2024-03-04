@@ -1,0 +1,28 @@
+---
+interface Item {
+    label: string;
+    href: string;
+}
+interface Props {
+    crumbs: Array<Item>;
+}
+const { crumbs } = Astro.props;
+
+const items: Array<Item> = [{ label: "Home", href: "/" }].concat(
+    crumbs.filter((item) => item.href !== "/")
+);
+---
+
+<nav>
+    <ol class="flex items-center gap-4">
+        {
+            items.map(({ label, href }) => (
+                <li class="flex items-center gap-4">
+                    <a href={href}>{label}</a>
+                    <span>/</span>
+                </li>
+            ))
+        }
+        <li class="capitalize text-slate-500"><slot /></li>
+    </ol>
+</nav>

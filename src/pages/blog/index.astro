@@ -1,0 +1,24 @@
+---
+import Layout from "~layouts/Layout.astro";
+
+import H1 from "~components/H1.astro";
+import { getCollection } from "astro:content";
+import ArticleList from "~components/ArticleList.astro";
+
+// Get all entries from a collection.
+// Requires the name of the collection as an argument.
+// Example: retrieve `src/content/blog/**`
+const allBlogPosts = await getCollection("blog", ({ data }) => {
+    return !data.draft;
+});
+---
+
+<Layout title="Blog Posts" sideWidth="full">
+    <H1>Recent Posts</H1>
+    <p>
+        Here are some of my latest blog posts. <a href="/blog/tags"
+            >Click Here to see a list of all tags</a
+        >.
+    </p>
+    <ArticleList articles={allBlogPosts.reverse()} />
+</Layout>

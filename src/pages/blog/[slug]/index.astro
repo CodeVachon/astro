@@ -1,0 +1,88 @@
+---
+import dayjs from "dayjs";
+import Layout from "~layouts/Layout.astro";
+import { getCollection, getEntries, getEntry } from "astro:content";
+import ArticleList from "~components/ArticleList.astro";
+
+export async function getStaticPaths() {
+    const allBlogPosts = await getCollection("blog", ({ data }) => {
+        return !data.draft;
+    });
+
+    return allBlogPosts.map((blogPost) => ({
+        params: {
+            slug: blogPost.slug
+        }
+    }));
+}
+
+const { slug } = Astro.params;
+
+const entry = await getEntry("blog", slug);
+const { Content, headings } = await entry.render();
+const related = await getCollection("blog", ({ data }) => {
+    return data.tags.some(
+        (tag) =>
+            entry.data.tags.some((articleTag) => articleTag.slug === tag.slug) &&
+            entry.data.title !== data.title
+    );
+}).then((articles) => articles.reverse().slice(0, 3));
+const recent = await getCollection("blog", ({ data }) => {
+    return (
+        data.title !== entry.data.title &&
+        !related.some((related) => related.data.title && data.title)
+    );
+}).then((articles) => articles.reverse().slice(0, 3));
+
+const sharedArticles = related;
+while (sharedArticles.length <= 3) {
+    const article = recent.shift();
+    if (article) {
+        sharedArticles.push(article);
+    } else {
+        break;
+    }
+}
+const tags = await getEntries(entry.data.tags);
+---
+
+<Layout
+    title={entry.data.title}
+    sideWidth="half"
+    headerImage={typeof entry.data.image === "object" ? entry.data.image.src : entry.data.image}
+>
+    <article class="flex flex-col gap-8 lg:max-w-[750px]">
+        <header>
+            <h1 class="font-serif text-4xl font-bold">{entry.data.title}</h1>
+            <p class="text-slate-500">{dayjs(entry.data.date).format("YYYY-MM-DD")}</p>
+        </header>
+        <main class="prose prose-lg max-w-full lg:prose-xl dark:prose-invert">
+            <Content />
+        </main>
+        <footer>
+            {
+                tags.length > 0 && (
+                    <div class="flex items-center gap-4">
+                        <p class="font-bold">Tags:</p>
+                        <ul class="flex gap-2">
+                            {tags.map((tag) => (
+                                <li class="">
+                                    <a
+                                        href={`/blog/tags/${tag.slug}`}
+                                        class="block rounded-md bg-pink-500 px-2 py-1 text-xs text-white transition-colors duration-200 ease-in-out hover:bg-pink-600"
+                                    >
+                                        {tag.data.name}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )
+            }
+        </footer>
+    </article>
+    <aside class="space-y-6 py-12">
+        <h2 class="-mx-6 bg-slate-900 px-6 py-2 text-2xl font-bold text-white">Related Articles</h2>
+        <ArticleList articles={sharedArticles.slice(0, 3)} grid />
+    </aside>
+</Layout>

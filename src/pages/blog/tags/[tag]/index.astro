@@ -1,0 +1,50 @@
+---
+import Layout from "~layouts/Layout.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import ArticleList from "~components/ArticleList.astro";
+import H1 from "~components/H1.astro";
+import BreadCrumbs from "~components/BreadCrumbs.astro";
+import { getEntry } from "astro:content";
+
+export async function getStaticPaths() {
+    const allTags = await getCollection("tag");
+
+    return Array.from(allTags).map((tag) => {
+        return {
+            params: {
+                tag: tag.slug
+            }
+        };
+    });
+}
+
+const { tag } = Astro.params;
+
+const thisTag = await getEntry("tag", tag);
+
+const allBlogPosts = await getCollection("blog", ({ data }) => {
+    return !data.draft && data.tags.some((articleTag) => articleTag.slug === tag);
+}).then((recordSet) => recordSet.reverse());
+
+const { Content } = await thisTag.render();
+---
+
+<Layout title={`Tag: ${thisTag.data.name}`} description={thisTag.data.description} sideWidth="half">
+    <H1>Tag: {thisTag.data.name}</H1>
+    <BreadCrumbs
+        crumbs={[
+            { label: "Home", href: "/" },
+            { label: "Blog", href: "/blog" },
+            { label: "Tags", href: "/blog/tags" }
+        ]}
+    >
+        {thisTag.data.name}</BreadCrumbs
+    >
+    <main class="prose prose-lg my-6 max-w-full lg:prose-xl dark:prose-invert">
+        <Content />
+    </main>
+    <div class="flex flex-col gap-6">
+        <h3 class="-mx-6 bg-slate-900 px-6 py-4 text-xl font-semibold text-white">Articles</h3>
+        <ArticleList articles={allBlogPosts} />
+    </div>
+</Layout>

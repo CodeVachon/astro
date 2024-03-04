@@ -1,0 +1,4 @@
+---
+name: Beer
+slug: beer
+---

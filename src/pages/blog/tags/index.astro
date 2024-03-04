@@ -1,0 +1,93 @@
+---
+import Layout from "~layouts/Layout.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import H1 from "~components/H1.astro";
+import BreadCrumbs from "~components/BreadCrumbs.astro";
+import ArticleList from "~components/ArticleList.astro";
+
+const allTags = await getCollection("tag");
+const allBlogPosts = await getCollection("blog", ({ data }) => {
+    return !data.draft;
+});
+
+allBlogPosts.sort((a, b) => {
+    return +(b.data.featured ?? false) < +(a.data.featured ?? false) ? 1 : -1;
+});
+
+// const tagList = Array.from(tags.keys()).sort();
+
+interface TagWithArticles {
+    tag: CollectionEntry<"tag">;
+    articles: Array<CollectionEntry<"blog">>;
+}
+
+const tagsWithAricles: Array<TagWithArticles> = [];
+const singletonTags: Array<TagWithArticles> = [];
+
+for (const thisTag of allTags) {
+    const articles = allBlogPosts.filter((post) =>
+        post.data.tags.some((articleTag) => articleTag.slug === thisTag.slug)
+    );
+    if (articles.length >= 3) {
+        tagsWithAricles.push({ tag: thisTag, articles: articles.reverse() });
+    } else {
+        singletonTags.push({ tag: thisTag, articles });
+    }
+}
+---
+
+<Layout title="Tags" sideWidth="half">
+    <H1>All Tags</H1>
+    <BreadCrumbs
+        crumbs={[
+            { label: "Home", href: "/" },
+            { label: "Blog", href: "/blog" }
+        ]}
+    >
+        Tags
+    </BreadCrumbs>
+    <div class="flex flex-col gap-4">
+        <h2 class="text-2xl font-bold">Popular Tags</h2>
+        <ol class="flex flex-col gap-12">
+            {
+                tagsWithAricles.map((record) => {
+                    const remainingPostsLength = record.articles.length - 3;
+                    return (
+                        <li class="flex flex-col gap-4">
+                            <h3 class="-mx-6 bg-slate-900 px-6 py-4 text-xl font-semibold text-white">
+                                <a href={["tags", record.tag.slug].join("/")} class="capitalize">
+                                    {record.tag.data.name}
+                                </a>
+                            </h3>
+                            <div class="">
+                                <ArticleList articles={record.articles.slice(0, 3)} grid />
+                            </div>
+                            {record.articles.length > 3 && (
+                                <p>
+                                    <a href={`/blog/tags/${record.tag.slug}`}>
+                                        See {remainingPostsLength} more {record.tag.data.name}
+                                        {`Post${remainingPostsLength === 1 ? "" : "s"}`}
+                                    </a>
+                                </p>
+                            )}
+                        </li>
+                    );
+                })
+            }
+        </ol>
+    </div>
+    <div class="mt-12">
+        <h2 class="text-2xl font-bold">Less Popular Tags</h2>
+        <ol>
+            {
+                singletonTags.map((record) => (
+                    <li>
+                        <a href={["tags", record.tag.slug].join("/")} class="capitalize">
+                            {record.tag.data.name}
+                        </a>
+                    </li>
+                ))
+            }
+        </ol>
+    </div>
+</Layout>
