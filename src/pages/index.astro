@@ -3,6 +3,7 @@ import Layout from "~layouts/Layout.astro";
 
 import { getCollection, getEntry } from "astro:content";
 import ArticleList from "~components/ArticleList.astro";
+import MarkdownContent from "~components/MarkdownContent.astro";
 import H1 from "~components/H1.astro";
 
 // Get all entries from a collection.
@@ -11,13 +12,18 @@ import H1 from "~components/H1.astro";
 const allBlogPosts = await getCollection("blog", ({ data }) => {
     return !data.draft;
 });
+
+const homepageData = await getEntry("page", "homepage");
+const {Content} = await homepageData.render()
 ---
 
-<Layout title="Home">
-    <H1>Astro</H1>
-    <p>Build faster websites with less client-side Javascript.</p>
-
-    <h2 class="text-3xl font-bold">Recent Posts</h2>
-    <ArticleList articles={allBlogPosts.reverse().slice(0, 10)} />
-    <p><a href="/blog">See More Posts</a></p>
+<Layout title="Home" className="flex flex-col gap-12">
+    <MarkdownContent>
+        <Content />
+    </MarkdownContent>
+    <main class="flex flex-col gap-6">
+        <h2 class="border-b text-3xl font-bold">Recent Posts</h2>
+        <ArticleList articles={allBlogPosts.reverse().slice(0, 5)} />
+        <p><a href="/blog">See More Posts</a></p>
+    </main>
 </Layout>

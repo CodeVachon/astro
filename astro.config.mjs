@@ -10,7 +10,13 @@ export default defineConfig({
     server: {
         port: 4006
     },
-    integrations: [react(), tailwind()],
+    integrations: [
+        react(),
+        tailwind({
+            nesting: true,
+            applyBaseStyles: false
+        })
+    ],
     markdown: {
         // Applied to .md and .mdx files
         remarkPlugins: [remarkReadingTime, remarkToc, a11yEmoji],

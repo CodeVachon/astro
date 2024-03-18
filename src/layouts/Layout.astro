@@ -4,6 +4,7 @@ interface Props {
     description?: string;
     sideWidth?: "full" | "half";
     headerImage?: string;
+    className?: string;
 }
 
 const navItems = [
@@ -12,7 +13,9 @@ const navItems = [
 ];
 
 import Glow from "~components/Glow.astro";
-const { title, description, sideWidth = "full", headerImage } = Astro.props;
+const { title, description, sideWidth = "full", headerImage, className = "" } = Astro.props;
+
+import "./../styles/global.css";
 ---
 
 <html lang="en" class="h-full antialiased" style="color-scheme: dark;">
@@ -40,7 +43,12 @@ const { title, description, sideWidth = "full", headerImage } = Astro.props;
                         {
                             navItems.map((item) => (
                                 <li>
-                                    <a href={item.href}>{item.name}</a>
+                                    <a
+                                        href={item.href}
+                                        class="text-white decoration-transparent transition duration-200 ease-in-out hover:text-white hover:decoration-primary"
+                                    >
+                                        {item.name}
+                                    </a>
                                 </li>
                             ))
                         }
@@ -48,7 +56,7 @@ const { title, description, sideWidth = "full", headerImage } = Astro.props;
                 </nav>
             </div>
         </section>
-        <main class="max-h-full flex-grow p-6 lg:overflow-auto lg:py-24">
+        <main class:list={["max-h-full flex-grow p-6 lg:overflow-auto lg:py-24", className]}>
             {
                 headerImage && (
                     <figure class="-mx-6 -mt-6 mb-6 overflow-hidden lg:-mt-24 ">

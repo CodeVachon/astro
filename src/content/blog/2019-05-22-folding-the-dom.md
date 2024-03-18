@@ -13,6 +13,6 @@ This article came across my desk today and completely blew me away.  It explore
 
 This needs to shared, so here it is.
 
-[](https://joshwcomeau.com/react/folding-the-dom/?ref=blog.christophervachon.com)[https://www.joshwcomeau.com/posts/folding-the-dom/](https://joshwcomeau.com/react/folding-the-dom/?ref=blog.christophervachon.com)
+[https://www.joshwcomeau.com/posts/folding-the-dom/](https://joshwcomeau.com/react/folding-the-dom/?ref=blog.christophervachon.com)
 
 > edited to fix URL change

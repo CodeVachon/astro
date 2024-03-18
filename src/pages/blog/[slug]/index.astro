@@ -3,6 +3,8 @@ import dayjs from "dayjs";
 import Layout from "~layouts/Layout.astro";
 import { getCollection, getEntries, getEntry } from "astro:content";
 import ArticleList from "~components/ArticleList.astro";
+import MarkdownContent from "~components/MarkdownContent.astro";
+import Badge from "~components/Badge.astro";
 
 export async function getStaticPaths() {
     const allBlogPosts = await getCollection("blog", ({ data }) => {
@@ -48,17 +50,20 @@ const tags = await getEntries(entry.data.tags);
 
 <Layout
     title={entry.data.title}
+    description={entry.data.description}
     sideWidth="half"
     headerImage={typeof entry.data.image === "object" ? entry.data.image.src : entry.data.image}
 >
     <article class="flex flex-col gap-8 lg:max-w-[750px]">
-        <header>
+        <header class="border-b">
             <h1 class="font-serif text-4xl font-bold">{entry.data.title}</h1>
             <p class="text-slate-500">{dayjs(entry.data.date).format("YYYY-MM-DD")}</p>
         </header>
-        <main class="prose prose-lg max-w-full lg:prose-xl dark:prose-invert">
+
+        <MarkdownContent>
             <Content />
-        </main>
+        </Markdowncontent>
+
         <footer>
             {
                 tags.length > 0 && (
@@ -67,12 +72,9 @@ const tags = await getEntries(entry.data.tags);
                         <ul class="flex gap-2">
                             {tags.map((tag) => (
                                 <li class="">
-                                    <a
-                                        href={`/blog/tags/${tag.slug}`}
-                                        class="block rounded-md bg-pink-500 px-2 py-1 text-xs text-white transition-colors duration-200 ease-in-out hover:bg-pink-600"
-                                    >
+                                    <Badge href={`/blog/tags/${tag.slug}`}>
                                         {tag.data.name}
-                                    </a>
+                                    </Badge>
                                 </li>
                             ))}
                         </ul>

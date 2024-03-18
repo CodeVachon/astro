@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --color-primary: 219 39 119;
+        /* ... */
+    }
+
+    a {
+        @apply underline decoration-primary transition-colors duration-300 ease-in-out;
+
+        &:hover {
+            @apply text-primary;
+        }
+    }
+
+    a[href^="http"] {
+        @apply underline decoration-primary transition-colors duration-300 ease-in-out;
+
+        &:after {
+            content: "↗";
+            @apply ml-1;
+        }
+        &:hover {
+            @apply text-primary;
+        }
+    }
+}

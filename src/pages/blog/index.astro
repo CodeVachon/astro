@@ -13,12 +13,14 @@ const allBlogPosts = await getCollection("blog", ({ data }) => {
 });
 ---
 
-<Layout title="Blog Posts" sideWidth="full">
-    <H1>Recent Posts</H1>
-    <p>
-        Here are some of my latest blog posts. <a href="/blog/tags"
-            >Click Here to see a list of all tags</a
-        >.
-    </p>
+<Layout title="Blog Posts" sideWidth="full" className="flex flex-col gap-12">
+    <header>
+        <H1>Recent Posts</H1>
+        <p>
+            Here are some of my latest blog posts. <a href="/blog/tags"
+                >Click Here to see a list of all tags</a
+            >.
+        </p>
+    </header>
     <ArticleList articles={allBlogPosts.reverse()} />
 </Layout>

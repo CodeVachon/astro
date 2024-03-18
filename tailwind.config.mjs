@@ -6,6 +6,11 @@ export default {
     darkMode: "selector",
     theme: {
         extend: {
+            colors: {
+                transparent: "transparent",
+                current: "currentColor",
+                primary: "rgb(var(--color-primary) / <alpha-value>)"
+            },
             fontSize: {
                 "2xs": ".6875rem"
             },
