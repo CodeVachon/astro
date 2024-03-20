@@ -8,18 +8,19 @@ export async function getStaticPaths() {
         return !data.draft;
     });
 
-    return allPages.map((page) => ({
-        params: {
-            page: page.slug
-        }
-    }));
+    return allPages
+        .filter((page) => page.slug !== "homepage")
+        .map((page) => ({
+            params: {
+                page: page.slug
+            }
+        }));
 }
 
 const { page } = Astro.params;
 
 const entry = await getEntry("page", page);
 const { Content } = await entry.render();
-
 ---
 
 <Layout
@@ -30,5 +31,5 @@ const { Content } = await entry.render();
 >
     <MarkdownContent>
         <Content />
-    </Markdowncontent>
+    </MarkdownContent>
 </Layout>

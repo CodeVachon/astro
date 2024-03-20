@@ -1,0 +1,12 @@
+{
+  "language_overrides": {
+    "JSON": {
+      "tab_size": 2
+    },
+    "Astro": {
+      "format_on_save": "on",
+      "formatter": "prettier"
+    }
+  },
+  "tab_size": 4
+}

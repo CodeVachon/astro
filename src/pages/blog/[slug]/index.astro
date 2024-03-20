@@ -62,7 +62,7 @@ const tags = await getEntries(entry.data.tags);
 
         <MarkdownContent>
             <Content />
-        </Markdowncontent>
+        </MarkdownContent>
 
         <footer>
             {
@@ -72,9 +72,7 @@ const tags = await getEntries(entry.data.tags);
                         <ul class="flex gap-2">
                             {tags.map((tag) => (
                                 <li class="">
-                                    <Badge href={`/blog/tags/${tag.slug}`}>
-                                        {tag.data.name}
-                                    </Badge>
+                                    <Badge href={`/blog/tags/${tag.slug}`}>{tag.data.name}</Badge>
                                 </li>
                             ))}
                         </ul>

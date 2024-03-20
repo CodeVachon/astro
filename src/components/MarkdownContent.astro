@@ -5,6 +5,13 @@ interface Props {
 
 const { className } = Astro.props;
 ---
-<main class:list={["prose prose-lg max-w-full lg:prose-xl dark:prose-invert lg:max-w-[750px]", className]}>
+
+<main
+    class:list={[
+        "prose prose-lg max-w-full dark:prose-invert",
+        "lg:prose-xl lg:max-w-[750px]",
+        className
+    ]}
+>
     <slot />
 </main>

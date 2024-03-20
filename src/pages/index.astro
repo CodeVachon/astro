@@ -4,7 +4,6 @@ import Layout from "~layouts/Layout.astro";
 import { getCollection, getEntry } from "astro:content";
 import ArticleList from "~components/ArticleList.astro";
 import MarkdownContent from "~components/MarkdownContent.astro";
-import H1 from "~components/H1.astro";
 
 // Get all entries from a collection.
 // Requires the name of the collection as an argument.
@@ -14,7 +13,7 @@ const allBlogPosts = await getCollection("blog", ({ data }) => {
 });
 
 const homepageData = await getEntry("page", "homepage");
-const {Content} = await homepageData.render()
+const { Content } = await homepageData.render();
 ---
 
 <Layout title="Home" className="flex flex-col gap-12">
