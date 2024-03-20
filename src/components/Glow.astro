@@ -1,5 +1,7 @@
 ---
 const { className } = Astro.props;
+
+const highlightColor = "rgba(256, 89, 248, 0.4)";
 ---
 
 <!-- GLOW START -->
@@ -15,12 +17,12 @@ const { className } = Astro.props;
     >
         <defs>
             <radialGradient id={`glow-desktop`} cx="100%">
-                <stop offset="0%" stop-color="rgba(56, 189, 248, 0.3)"></stop>
+                <stop offset="0%" stop-color={highlightColor}></stop>
                 <stop offset="53.95%" stop-color="rgba(0, 71, 255, 0.09)"></stop>
                 <stop offset="100%" stop-color="rgba(10, 14, 23, 0)"></stop>
             </radialGradient>
             <radialGradient id={`glow-mobile`} cy="100%">
-                <stop offset="0%" stop-color="rgba(56, 189, 248, 0.3)"></stop>
+                <stop offset="0%" stop-color={highlightColor}></stop>
                 <stop offset="53.95%" stop-color="rgba(0, 71, 255, 0.09)"></stop>
                 <stop offset="100%" stop-color="rgba(10, 14, 23, 0)"></stop>
             </radialGradient>

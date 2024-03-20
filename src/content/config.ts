@@ -1,7 +1,7 @@
 // 1. Import utilities from `astro:content`
 import { z, defineCollection, reference } from "astro:content";
 
-const imageConfig =z.string().or(
+const imageConfig = z.string().or(
     z.object({
         src: z.string(),
         alt: z.string()
@@ -35,13 +35,13 @@ const tagCollection = defineCollection({
 });
 
 const pageContentCollection = defineCollection({
-    type:"content",
+    type: "content",
     schema: z.object({
-        name:z.string(),
+        name: z.string(),
         description: z.string().optional(),
-        image: imageConfig.optional(),
+        image: imageConfig.optional()
     })
-})
+});
 
 // 3. Export a single `collections` object to register your collection(s)
 //    This key should match your collection directory name in "src/content"
