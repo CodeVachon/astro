@@ -7,7 +7,7 @@ interface Props {
 const { articles = [], grid = false } = Astro.props;
 ---
 
-<ul
+<ol
     class:list={grid
         ? ["grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-6"]
         : ["flex flex-col gap-12 lg:max-w-[725px]"]}
@@ -41,4 +41,4 @@ const { articles = [], grid = false } = Astro.props;
             </li>
         ))
     }
-</ul>
+</ol>

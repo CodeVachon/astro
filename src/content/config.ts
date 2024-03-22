@@ -10,10 +10,9 @@ const imageConfig = z.string().or(
 
 // 2. Define your collection(s)
 const blogCollection = defineCollection({
-    /* ... */
     type: "content",
     schema: z.object({
-        draft: z.boolean(),
+        draft: z.boolean().optional().default(false),
         title: z.string(),
         description: z.string(),
         image: imageConfig,
@@ -37,6 +36,7 @@ const tagCollection = defineCollection({
 const pageContentCollection = defineCollection({
     type: "content",
     schema: z.object({
+        draft: z.boolean().optional().default(false),
         name: z.string(),
         description: z.string().optional(),
         image: imageConfig.optional()

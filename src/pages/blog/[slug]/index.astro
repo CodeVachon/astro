@@ -21,7 +21,7 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 
 const entry = await getEntry("blog", slug);
-const { Content, headings } = await entry.render();
+const { Content } = await entry.render();
 const related = await getCollection("blog", ({ data }) => {
     return data.tags.some(
         (tag) =>

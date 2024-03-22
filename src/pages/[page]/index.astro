@@ -1,6 +1,6 @@
 ---
 import Layout from "~layouts/Layout.astro";
-import { getCollection, getEntries, getEntry } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import MarkdownContent from "~components/MarkdownContent.astro";
 
 export async function getStaticPaths() {
@@ -24,7 +24,7 @@ const { Content } = await entry.render();
 ---
 
 <Layout
-    title={entry.data.title}
+    title={entry.data.name}
     description={entry.data.description}
     sideWidth="half"
     headerImage={typeof entry.data.image === "object" ? entry.data.image.src : entry.data.image}
