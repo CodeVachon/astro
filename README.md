@@ -5,7 +5,7 @@ My Website in a Astro 4 application.
 setup with
 
 -   [zed](https://zed.dev) - Editor
--   (Astro 4)[https://docs.astro.build/en/getting-started/] - Static Site Generator
+-   [Astro 4](https://docs.astro.build/en/getting-started/) - Static Site Generator
 -   [Bun](https://bun.sh/) - Runtime
 -   [TailWindCSS](https://tailwindcss.com/)
 
