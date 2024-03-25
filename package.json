@@ -39,5 +39,9 @@
   "module": "index.ts",
   "peerDependencies": {
     "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": "18.19.1",
+    "npm": "10.2.4"
   }
 }
