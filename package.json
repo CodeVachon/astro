@@ -28,7 +28,7 @@
     "reading-time": "^1.5.0",
     "remark-toc": "^9.0.0",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3"
+    "typescript": "^5.0.0"
   },
   "devDependencies": {
     "@types/bun": "latest",
@@ -43,5 +43,8 @@
   "engines": {
     "node": "18.19.1",
     "npm": "10.2.4"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.13.0"
   }
 }
