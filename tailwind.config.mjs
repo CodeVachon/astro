@@ -30,62 +30,18 @@ export default {
         plugin(function ({ addComponents, theme }) {
             addComponents({
                 ".kg-card": {
+                    color: theme("colors.slate.900"),
                     backgroundColor: theme("colors.white"),
                     borderRadius: theme("borderRadius.lg"),
                     boxShadow: theme("boxShadow.sm"),
                     overflow: "hidden"
                 },
-                ".kg-card img": {
-                    margin: "0"
-                },
-                ".kg-bookmark-container": {
-                    width: "100%",
-                    display: "flex",
-                    gap: theme("spacing.4"),
-                    alignItems: "center",
+                ".prose .kg-card a": {
+                    color: theme("colors.slate.900"),
                     textDecoration: "none"
                 },
-                ".kg-bookmark-content": {
-                    flexGrow: "1",
-                    paddingTop: theme("spacing.2"),
-                    paddingBottom: theme("spacing.2"),
-                    paddingLeft: theme("spacing.4"),
-                    paddingRight: theme("spacing.4")
-                },
-                ".kg-bookmark-title": {
-                    fontWeight: "bold"
-                },
-                ".kg-bookmark-description": {
-                    fontSize: "0.8em",
-                    color: theme("colors.slate.500")
-                },
-                ".kg-bookmark-metadata": {
-                    display: "flex",
-                    fontSize: "0.8em",
-                    gap: "0.5rem",
-                    alignItems: "center",
-                    marginTop: theme("spacing.4")
-                },
-                ".kg-bookmark-metadata .kg-bookmark-publisher": {
-                    opacity: theme("opacity.50")
-                },
-                ".kg-bookmark-icon": {
-                    width: theme("spacing.10"),
-                    height: theme("spacing.10")
-                },
-                ".kg-bookmark-thumbnail img": {
-                    width: theme("spacing.64"),
-                    objectFit: "cover"
-                }
-            });
-        }),
-        plugin(function ({ addComponents, theme }) {
-            addComponents({
-                ".kg-card": {
-                    backgroundColor: theme("colors.white"),
-                    borderRadius: theme("borderRadius.lg"),
-                    boxShadow: theme("boxShadow.sm"),
-                    overflow: "hidden"
+                ".prose .kg-card a:after": {
+                    content: "''"
                 },
                 ".kg-card img": {
                     margin: "0"
