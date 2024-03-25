@@ -10,6 +10,7 @@ export default defineConfig({
     server: {
         port: 4006
     },
+    prefetch: true,
     integrations: [
         react(),
         tailwind({

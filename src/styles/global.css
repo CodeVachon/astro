@@ -16,15 +16,17 @@
         }
     }
 
-    a[href^="http"] {
-        @apply underline decoration-primary transition-colors duration-300 ease-in-out;
+    .prose {
+        a[href^="http"] {
+            @apply underline decoration-primary transition-colors duration-300 ease-in-out;
 
-        &:after {
-            content: "↗";
-            @apply ml-1;
-        }
-        &:hover {
-            @apply text-primary;
+            &:after {
+                content: "↗";
+                @apply ml-1 font-mono;
+            }
+            &:hover {
+                @apply text-primary;
+            }
         }
     }
 }
