@@ -103,8 +103,16 @@ import "./../styles/global.css";
             <main class:list={["flex-grow p-6 lg:py-24", className]}>
                 {
                     headerImage && (
-                        <figure class="-mx-6 -mt-6 mb-6 overflow-hidden lg:-mt-24 ">
-                            <img src={headerImage} class="w-full object-cover md:aspect-video" />
+                        <figure class="-mx-6 -mt-6 mb-6 max-w-[1200px] overflow-hidden lg:-mt-24">
+                            <Picture
+                                inferSize={true}
+                                src={headerImage}
+                                class="w-full object-cover md:aspect-video"
+                                alt={title}
+                                densities={[1.5, 2]}
+                                formats={["avif", "webp", "jpeg"]}
+                                fallbackFormat="jpeg"
+                            />
                         </figure>
                     )
                 }

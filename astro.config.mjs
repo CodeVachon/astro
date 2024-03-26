@@ -33,5 +33,9 @@ export default defineConfig({
             // Enable word wrap to prevent horizontal scrolling
             wrap: true
         }
+    },
+    image: {
+        domains: ["images.unsplash.com", "blog.christophervachon.com"],
+        remotePatterns: [{ protocol: "https" }]
     }
 });
