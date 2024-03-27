@@ -4,14 +4,17 @@ import tailwind from "@astrojs/tailwind";
 import remarkToc from "remark-toc";
 import a11yEmoji from "@fec/remark-a11y-emoji";
 import { remarkReadingTime } from "./src/lib/readingTime";
+import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
     server: {
         port: 4006
     },
+    site: "https://astro.christophervachon.com",
     prefetch: true,
     integrations: [
+        sitemap(),
         react(),
         tailwind({
             nesting: true,
