@@ -3,6 +3,7 @@ import { Picture } from "astro:assets";
 import { GithubIcon, LinkedInIcon, BlueSkyIcon } from "~components/Icons";
 import myImage from "../assets/me.png";
 import Glow from "~components/Glow.astro";
+import { ViewTransitions } from "astro:transitions";
 
 interface Props {
     title: string;
@@ -38,6 +39,7 @@ import "./../styles/global.css";
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{title}</title>
         <meta name="description" content={description} />
+        <ViewTransitions />
     </head>
     <body
         class="flex h-screen min-w-[350px] flex-col bg-white text-slate-900 lg:flex-row lg:overflow-hidden dark:bg-gray-950 dark:text-slate-50"
