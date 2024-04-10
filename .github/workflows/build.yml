@@ -1,0 +1,44 @@
+name: Build and Deploy
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  Check:
+    name: build ${{ github.ref_name }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+
+  Build:
+    name: build ${{ github.ref_name }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+
+      - name: Cache Assets
+        id: cache-assets
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.bun/install/cache
+            /dist/**/*.jpg
+            /dist/**/*.jpeg
+            /dist/**/*.png
+            /dist/**/*.webp
+          key: ${{ runner.os }}-assets
+
+      - run: bun install
+      - run: bun run build
+
+      - uses: mr-smithers-excellent/docker-build-push@v6.2
+        name: Build & Push ${{ github.ref_name }} Docker Image
+        with:
+          image: astroblog
+          registry: ghcr.io
+          addLatest: true
+          username: ${{ secrets.GHCR_USERNAME }}
+          password: ${{ secrets.GHCR_TOKEN }}

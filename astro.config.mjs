@@ -38,7 +38,11 @@ export default defineConfig({
         }
     },
     image: {
-        domains: ["images.unsplash.com", "blog.christophervachon.com"],
+        domains: [
+            "images.unsplash.com",
+            "blog.christophervachon.com",
+            "christophervachon.s3.amazonaws.com"
+        ],
         remotePatterns: [{ protocol: "https" }]
     }
 });

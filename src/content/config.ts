@@ -1,12 +1,15 @@
 // 1. Import utilities from `astro:content`
 import { z, defineCollection, reference } from "astro:content";
 
-const imageConfig = z.string().or(
-    z.object({
-        src: z.string(),
-        alt: z.string()
-    })
-);
+const imageConfig = z
+    .string()
+    .or(
+        z.object({
+            src: z.string(),
+            alt: z.string()
+        })
+    )
+    .optional();
 
 // 2. Define your collection(s)
 const blogCollection = defineCollection({
@@ -21,7 +24,8 @@ const blogCollection = defineCollection({
         footnote: z.string().optional(),
         // In frontmatter, dates written without quotes around them are interpreted as Date objects
         date: z.date(),
-        featured: z.boolean().optional().default(false)
+        featured: z.boolean().optional().default(false),
+        relatedPosts: z.array(reference("blog")).optional()
     })
 });
 

@@ -9,7 +9,7 @@ draft: false
 tags: ["web-development", "react"]
 ---
 
-Recently, I wanted to build a simple SVG donut chart to display some data I calculate in a React Application. I did some searching and found an excellent tutorial on Medium by [Mark Caron](https://medium.com/@heyoka?ref=blog.christophervachon.com) ([Scratch-made SVG Donut & Pie Charts in HTML5](https://medium.com/@heyoka/scratch-made-svg-donut-pie-charts-in-html5-2c587e935d72?ref=blog.christophervachon.com#.on30a1zfm)).  This got me started.
+Recently, I wanted to build a simple SVG donut chart to display some data I calculate in a React Application. I did some searching and found an excellent tutorial on Medium by [Mark Caron](https://heyoka.medium.com/) ([Scratch-made SVG Donut & Pie Charts in HTML5](https://heyoka.medium.com/scratch-made-svg-donut-pie-charts-in-html5-2c587e935d72#.on30a1zfm).  This got me started.
 
 With this tutorial in mind, I created the following React Component.
 

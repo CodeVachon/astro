@@ -1,8 +1,8 @@
 ---
 title: MySQL Workbench Safe Mode Toggle
 featured: false
-description: We've been running into an issue with MySQL Workbench where the Safe Mode toggle is enabled. Here's how to desable it.
-image: https://images.unsplash.com/photo-1462045504115-6c1d931f07d1?q=80&w=4739&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA&q=80&w=1000
+description: We've been running into an issue with MySQL Workbench where the Safe Mode toggle is enabled. Here's how to disable it.
+image: https://images.unsplash.com/photo-1462045504115-6c1d931f07d1?q=80&w=1500&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA&q=80&
 date: 2024-03-26
 draft: false
 tags: ["mysql", "database"]
@@ -33,6 +33,6 @@ Most of the time, you'll want to disable Safe Mode so that you can run any query
 -   Click `OK` to save your changes
 -   Close and Reopen any open connections in MySQL Workbench
 
-![A starry night sky.](../../assets/mysql_workbench_settings.png)
+![A starry night sky.](../../assets/blog/mysql_workbench_settings.png)
 
 Once you've disabled Safe Mode, you should be able to run any query you like without any issues. If you ever need to re-enable Safe Mode, you can follow the same steps and check the `Safe Updates` option again.

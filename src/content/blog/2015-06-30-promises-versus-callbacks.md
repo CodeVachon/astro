@@ -34,9 +34,9 @@ Most promise library offer several additional functionality such as `.then()` an
 
 The main advantage to this type of structure, is that it is much easier to block out your code on the front end. It is very clear the functionality that is going to occur on success and on failure.
 
-The main drawback is that it is a little more verbose, and more difficult when coding the module. It is also not natively supported by JavaScript, so you need to include a 3rd party library such as [simply-deferred](https://github.com/sudhirj/simply-deferred?ref=blog.christophervachon.com) or write your own.
+The main drawback is that it is a little more verbose, and more difficult when coding the module. It is also not natively supported by JavaScript, so you need to include a 3rd party library such as [simply-deferred](https://github.com/sudhirj/simply-deferred) or write your own.
 
-This [Gist](https://gist.github.com/liaodrake/bcbb8f6dad8c68c195ae?ref=blog.christophervachon.com) shows the usage and testing of this type of module in a simple express application.
+This [Gist](https://gist.github.com/liaodrake/bcbb8f6dad8c68c195ae) shows the usage and testing of this type of module in a simple express application.
 
 ## Rundown of a Callback
 
@@ -62,10 +62,10 @@ The advantage of this type of structure is that it natively supported JavaScript
 
 The drawback is that your resulting nested code and start to get really deep. Too many nested code levers gets to be very hard to follow. You can however break your code down into smaller block, but that can have its own challenges.
 
-This [Gist](https://gist.github.com/liaodrake/019d5eb1c31f1866399f?ref=blog.christophervachon.com) shows the usage and testing of this type of module in a simple express application.
+This [Gist](https://gist.github.com/liaodrake/019d5eb1c31f1866399f) shows the usage and testing of this type of module in a simple express application.
 
 ## So Which Should I Use?
 
-Both of these methodologies have there pros and cons, and ultimately, they handle the same functionality in the end. So to answer the question of which you should use depends entirely on what is already being utilized in your project.  If you are using [express](http://expressjs.com/?ref=blog.christophervachon.com), which uses callbacks, than it makes sense for you to use callbacks to maintain consistency in the project. If you are using jQuery, than you should use promises.
+Both of these methodologies have there pros and cons, and ultimately, they handle the same functionality in the end. So to answer the question of which you should use depends entirely on what is already being utilized in your project.  If you are using [express](http://expressjs.com/), which uses callbacks, than it makes sense for you to use callbacks to maintain consistency in the project. If you are using jQuery, than you should use promises.
 
 I hope this sheds some light on things for a few people

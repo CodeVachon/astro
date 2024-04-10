@@ -1,6 +1,7 @@
 ---
 import { Picture } from "astro:assets";
-import { GithubIcon, LinkedInIcon, BlueSkyIcon } from "~components/Icons";
+import { Icon } from "~components/Icons";
+import type { IconName } from "~components/Icons";
 import myImage from "../assets/me.png";
 import Glow from "~components/Glow.astro";
 import { ViewTransitions } from "astro:transitions";
@@ -18,14 +19,22 @@ const navItems: Array<{ name: string; href: string }> = [
     { name: "Blog", href: "/blog" }
 ];
 
-const socialMediaItems: Array<{ name: string; href: string; Icon: React.ReactNode }> = [
-    { name: "Github", href: "https://github.com/CodeVachon", Icon: GithubIcon },
+const socialMediaItems: Array<{ name: string; href: string; icon: IconName }> = [
+    {
+        name: "Github",
+        href: "https://github.com/CodeVachon",
+        icon: "github"
+    },
     {
         name: "LinkedIn",
         href: "https://www.linkedin.com/in/christophervachon/",
-        Icon: LinkedInIcon
+        icon: "linkedin"
     },
-    { name: "BlueSky", href: "https://bsky.app/profile/christophervachon.ca", Icon: BlueSkyIcon }
+    {
+        name: "BlueSky",
+        href: "https://bsky.app/profile/christophervachon.ca",
+        icon: "blueSky"
+    }
 ];
 
 const { title, description, sideWidth = "full", headerImage, className = "" } = Astro.props;
@@ -37,14 +46,23 @@ import "./../styles/global.css";
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href={`${Astro.site}me-300-1.png`} type="image/png" />
         <title>{title}</title>
         <meta name="description" content={description} />
+        <meta name="referrer" content="no-referrer-when-downgrade" />
+        <link
+            rel="alternate"
+            type="application/rss+xml"
+            title="Your Site's Title"
+            href={`${Astro.site}rss.xml`}
+        />
         <ViewTransitions />
     </head>
     <body
         class="flex h-screen min-w-[350px] flex-col bg-white text-slate-900 lg:flex-row lg:overflow-hidden dark:bg-gray-950 dark:text-slate-50"
     >
         <section
+            id="sidebar"
             class:list={[
                 "relative sticky top-0 z-[100] flex items-center justify-center transition duration-500 lg:flex-shrink-0",
                 sideWidth === "full" ? "lg:w-1/2" : "lg:w-1/3",
@@ -53,14 +71,21 @@ import "./../styles/global.css";
         >
             <Glow />
             <div
+                id="sidebar-content"
                 class="flex w-full items-center justify-between gap-4 p-4 lg:w-auto lg:flex-col lg:items-start lg:justify-center"
             >
-                <header class="flex w-1/3 items-center gap-4 lg:w-full lg:flex-col lg:items-start">
+                <header
+                    class="flex w-1/3 min-w-[115px] items-center gap-4 lg:w-full lg:flex-col lg:items-start"
+                >
                     <Picture
-                        class="size-6 flex-shrink-0 rounded-full lg:size-64 lg:rounded-2xl"
+                        id="profile-image"
+                        class="size-6 min-w-[24px] flex-shrink-0 rounded-full lg:size-64 lg:rounded-2xl"
                         src={myImage}
-                        formats={["avif", "webp", "jpeg"]}
-                        alt="A description of my image."
+                        densities={[1.5, 2]}
+                        formats={["webp", "jpeg"]}
+                        fallbackFormat="jpeg"
+                        alt="Christopher Vachon"
+                        loading="eager"
                     />
 
                     <h1 class="text-lg font-bold lg:text-2xl">Christopher Vachon</h1>
@@ -84,7 +109,7 @@ import "./../styles/global.css";
                 <nav class="flex w-1/3 justify-end lg:w-full lg:justify-start">
                     <ol class="flex items-center gap-2">
                         {
-                            socialMediaItems.map(({ name, href, Icon }) => (
+                            socialMediaItems.map(({ name, href, icon }) => (
                                 <li>
                                     <a
                                         href={href}
@@ -92,7 +117,7 @@ import "./../styles/global.css";
                                         title={`Check me out on ${name}`}
                                         class="text-primary hover:text-white"
                                     >
-                                        <Icon className="size-5" />
+                                        <Icon name={icon} className="size-5" />
                                     </a>
                                 </li>
                             ))
@@ -112,8 +137,9 @@ import "./../styles/global.css";
                                 class="w-full object-cover md:aspect-video"
                                 alt={title}
                                 densities={[1.5, 2]}
-                                formats={["avif", "webp", "jpeg"]}
+                                formats={["webp", "jpeg"]}
                                 fallbackFormat="jpeg"
+                                loading="eager"
                             />
                         </figure>
                     )
