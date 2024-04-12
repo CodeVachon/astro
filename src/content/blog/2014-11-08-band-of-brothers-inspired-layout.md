@@ -2,7 +2,7 @@
 title: Band of Brothers Inspired Layout
 featured: false
 description: With November 11th quickly coming, I've been watching a lot of Band of Brothers.If you are unfamiliar with that series, it is about the American 101st AirBourne and their trials in the second world war.  I would highly recommend it toanyone as it is very well done.At the start of each episode, the screen is black, and the episode title andnumber as displayed in a simple white text with a singular red line separatingthe two elements.  It is this clean and simple display that I am wanting t
-image: https://images.unsplash.com/photo-1580974511885-b30fd231388c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxMTc3M3wwfDF8c2VhcmNofDMxfHxBcm15JTIwd3cyfGVufDB8fHw&ixlib=rb-1.2.1&q=80&w=2000
+image: ./../../assets/blog/photo-1580974511885-b30fd231388c.jpg
 date_orig: 2014-11-08T16:00:00.000-05:00
 date: 2014-11-08
 draft: false

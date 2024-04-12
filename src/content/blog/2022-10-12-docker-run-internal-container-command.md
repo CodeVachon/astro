@@ -2,7 +2,7 @@
 title: Docker Run Internal Container Command
 featured: true
 description: How to run a command in a Docker container that is not the main running command of the container.
-image: https://images.unsplash.com/photo-1595587637401-83ff822bd63e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTc3M3wwfDF8c2VhcmNofDJ8fGRvY2tlcnxlbnwwfHx8fDE2NjU2MDk1OTc&ixlib=rb-1.2.1&q=80&w=2000
+image: ./../../assets/blog/photo-1595587637401-83ff822bd63e.jpg
 date_orig: 2022-10-12T17:20:45.000-04:00
 date: 2022-10-12
 draft: false

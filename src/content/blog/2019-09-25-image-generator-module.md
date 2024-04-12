@@ -2,7 +2,7 @@
 title: Image Generator Module
 featured: false
 description: an Exploration on using JavaScript and its Canvas to generate a dataurl image.
-image: https://images.unsplash.com/photo-1531796311868-83672cd144f3?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=2000&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ
+image: ./../../assets/blog/photo-1531796311868-83672cd144f3.jpg
 date_orig: 2019-09-25T11:53:55.000-04:00
 date: 2019-09-25
 draft: false

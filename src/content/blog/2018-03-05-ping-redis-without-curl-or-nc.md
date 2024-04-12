@@ -2,7 +2,7 @@
 title: Ping Redis without CURL or NC
 featured: false
 description: I found this little snippet on Stack Overflow which allowed me to check the Redis connection from inside my container.
-image: https://images.unsplash.com/photo-1558433916-90a36b44753f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=2000&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ
+image: ./../../assets/blog/photo-1558433916-90a36b44753f.jpg
 date_orig: 2018-03-05T16:00:00.000-05:00
 date: 2018-03-05
 draft: false

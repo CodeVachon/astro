@@ -2,7 +2,7 @@
 title: How to configure Nginx to load balance between multiple Docker containers
 featured: false
 description: A brief exploration of using Nginx as a load balancer for multiple docker containers.
-image: https://images.unsplash.com/photo-1542464734-5690b15c420a?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ
+image: ./../../assets/blog/photo-1542464734-5690b15c420a.jpg
 date_orig: 2019-05-29T08:40:00.000-04:00
 date: 2019-05-29
 draft: false

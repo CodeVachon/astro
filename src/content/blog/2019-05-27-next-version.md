@@ -2,7 +2,7 @@
 title: Next Version
 featured: false
 description: I created a Node.js based Command Line Interface tool for creating and updating a Node Projects Version.
-image: https://blog.christophervachon.com/content/images/2019/05/next-version.png
+image: ./../../assets/blog/next-version.png
 date_orig: 2019-05-27T21:48:45.000-04:00
 date: 2019-05-27
 draft: false

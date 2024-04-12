@@ -2,7 +2,7 @@
 title: Promises Versus Callbacks
 featured: false
 description: Recently I have been asked about the differences between JavaScript Promise (sometimes called a deferred) and a JavaScript Callback. Over the years, we haveseen many implementations of both these types of infrastructure, and even manylibraries which mix and match between to two.The point of both of these types of programming are that they allow you to codeasynchronously by allowing you to perform actions when your active action iscompleted. The main difference between the two is that prom
-image: https://images.unsplash.com/photo-1550063873-ab792950096b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxMTc3M3wwfDF8c2VhcmNofDF8fFByb21pc2VzfGVufDB8fHw&ixlib=rb-1.2.1&q=80&w=2000
+image: ./../../assets/blog/photo-1550063873-ab792950096b.jpg
 date_orig: 2015-06-30T16:00:00.000-04:00
 date: 2015-06-30
 draft: false

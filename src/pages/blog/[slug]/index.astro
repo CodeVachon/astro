@@ -52,7 +52,7 @@ const tags = await getEntries(entry.data.tags);
     title={entry.data.title}
     description={entry.data.description}
     sideWidth="half"
-    headerImage={typeof entry.data.image === "object" ? entry.data.image.src : entry.data.image}
+    headerImage={entry.data.image}
 >
     <article class="flex flex-col gap-8 lg:max-w-[750px]">
         <header class="border-b">

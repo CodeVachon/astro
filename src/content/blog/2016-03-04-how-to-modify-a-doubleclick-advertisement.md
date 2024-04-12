@@ -2,7 +2,7 @@
 title: How to Modify a DoubleClick Advertisement
 featured: false
 description: Today an odd request came by my desk. The company has a DoubleClick forPublishers (DFP)Account serving advertisement on page for one of there clients. They want to beable to detect the destination URL of the advertisement, and if it meats acertain criteria, to get additional information for the advertisement related tothe sponsored client.My initial solution was to simply load the content you want as you want itdispl
-image: https://blog.christophervachon.com/content/images/2019/05/dfp1.jpg
+image: ./../../assets/blog/dfp1.jpg
 date_orig: 2016-03-04T16:00:00.000-05:00
 date: 2016-03-04
 draft: false

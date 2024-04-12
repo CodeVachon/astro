@@ -2,7 +2,7 @@
 title: How to make macOS remember my ssh password
 featured: false
 description: You can follow these steps to mimic the older functionality of macOS remembering your password between sessions and restarts.
-image: https://images.unsplash.com/photo-1523484489927-4aa8bf9a99d8?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ
+image: ./../../assets/blog/photo-1523484489927-4aa8bf9a99d8.jpg
 date_orig: 2017-03-17T16:00:00.000-04:00
 date: 2017-03-17
 draft: false

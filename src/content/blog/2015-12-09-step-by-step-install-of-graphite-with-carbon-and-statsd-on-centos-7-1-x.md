@@ -2,7 +2,7 @@
 title: Step by Step Install of Graphite with Carbon and StatsD on CentOS 7.1.x
 featured: false
 description: Recently, we started to build our own Graphite StatsD Server. We tried following a couple of step by step guides, but all them were seeming out of date.  And we encountered several errors, many of which did not have defined documentation.
-image: https://blog.christophervachon.com/content/images/2019/05/devops-1.jpg
+image: ./../../assets/blog/devops-1.jpg
 date_orig: 2015-12-09T16:00:00.000-05:00
 date: 2015-12-09
 draft: false

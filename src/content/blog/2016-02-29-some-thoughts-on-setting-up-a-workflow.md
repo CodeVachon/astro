@@ -2,7 +2,7 @@
 title: Some Thoughts on Setting Up a Workflow
 featured: false
 description: A key component to DevOps is setting up and maintaining a workflow fordevelopers. It's not all about automation and statistics. Having a developmentbackground comes in nice and handy, but system operations is valuable too. Ifyou don't have that experience behind you, find an experienced developer and/orsystems administrator to work with on your workflow.Step 1 - Analyze What You're Already Doing.Lets start by taking some time to analyze your current process. Unless you are aone man shop
-image: https://blog.christophervachon.com/content/images/2019/05/devops.jpg
+image: ./../../assets/blog/devops.jpg
 date_orig: 2016-02-29T16:00:00.000-05:00
 date: 2016-02-29
 draft: false

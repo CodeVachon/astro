@@ -11,18 +11,20 @@ const imageConfig = z.string().or(
 // 2. Define your collection(s)
 const blogCollection = defineCollection({
     type: "content",
-    schema: z.object({
-        draft: z.boolean().optional().default(false),
-        title: z.string(),
-        description: z.string(),
-        image: imageConfig,
-        tags: z.array(reference("tag")),
-        // An optional frontmatter property. Very common!
-        footnote: z.string().optional(),
-        // In frontmatter, dates written without quotes around them are interpreted as Date objects
-        date: z.date(),
-        featured: z.boolean().optional().default(false)
-    })
+    schema: ({ image }) =>
+        z.object({
+            draft: z.boolean().optional().default(false),
+            title: z.string(),
+            description: z.string(),
+            image: image().optional(),
+            tags: z.array(reference("tag")),
+            // An optional frontmatter property. Very common!
+            footnote: z.string().optional(),
+            // In frontmatter, dates written without quotes around them are interpreted as Date objects
+            date: z.date(),
+            featured: z.boolean().optional().default(false),
+            relatedPosts: z.array(reference("blog")).optional()
+        })
 });
 
 const tagCollection = defineCollection({
@@ -35,11 +37,11 @@ const tagCollection = defineCollection({
 
 const pageContentCollection = defineCollection({
     type: "content",
-    schema: z.object({
+    schema:({ image }) => z.object({
         draft: z.boolean().optional().default(false),
         name: z.string(),
         description: z.string().optional(),
-        image: imageConfig.optional()
+        image: image().optional(),
     })
 });
 

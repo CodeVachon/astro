@@ -2,7 +2,7 @@
 title: NGINX Location Rewrite
 featured: false
 description: with my change over to the Ghost  Blogging platform from myown custom engine, I had one major problem.The URL's from my old blog did not directly match the URL's of the new blogSpecifically, the blog path.In my custom built blog, I had entered all the blog posts to sit under the /blog/ route. Ghost does not do this, nor does it directly allow me to modifythat path without modifying Ghost itself. Because the intention of thistransition is to utilize an existing communi
-image: https://images.unsplash.com/photo-1504930268766-d71549a36ec2?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=2000&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ
+image: ./../../assets/blog/photo-1504930268766-d71549a36ec2.jpg
 date_orig: 2015-11-20T16:00:00.000-05:00
 date: 2015-11-20
 draft: false

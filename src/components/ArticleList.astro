@@ -6,6 +6,7 @@ interface Props {
     grid?: boolean;
 }
 const { articles = [], grid = false } = Astro.props;
+
 ---
 
 <ol
@@ -21,18 +22,14 @@ const { articles = [], grid = false } = Astro.props;
                         <Picture
                             inferSize={true}
                             src={
-                                typeof post.data.image === "object"
-                                    ? post.data.image.src
-                                    : post.data.image
+                                post.data.image
                             }
                             class="rounded-md object-cover md:aspect-video lg:aspect-auto lg:rounded-none"
                             alt={
-                                typeof post.data.image === "object" && post.data.image.alt
-                                    ? post.data.image.alt
-                                    : post.data.title
+                               post.data.title
                             }
                             densities={[1.5, 2]}
-                            formats={["avif", "webp", "jpeg"]}
+                            formats={["webp", "jpeg"]}
                             fallbackFormat="jpeg"
                         />
                     </figure>

@@ -9,7 +9,12 @@ interface Props {
     title: string;
     description?: string;
     sideWidth?: "full" | "half";
-    headerImage?: string;
+    headerImage?: string | {
+        src: string;
+        width: number;
+        height: number;
+        format: "png" | "jpg" | "jpeg" | "tiff" | "webp" | "gif" | "svg" | "avif";
+    };
     className?: string;
 }
 
@@ -18,7 +23,7 @@ const navItems: Array<{ name: string; href: string }> = [
     { name: "Blog", href: "/blog" }
 ];
 
-const socialMediaItems: Array<{ name: string; href: string; Icon: React.ReactNode }> = [
+const socialMediaItems: Array<{ name: string; href: string; Icon: React.ReactNode | React.FC }> = [
     { name: "Github", href: "https://github.com/CodeVachon", Icon: GithubIcon },
     {
         name: "LinkedIn",
@@ -59,7 +64,7 @@ import "./../styles/global.css";
                     <Picture
                         class="size-6 flex-shrink-0 rounded-full lg:size-64 lg:rounded-2xl"
                         src={myImage}
-                        formats={["avif", "webp", "jpeg"]}
+                        formats={["webp", "jpeg"]}
                         alt="A description of my image."
                     />
 
@@ -112,7 +117,7 @@ import "./../styles/global.css";
                                 class="w-full object-cover md:aspect-video"
                                 alt={title}
                                 densities={[1.5, 2]}
-                                formats={["avif", "webp", "jpeg"]}
+                                formats={["webp", "jpeg"]}
                                 fallbackFormat="jpeg"
                             />
                         </figure>

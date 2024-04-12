@@ -2,7 +2,7 @@
 title: The Power of Statistics
 featured: false
 description: Over the past couple of weeks I have been exploring Application Monitoring toolswhich has resulting in me playing with StatsD  and Graphite .  I quickly found a Docker  Container, and plugged in an NPM library called node-statsd into an Express RESTful api to see what kind of data I could get.At firs
-image: https://images.unsplash.com/photo-1518186285589-2f7649de83e0?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=2000&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ
+image: ./../../assets/blog/photo-1518186285589-2f7649de83e0.jpg
 date_orig: 2015-11-30T16:00:00.000-05:00
 date: 2015-11-30
 draft: false

@@ -2,7 +2,7 @@
 title: CSS3 :nth-last-of-child Demo
 featured: false
 description: This is a neat trick I learned for CSS3 to select out the last box of a grid off loading elements and set its width to fill the remaining box.  For this, I amusing a CSS pseudo-class called :nth-last-of-type(). This pseudo-class will select out the last element of the attached element in the containing element. So in a grid of 9 span tags in a div tag, the selector will pick out the the box.whats nice about selector is that it will accept arguments.
-image: https://images.unsplash.com/photo-1587303150910-b05077a4fb45?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxMTc3M3wwfDF8c2VhcmNofDE5fHxOZXdzcGFwZXIlMjBwcmludHxlbnwwfHx8&ixlib=rb-1.2.1&q=80&w=2000
+image: ./../../assets/blog/photo-1587303150910-b05077a4fb45.jpg
 date_orig: 2014-09-05T16:00:00.000-04:00
 date: 2014-09-05
 draft: false

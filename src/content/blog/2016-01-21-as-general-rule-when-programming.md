@@ -2,7 +2,7 @@
 title: As a general rule when programming...
 featured: false
 description: As a General Rule When Programming. If you think your code is going to cause a WTF moment a year from now re-evaluate your solution.
-image: https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=2000&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ
+image: ./../../assets/blog/photo-1512758017271-d7b84c2113f1.jpg
 date_orig: 2016-01-21T16:00:00.000-05:00
 date: 2016-01-21
 draft: false
