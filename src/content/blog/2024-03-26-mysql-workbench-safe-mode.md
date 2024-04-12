@@ -2,7 +2,7 @@
 title: MySQL Workbench Safe Mode Toggle
 featured: false
 description: We've been running into an issue with MySQL Workbench where the Safe Mode toggle is enabled. Here's how to disable it.
-image: https://images.unsplash.com/photo-1462045504115-6c1d931f07d1?q=80&w=1500&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA&q=80&
+image: https://images.unsplash.com/photo-1462045504115-6c1d931f07d1?q=80&w=1500&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA&q=80
 date: 2024-03-26
 draft: false
 tags: ["mysql", "database"]
