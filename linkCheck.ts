@@ -104,4 +104,8 @@ if (Object.keys(brokenLinks).length > 0) {
     process.exit(1);
 }
 
+console.log("");
+console.log("✅ Work Complete!");
+console.log("All links are resolving");
+console.log("");
 process.exit(0);
