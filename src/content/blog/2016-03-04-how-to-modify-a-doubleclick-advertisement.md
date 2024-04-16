@@ -9,7 +9,7 @@ draft: false
 tags: ["web-development"]
 ---
 
-Today an odd request came by my desk. The company has a [DoubleClick for Publishers](https://www.doubleclickbygoogle.com/solutions/revenue-management/dfp/?ref=blog.christophervachon.com) (`DFP`) Account serving advertisement on page for one of there clients. They want to be able to detect the destination URL of the advertisement, and if it meats a certain criteria, to get additional information for the advertisement related to the sponsored client.
+Today an odd request came by my desk. The company has a [DoubleClick for Publishers](https://www.doubleclickbygoogle.com/solutions/revenue-management/dfp/) (`DFP`) Account serving advertisement on page for one of there clients. They want to be able to detect the destination URL of the advertisement, and if it meats a certain criteria, to get additional information for the advertisement related to the sponsored client.
 
 My initial solution was to simply load the content you want as you want it displayed directly into DFP.  However that solution placed a great deal of effort on the administrative staff, so we needed to find a way to handle this programatically.
 
@@ -43,6 +43,6 @@ googletag
 ;
 ```
 
-Now we have our advertisement block.  Depending on your settings, your advertisements may be loaded via an iFrame. From this point on, We decided to leverage [jQuery](http://www.jquery.com/?ref=blog.christophervachon.com) which is already loaded on our page.
+Now we have our advertisement block.  Depending on your settings, your advertisements may be loaded via an iFrame. From this point on, We decided to leverage [jQuery](http://www.jquery.com/) which is already loaded on our page.
 
 This gist of this being that for each advertisement that is loaded on the site from DFP we are performing this function on the content we got from DFP.  From here, we can change and modify the contents as required.

@@ -21,5 +21,5 @@ assuming you can connect to the server and everything is find, you should be the
 
 ### References
 
--   [Stack Overflow Answer](https://stackoverflow.com/questions/33243121/abuse-curl-to-communicate-with-redis?ref=blog.christophervachon.com)
--   [More on Using Bash's Built-in /dev/tcp File (TCP/IP)](http://www.linuxjournal.com/content/more-using-bashs-built-devtcp-file-tcpip?ref=blog.christophervachon.com)
+-   [Stack Overflow Answer](https://stackoverflow.com/questions/33243121/abuse-curl-to-communicate-with-redis)
+-   [More on Using Bash's Built-in /dev/tcp File (TCP/IP)](http://www.linuxjournal.com/content/more-using-bashs-built-devtcp-file-tcpip)

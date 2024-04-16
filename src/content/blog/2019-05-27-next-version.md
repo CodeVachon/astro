@@ -31,4 +31,4 @@ I wanted a quick way to ensure that this normally manual task was performed the 
 
 ---
 
-If you interested, you can checkout the project in my GitHub at [github.com/liaodrake/next-version](https://github.com/liaodrake/next-version?ref=blog.christophervachon.com) or on my [Personal NPM Registry](https://npm.christophervachon.com/-/web/detail/@christophervachon/next-version?ref=blog.christophervachon.com).
+If you interested, you can checkout the project in my GitHub at [github.com/liaodrake/next-version](https://github.com/liaodrake/next-version) or on my [Personal NPM Registry](https://npm.christophervachon.com/-/web/detail/@christophervachon/next-version).

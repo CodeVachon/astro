@@ -50,7 +50,7 @@ for (const thisTag of allTags) {
         <h2 class="text-2xl font-bold">Popular Tags</h2>
         <ol class="flex flex-col gap-12">
             {
-                tagsWithAricles.map((record) => {
+                tagsWithAricles.map(async (record) => {
                     const remainingPostsLength = record.articles.length - 3;
                     return (
                         <li class="flex flex-col gap-4">
@@ -59,6 +59,12 @@ for (const thisTag of allTags) {
                                     {record.tag.data.name}
                                 </a>
                             </h3>
+
+                            <p class="text-slate-700 dark:text-slate-300">
+                                {record.tag.data.description ??
+                                    `Blog posts on ${record.tag.data.name}`}
+                            </p>
+
                             <div class="">
                                 <ArticleList articles={record.articles.slice(0, 3)} grid />
                             </div>
