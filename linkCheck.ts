@@ -5,23 +5,32 @@ class Log {
     lineLength = 0;
 
     async clearLine() {
-        const sleepDuration = this.sleepCount * Math.ceil(this.lineLength / 1);
-        // process.stdout.clearLine(0);
-        // await sleep(sleepDuration);
-        process.stdout.cursorTo(0);
-        await sleep(sleepDuration);
+        if (process.stdout.isTTY) {
+            const sleepDuration = this.sleepCount * Math.ceil(this.lineLength / 1);
+            // process.stdout.clearLine(0);
+            // await sleep(sleepDuration);
+            process.stdout.cursorTo(0);
+            await sleep(sleepDuration);
+        }
     }
 
     async msg(msg: string) {
         this.clearLine();
-        process.stdout.write(msg);
+        if (process.stdout.isTTY) {
+            process.stdout.write(msg);
+        } else {
+            console.log(msg);
+        }
+
         this.lineLength = msg.length;
         await sleep(this.sleepCount);
     }
 
     async next() {
-        process.stdout.write("\n");
-        await sleep(this.sleepCount);
+        if (process.stdout.isTTY) {
+            process.stdout.write("\n");
+            await sleep(this.sleepCount);
+        }
     }
 }
 

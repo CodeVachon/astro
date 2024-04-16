@@ -2,7 +2,7 @@
 title: SCSS Mixin for Media Queries
 featured: false
 description: I created a SCSS Mixin for creating media queries based on a keywords.
-image: https://images.unsplash.com/photo-1468070454955-c5b6932bd08d?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ
+image: ./../../assets/blog/photo-1468070454955-c5b6932bd08d.jpg
 date_orig: 2019-05-14T21:38:13.000-04:00
 date: 2019-05-14
 draft: true

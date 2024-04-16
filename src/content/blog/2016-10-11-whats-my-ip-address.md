@@ -2,7 +2,7 @@
 title: What's my IP Address
 featured: false
 description: I have recently been giving a new 15inch MacBook Pro by the office, and havespent a fair bit of time moving things over from a MacMini to it to be my newprimary console. Although there are several tools available to transition fromone mac to another, I have decided to do this as a fresh/clean install as themini has been around for 4 years. It's also allowed me to mark down everythingfor a new on-boarding process I am starting.One of the main issues in switching from a desktop unit to a la
-image: https://blog.christophervachon.com/content/images/2019/09/Screen-Shot-2019-09-13-at-09.59.07.png
+image: ./../../assets/blog/Screen-Shot-2019-09-13-at-09.59.07.png
 date_orig: 2016-10-11T16:00:00.000-04:00
 date: 2016-10-11
 draft: false

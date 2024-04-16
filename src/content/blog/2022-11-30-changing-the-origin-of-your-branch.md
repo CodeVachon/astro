@@ -2,7 +2,7 @@
 title: Changing the Origin of your Branch
 featured: false
 description: Today I learned that you can change the origin of your branch in Git.
-image: https://images.unsplash.com/photo-1592928038511-20202bdad1fd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTc3M3wwfDF8c2VhcmNofDZ8fG9yaWdpbnxlbnwwfHx8fDE2Njk4MzAwOTE&ixlib=rb-4.0.3&q=80&w=2000
+image: ./../../assets/blog/photo-1592928038511-20202bdad1fd.jpg
 date_orig: 2022-11-30T12:45:32.000-05:00
 date: 2022-11-30
 draft: false

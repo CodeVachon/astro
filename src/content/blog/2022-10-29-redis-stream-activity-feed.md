@@ -2,7 +2,7 @@
 title: Redis Stream Activity Feed
 featured: false
 description: I created a new Concept Project utilizing Redis Streams to create an Activity Feed
-image: https://images.unsplash.com/photo-1474835409173-5dc81aae3faa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTc3M3wwfDF8c2VhcmNofDE0fHxhY3Rpdml0eSUyMGZlZWR8ZW58MHx8fHwxNjY3MDg5ODQ0&ixlib=rb-4.0.3&q=80&w=2000
+image: ./../../assets/blog/photo-1474835409173-5dc81aae3faa.jpg
 date_orig: 2022-10-29T21:13:43.000-04:00
 date: 2022-10-29
 draft: false

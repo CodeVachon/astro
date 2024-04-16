@@ -2,14 +2,12 @@
 title: GitHub Actions Reusable Workflows
 featured: false
 description: This is how I created a reusable GitHub Action workflow that can be shared and reused within a repository.
-image: https://christophervachon.s3.amazonaws.com/astro/octocat-directing-traffic.png
+image: ./../../assets/blog/octocat-directing-traffic.png
 date: 2024-04-04
 draft: false
 tags:
     - github
     - devops
-relatedPosts:
-    - 2024-03-26-mysql-workbench-safe-mode
 ---
 
 One of the biggest pain points for me working with GitHub Actions is the duplication of workflows within a repository. I've been looking for a way to create reusable workflows that can be shared across multiple workflows and jobs.

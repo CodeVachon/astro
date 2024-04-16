@@ -2,7 +2,7 @@
 title: Playing with CSS Grid
 featured: false
 description: Recently, Rachel Andrew gave a great talk on the topic which was uploaded to youtube. This was a great introduction to the subject for me, and also provides a brief comparison between CSS Grid and CSS Flexbox.
-image: https://blog.christophervachon.com/content/images/2019/05/Screen-Shot-2017-04-27-at-10.18.17.png
+image: ./../../assets/blog/Screen-Shot-2017-04-27-at-10.18.17.png
 date_orig: 2017-04-27T16:00:00.000-04:00
 date: 2017-04-27
 draft: false

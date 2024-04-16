@@ -2,7 +2,7 @@
 title: Cherry-Pick with Git
 featured: false
 description: Sometimes things don't quite work out as planned. Okies, lets be honest, Most ofthe time things don't work out as planned from the start. But with a properworkflow, this is not always detrimental.For one of my office projects, I had a transition over to DoubleClick forPublishers (DFP). This was completed, and entered into a merge release for thestart of the month along with a few other patches and small features. However,that transition was to be pulled from the upcoming release for inter
-image: https://blog.christophervachon.com/content/images/2019/05/bg-git-1.jpg
+image: ./../../assets/blog/bg-git-1.jpg
 date_orig: 2016-06-30T16:00:00.000-04:00
 date: 2016-06-30
 draft: false

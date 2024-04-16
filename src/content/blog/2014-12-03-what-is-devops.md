@@ -2,7 +2,7 @@
 title: What is DevOps
 featured: false
 description: Several Months ago, I attended a conference in Toronto called DevOpsDays. The purpose is like any other technical conference, ameans to get like minded individuals together and to share new ideas. In thiscase, DevOps.I have long counted myself as the DevOps Engineer of the company I work for, andhave had a lot of issue getting the company to believe that DevOps is a realthing. It doesn't help when goggling "DevOps" gives you a large and varyingdescription of the r
-image: https://blog.christophervachon.com/content/images/2019/09/devops-2.jpg
+image: ./../../assets/blog/devops-2.jpg
 date_orig: 2014-12-03T16:00:00.000-05:00
 date: 2014-12-03
 draft: false

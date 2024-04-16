@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 interface Props {
     articles: Array<CollectionEntry<"blog">>;
@@ -14,34 +14,28 @@ const { articles = [], grid = false } = Astro.props;
         : ["flex flex-col gap-12 lg:max-w-[725px]"]}
 >
     {
-        articles.map(async (post, index) => {
-            const cover: { src: string; alt: string } =
-                typeof post.data.image === "object"
-                    ? post.data.image
-                    : { src: post.data.image ?? "", alt: post.data.title };
-
-            return (
-                <li class="relative z-30 flex flex-col md:flex-row lg:overflow-hidden lg:rounded-lg">
-                    {cover.src.length > 0 && (
-                        <figure class="w-full flex-shrink-0 overflow-hidden md:mr-6 md:w-64 lg:w-full">
-                            <Image
-                                inferSize={true}
-                                src={cover.src}
-                                class="rounded-md object-cover md:aspect-video lg:aspect-auto lg:rounded-none"
-                                alt={cover.alt}
-                                densities={[1.5, 2]}
-                                loading={index < 10 ? "eager" : "lazy"}
-                            />
-                        </figure>
-                    )}
-                    <article class="z-40 lg:absolute lg:bottom-0 lg:left-0 lg:right-0 lg:bg-slate-50/75 lg:p-6 lg:backdrop-blur-lg lg:dark:bg-slate-500/50">
-                        <a href={["/blog", post.slug].join("/")} class="text-xl font-bold">
-                            {post.data.title}
-                        </a>
-                        <p class="lg:line-clamp-2">{post.data.description}</p>
-                    </article>
-                </li>
-            );
-        })
+        articles.map((post) => (
+            <li class="relative z-30 flex flex-col md:flex-row lg:overflow-hidden lg:rounded-lg">
+                {post.data.image && (
+                    <figure class="w-full flex-shrink-0 overflow-hidden md:mr-6 md:w-64 lg:w-full">
+                        <Picture
+                            inferSize={true}
+                            src={post.data.image}
+                            class="rounded-md object-cover md:aspect-video lg:aspect-auto lg:rounded-none"
+                            alt={post.data.title}
+                            densities={[1.5, 2]}
+                            formats={["webp", "jpeg"]}
+                            fallbackFormat="jpeg"
+                        />
+                    </figure>
+                )}
+                <article class="z-40 lg:absolute lg:bottom-0 lg:left-0 lg:right-0 lg:bg-slate-50/75 lg:p-6 lg:backdrop-blur-lg lg:dark:bg-slate-500/50">
+                    <a href={["/blog", post.slug].join("/")} class="text-xl font-bold">
+                        {post.data.title}
+                    </a>
+                    <p class="lg:line-clamp-2">{post.data.description}</p>
+                </article>
+            </li>
+        ))
     }
 </ol>

@@ -2,7 +2,7 @@
 title: Get a Bash Scripts Absolute Path
 featured: false
 description: How to find a bash script absolute path without the use of realpath.
-image: https://images.unsplash.com/photo-1562504208-03d85cc8c23e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTc3M3wwfDF8c2VhcmNofDEyfHxtYXB8ZW58MHx8fHwxNjY1NjkwOTE3&ixlib=rb-1.2.1&q=80&w=2000
+image: ./../../assets/blog/photo-1562504208-03d85cc8c23e.jpg
 date_orig: 2022-10-11T15:43:00.000-04:00
 date: 2022-10-11
 draft: false

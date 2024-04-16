@@ -2,7 +2,7 @@
 title: How to make GIT ignore future changes to a committed file.
 featured: false
 description: A quick command to tell Git to ignore future changes to a tracked file.
-image: https://blog.christophervachon.com/content/images/2019/05/bg-git-2.jpg
+image: ./../../assets/blog/bg-git-2.jpg
 date_orig: 2019-05-15T22:36:07.000-04:00
 date: 2019-05-15
 draft: false

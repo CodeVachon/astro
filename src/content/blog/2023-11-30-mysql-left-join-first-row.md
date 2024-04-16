@@ -2,7 +2,7 @@
 title: MySQL Left Join First Row
 featured: false
 description: This is how I solved a MySQL Left Join First Row issue
-image: https://images.unsplash.com/photo-1525081905268-fc0b46e9d786?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&q=80&w=1000
+image: ./../../assets/blog/photo-1525081905268-fc0b46e9d786.jpg
 date_orig: 2023-11-30T12:45:32.000-05:00
 date: 2023-11-30
 draft: false

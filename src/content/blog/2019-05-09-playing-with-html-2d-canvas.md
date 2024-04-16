@@ -2,7 +2,7 @@
 title: Playing with HTML 2D Canvas
 featured: false
 description: This is my first time playing with HTML Canvas, and I wanted to show it off.
-image: https://blog.christophervachon.com/content/images/2019/05/Screen-Shot-2019-05-09-at-20.31.41.png
+image: ./../../assets/blog/Screen-Shot-2019-05-09-at-20.31.41.png
 date_orig: 2019-05-09T20:33:32.000-04:00
 date: 2019-05-09
 draft: false

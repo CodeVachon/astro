@@ -2,7 +2,7 @@
 title: High Availability Redis Session with Express
 featured: false
 description: Recently we have needed update our session solution with Redis to use Redis as a cluster, increasing the availability of our sites in the event that we have to cycle our Redis servers.
-image: https://images.unsplash.com/photo-1563639115997-1eac7f574628?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=2000&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ
+image: ./../../assets/blog/photo-1563639115997-1eac7f574628.jpg
 date_orig: 2017-08-25T16:00:00.000-04:00
 date: 2017-08-25
 draft: false

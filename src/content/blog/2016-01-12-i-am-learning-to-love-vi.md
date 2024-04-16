@@ -2,7 +2,7 @@
 title: I am learning to love VI
 featured: false
 description: I will admit that in my early developer days, that I was extremely resistant todoing anything command line. My thought was that we lived in an age where wecould easily make GUI so why wouldn't we create and use them. Now will toolslike GIT, LESS, SASS, Grunt, Gulp, Vagrant, and Docker (just to name a few) Ihave learned to love working in the command line and cant imaging workingwithout it.That being said, the one thing about command line that has always bothered was vi (or vim). I never
-image: https://blog.christophervachon.com/content/images/2019/09/Screen-Shot-2019-09-13-at-10.08.08.png
+image: ./../../assets/blog/Screen-Shot-2019-09-13-at-10.08.08.png
 date_orig: 2016-01-12T22:05:00.000-05:00
 date: 2016-01-12
 draft: false

@@ -2,7 +2,7 @@
 title: Web Developer Job Applicants - Here's some Pro Tips!
 featured: false
 description: I have been spent a fair bit of time looking a resumes and cover letters as of late. Some of which have prompted a few tweets from me.
-image: https://images.unsplash.com/1/iphone-4-closeup.jpg?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ
+image: ./../../assets/blog/iphone-4-closeup.jpg
 date_orig: 2016-04-15T16:00:00.000-04:00
 date: 2016-04-15
 draft: false

@@ -2,7 +2,7 @@
 title: GitHub Action - Passing a Slack Message ID between Jobs
 featured: false
 description: How to pass a Slack Message ID (or any primitive value) between multiple GitHub Action Jobs.
-image: https://images.unsplash.com/photo-1521575107034-e0fa0b594529?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTc3M3wwfDF8c2VhcmNofDI0fHxtYWlsfGVufDB8fHx8MTY2NjM2MTk1NQ&ixlib=rb-4.0.3&q=80&w=2000
+image: ./../../assets/blog/photo-1521575107034-e0fa0b594529.jpg
 date_orig: 2022-10-19T22:00:00.000-04:00
 date: 2022-10-19
 draft: false

@@ -2,7 +2,7 @@
 title: React with Gulp, Babel, and Browserify
 featured: false
 description: Recently I have started working with React  for a prototype for an upcoming project. I have found a large community outthere, and have started using Browserify , Babel, and Gulp  to streamline the process oftranspiling the react code.However I have found it slightly frustrating that with most of the workflows Ihave found, that my with poor working knowledge of react at this time, thatbrowse
-image: https://blog.christophervachon.com/content/images/2019/05/bg-react-1.jpg
+image: ./../../assets/blog/bg-react-1.jpg
 date_orig: 2016-05-06T16:00:00.000-04:00
 date: 2016-05-06
 draft: false

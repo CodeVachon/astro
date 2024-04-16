@@ -2,7 +2,7 @@
 title: How to get GitLab Runner to push a Git Tag
 featured: false
 description: Some thoughts on getting a Gitlab Runner to deploy tags back to a remote.
-image: https://images.unsplash.com/photo-1513407135356-a5276958b57e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ
+image: ./../../assets/blog/photo-1513407135356-a5276958b57e.jpg
 date_orig: 2019-06-14T20:55:04.000-04:00
 date: 2019-06-14
 draft: false

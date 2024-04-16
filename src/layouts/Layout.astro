@@ -10,7 +10,12 @@ interface Props {
     title: string;
     description?: string;
     sideWidth?: "full" | "half";
-    headerImage?: string;
+    headerImage?: {
+        src: string;
+        width: number;
+        height: number;
+        format: "png" | "jpg" | "jpeg" | "tiff" | "webp" | "gif" | "svg" | "avif";
+    };
     className?: string;
 }
 
@@ -82,8 +87,8 @@ import "./../styles/global.css";
                         class="size-6 min-w-[24px] flex-shrink-0 rounded-full lg:size-64 lg:rounded-2xl"
                         src={myImage}
                         densities={[1.5, 2]}
-                        formats={["webp", "jpeg"]}
-                        fallbackFormat="jpeg"
+                        formats={["webp", "jpg"]}
+                        fallbackFormat="jpg"
                         alt="Christopher Vachon"
                         loading="eager"
                     />
@@ -137,8 +142,8 @@ import "./../styles/global.css";
                                 class="w-full object-cover md:aspect-video"
                                 alt={title}
                                 densities={[1.5, 2]}
-                                formats={["webp", "jpeg"]}
-                                fallbackFormat="jpeg"
+                                formats={["webp", "jpg"]}
+                                fallbackFormat="jpg"
                                 loading="eager"
                             />
                         </figure>

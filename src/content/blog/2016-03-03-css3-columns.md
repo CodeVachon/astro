@@ -2,7 +2,7 @@
 title: CSS3 Columns
 featured: false
 description: Today we had an issue where we needed to split an ordered list into multiplecolumns. So took some time to explorer a different way to accomplish the task ofsplitting a standard html into multiple columns.  Item 1  Item 2  Item 3  Item 4  Item 5  Item 6  Item 7  Item 8  Item 9  Item 10  Item 11  Item 12  Item 13  Item 14  Item
-image: https://blog.christophervachon.com/content/images/2019/05/css3.jpg
+image: ./../../assets/blog/css3.jpg
 date_orig: 2016-03-03T16:00:00.000-05:00
 date: 2016-03-03
 draft: false

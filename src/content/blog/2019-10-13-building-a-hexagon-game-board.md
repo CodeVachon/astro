@@ -2,7 +2,7 @@
 title: Building a Hexagon Game Board
 featured: false
 description: Playing with HTML Canvas to make a hexagonal grid-based game.
-image: https://blog.christophervachon.com/content/images/2019/11/Screen-Shot-2019-11-07-at-08.51.07.png
+image: ./../../assets/blog/Screen-Shot-2019-11-07-at-08.51.07.png
 date_orig: 2019-10-13T15:41:00.000-04:00
 date: 2019-10-13
 draft: false

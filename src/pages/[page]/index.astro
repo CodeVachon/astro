@@ -28,7 +28,7 @@ const { Content } = await entry.render();
     title={entry.data.name}
     description={entry.data.description}
     sideWidth="half"
-    headerImage={typeof entry.data.image === "object" ? entry.data.image.src : entry.data.image}
+    headerImage={entry.data.image}
 >
     <MarkdownContent>
         <Content />

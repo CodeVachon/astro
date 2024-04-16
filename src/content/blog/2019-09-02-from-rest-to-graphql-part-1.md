@@ -2,7 +2,7 @@
 title: From REST to GraphQL - How To Build a GraphQL Server
 featured: false
 description: Exploring the Development of Refactoring a RESTful api to GraphQL
-image: https://blog.christophervachon.com/content/images/2019/08/Screen-Shot-2019-08-22-at-15.25.43-1.png
+image: ./../../assets/blog/Screen-Shot-2019-08-22-at-15.25.43-1.png
 date_orig: 2019-09-02T21:15:36.000-04:00
 date: 2019-09-02
 draft: false

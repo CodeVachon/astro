@@ -2,7 +2,7 @@
 title: Folding the DOM
 featured: false
 description: I came across this article online and just needed to share it.
-image: https://blog.christophervachon.com/content/images/2019/05/Screen-Shot-2019-05-22-at-18.52.56.png
+image: ./../../assets/blog/Screen-Shot-2019-05-22-at-18.52.56.png
 date_orig: 2019-05-22T18:57:18.000-04:00
 date: 2019-05-22
 draft: false

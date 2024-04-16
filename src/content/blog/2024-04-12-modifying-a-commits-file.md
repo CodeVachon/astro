@@ -1,8 +1,10 @@
 ---
 title: Modifying a commit's file
-description: How to modify a file in a commit
+description: Sometimes you commit files that you did not mean to stage. Here is how to modify that commit to add or remove files.
 date: 2024-04-12
-tags: git
+image: ../../assets/blog/github-rewrite-history.png
+tags:
+    - git
 ---
 
 I have recently made a commit and I realized that I added files and changes that I not mean to stage. This is a common issue that stems from a bit of code blindness where I'll just use the `git commit -am "<msg>"` command and not review the changes that I am committing.

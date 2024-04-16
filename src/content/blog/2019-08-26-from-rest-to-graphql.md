@@ -2,7 +2,7 @@
 title: From REST to GraphQL
 featured: true
 description: I am giving a talk at NorthOT this Thursday in Barrie Ontario about Migrating from a RESTful API to GraphQL.
-image: https://blog.christophervachon.com/content/images/2019/08/58461959_623297634799391_6037600785443848192_o.png
+image: ./../../assets/blog/58461959_623297634799391_6037600785443848192_o.png
 date_orig: 2019-08-26T19:54:48.000-04:00
 date: 2019-08-26
 draft: false

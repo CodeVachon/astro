@@ -2,7 +2,7 @@
 title: Script to Close a Port on MacOS
 featured: false
 description: A very handy Bash alias for web developers to close an open port on macOS.
-image: https://images.unsplash.com/photo-1512380924987-27e737876395?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=2000&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ
+image: ./../../assets/blog/photo-1512380924987-27e737876395.jpg
 date_orig: 2018-10-16T16:00:00.000-04:00
 date: 2018-10-16
 draft: false

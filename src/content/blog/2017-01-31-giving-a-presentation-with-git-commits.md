@@ -2,7 +2,7 @@
 title: Giving a Presentation with Git Commits
 featured: false
 description: recently I have been creating and giving presentations on how to use certaintechnologies. Event expanding some to be more like workshops.I decided that rather than writing all my code on the fly while giving thepresentation, which would undoubtedly lead to a number of errors as I go, that Iwould pre-write all the code and stores changes as git commits.This leads me this post.  How to navigate those commits quickly and easilyduring my presentation.My solution was to create three bash al
-image: https://blog.christophervachon.com/content/images/2019/05/bg-git.jpg
+image: ./../../assets/blog/bg-git.jpg
 date_orig: 2017-01-31T16:00:00.000-05:00
 date: 2017-01-31
 draft: false

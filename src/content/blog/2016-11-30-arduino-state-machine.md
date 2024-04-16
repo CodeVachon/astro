@@ -2,7 +2,7 @@
 title: Arduino State Machine
 featured: false
 description: Recently, I have been on a bit of a beer making kick and have decided that Ireally do enjoy it.>  View this post on Instagram   My first batch of #homebrew. Awesome aroma, great taste, incredible headretention. I am extremely impressed. #craftabrewcatalyst helped me make myfirstbatch one of the best beers I've ever had. Tasting at my place tomorrowafternoon 😁 A post shared by Christopher Vachon [https:/
-image: https://blog.christophervachon.com/content/images/2019/09/15251654_223185134776505_2696799567042576384_n.jpg
+image: ./../../assets/blog/15251654_223185134776505_2696799567042576384_n.jpg
 date_orig: 2016-11-30T16:00:00.000-05:00
 date: 2016-11-30
 draft: false

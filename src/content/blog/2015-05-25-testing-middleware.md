@@ -2,7 +2,7 @@
 title: Testing Middleware
 featured: false
 description: Recently I wrote a small custom piece of middleware for an express applicationto consume on its requests. It takes a query parameter and reworks it for lateruse in the event loop. Nothing too fancy or overly complicated.But as is the good practice, and because this was for a production application,I wanted to test this bit of middleware with mocha . Buthow?A brief google search did not return to me any relevant information, so that'swhat prompted this post.Writing
-image: https://images.unsplash.com/photo-1512851685250-bfa0aa982a1c?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=2000&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ
+image: ./../../assets/blog/photo-1512851685250-bfa0aa982a1c.jpg
 date_orig: 2015-05-25T16:00:00.000-04:00
 date: 2015-05-25
 draft: false

@@ -2,7 +2,7 @@
 title: Human Readable Code
 featured: false
 description: I have recently spent a great deal of time reviewing code from externaldevelopers. Some of it is good, some of it is rough, some of it makes my headhurt. Ultimately, if the code produces the expected result, I tend to let thingsslide to be included as part of a later refactor if needed, but this leads me tomy topic of the day; Human Readable Code.No longer do we live in an age where we need to consider how a computer is goingto process a block code, and as such, code for the compiler in t
-image: https://blog.christophervachon.com/content/images/2019/05/keyboard.jpg
+image: ./../../assets/blog/keyboard.jpg
 date_orig: 2016-08-30T16:00:00.000-04:00
 date: 2016-08-30
 draft: false
