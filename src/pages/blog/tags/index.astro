@@ -29,7 +29,7 @@ for (const thisTag of allTags) {
         post.data.tags.some((articleTag) => articleTag.slug === thisTag.slug)
     );
     if (articles.length >= 3) {
-        tagsWithAricles.push({ tag: thisTag, articles: articles.reverse() });
+        tagsWithAricles.push({ tag: thisTag, articles: articles });
     } else {
         singletonTags.push({ tag: thisTag, articles });
     }
