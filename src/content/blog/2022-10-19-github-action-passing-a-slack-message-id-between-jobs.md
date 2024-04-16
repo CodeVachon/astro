@@ -9,11 +9,11 @@ draft: false
 tags: ["devops", "github", "github-actions"]
 ---
 
-While migrating a project into [GitHub](https://github.com/?ref=blog.christophervachon.com), I have been updating the CI/CD processes of the repositories to use [GitHub Actions](https://docs.github.com/en/actions?ref=blog.christophervachon.com).
+While migrating a project into [GitHub](https://github.com/), I have been updating the CI/CD processes of the repositories to use [GitHub Actions](https://docs.github.com/en/actions).
 
-One of the updates I wanted to make was to push notifications into a [Slack](https://slack.com/?ref=blog.christophervachon.com) Channel to notify users of the status of deployments but to do so without flooding the channel with multiple notifications of the same event.
+One of the updates I wanted to make was to push notifications into a [Slack](https://slack.com/) Channel to notify users of the status of deployments but to do so without flooding the channel with multiple notifications of the same event.
 
-Fortunately, the [Slack API](https://api.slack.com/?ref=blog.christophervachon.com) allows you to update a message in a channel. There are already several public actions to post a message into Slack and update them, so I will not go too deep into them. But what I got a little hung up on was how to pass the `ID` of the message being updated between multiple GitHub Action Jobs.
+Fortunately, the [Slack API](https://api.slack.com/) allows you to update a message in a channel. There are already several public actions to post a message into Slack and update them, so I will not go too deep into them. But what I got a little hung up on was how to pass the `ID` of the message being updated between multiple GitHub Action Jobs.
 
 The first step we need to take is to define our action workflow
 
@@ -42,7 +42,7 @@ jobs:
               run: echo "deploy step"
 ```
 
-This Action runs three steps over 2 jobs. Next, we'll push a message into Slack using the [voxmedia/github-action-slack-notify-build@v1](https://github.com/voxmedia/github-action-slack-notify-build?ref=blog.christophervachon.com) action.
+This Action runs three steps over 2 jobs. Next, we'll push a message into Slack using the [voxmedia/github-action-slack-notify-build@v1](https://github.com/voxmedia/github-action-slack-notify-build) action.
 
 ```yaml
 # ./.github/workflows/build-and-deploy.yml

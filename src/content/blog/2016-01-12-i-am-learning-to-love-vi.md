@@ -43,4 +43,4 @@ In addition, you tell vim to open a file at a certain line number: `vi +[linenum
 
 All these settings can be turned on globally as well via a global settings files in your home directory (`~/.vimrc`).
 
-There are also a good number of features which I have not mentioned which are also very beneficial. Checkout this repository on [Github](https://github.com/?ref=blog.christophervachon.com) at [amix/vimrc](https://github.com/amix/vimrc?ref=blog.christophervachon.com).
+There are also a good number of features which I have not mentioned which are also very beneficial. Checkout this repository on [Github](https://github.com/) at [amix/vimrc](https://github.com/amix/vimrc).

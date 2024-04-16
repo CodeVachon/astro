@@ -13,9 +13,9 @@ Recently we have needed update our session solution with Redis to use Redis as a
 
 The current solution connect to a single Redis service, however we can not update that system because it'll take down systems that are dependent on that system. Yes, this is very bad practice, and this is why we are now addressing it.
 
-The solution moving forward is to create a cluster of Redis servers using [Redis Sentinel](https://redis.io/topics/sentinel?ref=blog.christophervachon.com) (that setup is outside the scope of this post). We then need to update our systems to use sentinel as a client instead of connecting directly to Redis.
+The solution moving forward is to create a cluster of Redis servers using [Redis Sentinel](https://redis.io/topics/sentinel) (that setup is outside the scope of this post). We then need to update our systems to use sentinel as a client instead of connecting directly to Redis.
 
-To do this, we needed to change from using Redis module to create a client to using the [redis-sentinel](https://www.npmjs.com/package/redis-sentinel?ref=blog.christophervachon.com) module. Because sentinel returns a Redis Client as if I was manually creating one from the redis module, the update was simply to swap out Redis clients. We went from this
+To do this, we needed to change from using Redis module to create a client to using the [redis-sentinel](https://www.npmjs.com/package/redis-sentinel) module. Because sentinel returns a Redis Client as if I was manually creating one from the redis module, the update was simply to swap out Redis clients. We went from this
 
 ```
 // app.js

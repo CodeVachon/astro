@@ -2,6 +2,7 @@
 import Layout from "~layouts/Layout.astro";
 import { getCollection, getEntry } from "astro:content";
 import MarkdownContent from "~components/MarkdownContent.astro";
+import { GithubIcon } from "~components/Icons";
 
 export async function getStaticPaths() {
     const allPages = await getCollection("page", ({ data }) => {
@@ -32,4 +33,16 @@ const { Content } = await entry.render();
     <MarkdownContent>
         <Content />
     </MarkdownContent>
+    <footer class="flex flex-col gap-4 border-t pt-4">
+        <div>
+            <a
+                href={`https://github.com/CodeVachon/astro/blob/main/src/content/page/${page}.md`}
+                target="_blank"
+                class="inline-flex items-center gap-2"
+            >
+                <GithubIcon className="size-4" />
+                <span>View on GitHub</span>
+            </a>
+        </div>
+    </footer>
 </Layout>

@@ -1,12 +1,15 @@
 // 1. Import utilities from `astro:content`
 import { z, defineCollection, reference } from "astro:content";
 
-const imageConfig = z.string().or(
-    z.object({
-        src: z.string(),
-        alt: z.string()
-    })
-);
+const imageConfig = z
+    .string()
+    .or(
+        z.object({
+            src: z.string(),
+            alt: z.string()
+        })
+    )
+    .optional();
 
 // 2. Define your collection(s)
 const blogCollection = defineCollection({
@@ -37,12 +40,13 @@ const tagCollection = defineCollection({
 
 const pageContentCollection = defineCollection({
     type: "content",
-    schema:({ image }) => z.object({
-        draft: z.boolean().optional().default(false),
-        name: z.string(),
-        description: z.string().optional(),
-        image: image().optional(),
-    })
+    schema: ({ image }) =>
+        z.object({
+            draft: z.boolean().optional().default(false),
+            name: z.string(),
+            description: z.string().optional(),
+            image: image().optional()
+        })
 });
 
 // 3. Export a single `collections` object to register your collection(s)

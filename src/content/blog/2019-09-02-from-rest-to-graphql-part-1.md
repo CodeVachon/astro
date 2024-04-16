@@ -9,9 +9,9 @@ draft: false
 tags: ["devops", "rest", "graphql"]
 ---
 
-I have been researching and playing with [GraphQL](https://graphql.org/?ref=blog.christophervachon.com) for about the last 6 months to evaluate the potential implementation into our enterprise platforms. Because I am receiving multiple requests to customize the current RESTful APIs to make them more flexible and dynamic, I started looking into other solutions and quickly found GraphQL to be a solid choice.
+I have been researching and playing with [GraphQL](https://graphql.org/) for about the last 6 months to evaluate the potential implementation into our enterprise platforms. Because I am receiving multiple requests to customize the current RESTful APIs to make them more flexible and dynamic, I started looking into other solutions and quickly found GraphQL to be a solid choice.
 
-To gauge the feasibility of GraphQL for our applications, I quickly developed a quick analog of one of my systems to see how quickly I could implement the platform. To this end, I created a Book Store application with 9 books and their associated authors, tags, genres, and images. Along with the basic application I created a standard RESTful API to feed a react application so that I could get a bench mark of the overall performance and workability (you can find that application on my Github: [github.com/CodeVachon/graphql-demo](https://github.com/CodeVachon/graphql-demo?ref=blog.christophervachon.com)).
+To gauge the feasibility of GraphQL for our applications, I quickly developed a quick analog of one of my systems to see how quickly I could implement the platform. To this end, I created a Book Store application with 9 books and their associated authors, tags, genres, and images. Along with the basic application I created a standard RESTful API to feed a react application so that I could get a bench mark of the overall performance and workability (you can find that application on my Github: [github.com/CodeVachon/graphql-demo](https://github.com/CodeVachon/graphql-demo)).
 
 <figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://blog.christophervachon.com/content/images/2019/09/bookstore.png" class="kg-image" alt="" loading="lazy"><figcaption>Screen Shot of the Book Store</figcaption></figure>
 
@@ -131,7 +131,7 @@ tags: () =&gt; tagsService.getList()
 
 These methods could just as easily make asynchronous requests directly to database or to a third party api. What's important is that each resolver returns all of the data needed to fulfill the return type from the schema. In that file I defined that `book` returns a `Book` type. this means that my `book` resolver must return all of the columns as defined in the `Book` type in the schema file.
 
-This leads to a problem for the model. The `getItem()` function for a book does not return the information needed to populate tags. There are severals ways I can handle this problem, but I have found the most reusable way has been to use a [JavaScript Class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes?ref=blog.christophervachon.com) to define the data to GraphQL. By using classes, I can define the model once and use it in other classes (books linked to tags, and tags linked to books). To make this work, I add two new files to the project.
+This leads to a problem for the model. The `getItem()` function for a book does not return the information needed to populate tags. There are severals ways I can handle this problem, but I have found the most reusable way has been to use a [JavaScript Class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) to define the data to GraphQL. By using classes, I can define the model once and use it in other classes (books linked to tags, and tags linked to books). To make this work, I add two new files to the project.
 
 <figure class="kg-card kg-code-card"><pre><code class="language-javascript">const booksService = require("./../../services/books");
 
@@ -253,7 +253,7 @@ After refactoring the React Application on the front end, I achieved the followi
 1.  The index list view went from 31 GET Requests to 1 POST Request. Having to deal with a single request failure requires less code which also reduced the front-end application payload as well.
 2.  The total payload from the index list view was also reduced from 34kb to 13kb due to fewer request headers and because I can now request only the columns I require for the view.
 
-For anyone interested in exploring this use-case, I have provided the source code for this project on my Github at [github.com/CodeVachon/graphql-demo](https://github.com/liaodrake/graphql-demo?ref=blog.christophervachon.com). Check back later for more information as I continue this series on GraphQL with Mutations and Scalars.
+For anyone interested in exploring this use-case, I have provided the source code for this project on my Github at [github.com/CodeVachon/graphql-demo](https://github.com/liaodrake/graphql-demo). Check back later for more information as I continue this series on GraphQL with Mutations and Scalars.
 
 ---
 
@@ -261,12 +261,12 @@ For anyone interested in exploring this use-case, I have provided the source cod
 
 GraphQL
 
-[graphql.org](https://graphql.org/?ref=blog.christophervachon.com)
+[graphql.org](https://graphql.org/)
 
 Getting Started with GraphQL & Node.Js
 
-[graphql.org/graphql-js](https://graphql.org/graphql-js/?ref=blog.christophervachon.com)
+[graphql.org/graphql-js](https://graphql.org/graphql-js/)
 
 GraphQL Cheet Sheet
 
-[devhints.io/graphql](https://devhints.io/graphql?ref=blog.christophervachon.com)
+[devhints.io/graphql](https://devhints.io/graphql)

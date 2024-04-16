@@ -33,6 +33,6 @@ Most of the time, you'll want to disable Safe Mode so that you can run any query
 -   Click `OK` to save your changes
 -   Close and Reopen any open connections in MySQL Workbench
 
-![A starry night sky.](../../assets/mysql_workbench_settings.png)
+![A starry night sky.](../../assets/blog/mysql_workbench_settings.png)
 
 Once you've disabled Safe Mode, you should be able to run any query you like without any issues. If you ever need to re-enable Safe Mode, you can follow the same steps and check the `Safe Updates` option again.

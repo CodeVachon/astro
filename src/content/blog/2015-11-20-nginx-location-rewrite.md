@@ -9,7 +9,7 @@ draft: false
 tags: ["devops"]
 ---
 
-with my change over to the [Ghost](http://ghost.org/?ref=blog.christophervachon.com) Blogging platform from my own custom engine, I had one major problem.
+with my change over to the [Ghost](http://ghost.org/) Blogging platform from my own custom engine, I had one major problem.
 
 The URL's from my old blog did not directly match the URL's of the new blog
 
@@ -21,7 +21,7 @@ Fortunately, the remainder of the post `URI` remains the same between the old pl
 
 ## NGINX
 
-Because I am using [nginx](https://www.nginx.com/?ref=blog.christophervachon.com) to proxy the Ghost server, I can use its configuration file to handle this URL change for me.
+Because I am using [nginx](https://www.nginx.com/) to proxy the Ghost server, I can use its configuration file to handle this URL change for me.
 
 What I need to do is to permanently redirect this URI `/blog/2015/08/14/when-is-a-good-time-to-use-a-promise` to this URI `/2015/08/14/when-is-a-good-time-to-use-a-promise`.  As you can see, the only difference between the two is the word `blog` at that start. We can use this simple regular expression (regex) `^/blog/(.*)$` to change the first string to the second.
 

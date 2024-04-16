@@ -30,3 +30,24 @@
         }
     }
 }
+
+@layer components {
+    @media (min-height: 1500px) {
+        #sidebar {
+            @apply items-start;
+        }
+
+        #sidebar-content {
+            @apply mt-[32rem];
+        }
+    }
+
+    @media (max-height: 700px) and (min-width: 1024px) {
+        #sidebar-content header {
+            @apply relative;
+        }
+        #sidebar-content #profile-image {
+            @apply absolute -left-36 top-4 size-32;
+        }
+    }
+}

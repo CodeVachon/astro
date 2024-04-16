@@ -18,26 +18,26 @@ I am giving a talk at NorthOT this Thursday in Barrie Ontario about Migrating fr
 
 GraphQL
 
-[graphql.org](https://graphql.org/?ref=blog.christophervachon.com)
+[graphql.org](https://graphql.org/)
 
 Getting Started with GraphQL & Node.Js
 
-[graphql.org/graphql-js](https://graphql.org/graphql-js/?ref=blog.christophervachon.com)
+[graphql.org/graphql-js](https://graphql.org/graphql-js/)
 
 GraphQL Cheet Sheet
 
-[devhints.io/graphql](https://devhints.io/graphql?ref=blog.christophervachon.com)
+[devhints.io/graphql](https://devhints.io/graphql)
 
 Apollo
 
-[apollographql.com](https://www.apollographql.com/?ref=blog.christophervachon.com)
+[apollographql.com](https://www.apollographql.com/)
 
 Prisma
 
-[www.prisma.io](https://www.prisma.io/?ref=blog.christophervachon.com)
+[www.prisma.io](https://www.prisma.io/)
 
 <figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><img src="https://blog.christophervachon.com/content/images/2019/08/Screen-Shot-2019-08-28-at-20.36.39.png" class="kg-image" alt="" loading="lazy"><figcaption>Opening Slide of my presentation</figcaption></figure>
 
-My Presentation with Notes are posted here: [reveal.christophervachon.com](https://reveal.christophervachon.com/decks/2019/from-rest-to-graphql.html?ref=blog.christophervachon.com). For a brief summary of the presentation, checkout this article.
+My Presentation with Notes are posted here: [reveal.christophervachon.com](https://reveal.christophervachon.com/decks/2019/from-rest-to-graphql.html). For a brief summary of the presentation, checkout this article.
 
 <figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://blog.christophervachon.com/from-rest-to-graphql-part-1/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">From REST to GraphQL - How To Build a GraphQL Server</div><div class="kg-bookmark-description">Exploring the Development of Refactoring a RESTful api to GraphQL</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://blog.christophervachon.com/favicon.ico"><span class="kg-bookmark-author">Blog of Christopher Vachon</span><span class="kg-bookmark-publisher">Christopher Vachon</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://blog.christophervachon.com/content/images/2019/08/Screen-Shot-2019-08-22-at-15.25.43-1.png"></div></a></figure>

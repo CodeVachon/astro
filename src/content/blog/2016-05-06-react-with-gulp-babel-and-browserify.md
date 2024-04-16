@@ -9,7 +9,7 @@ draft: false
 tags: ["web-development", "react"]
 ---
 
-Recently I have started working with [React](https://facebook.github.io/react/?ref=blog.christophervachon.com) for a prototype for an upcoming project. I have found a large community out there, and have started using [Browserify](http://browserify.org/?ref=blog.christophervachon.com), [Babel](http://babeljs.io/?ref=blog.christophervachon.com), and [Gulp](http://gulpjs.com/?ref=blog.christophervachon.com) to streamline the process of transpiling the react code.
+Recently I have started working with [React](https://facebook.github.io/react/) for a prototype for an upcoming project. I have found a large community out there, and have started using [Browserify](http://browserify.org/), [Babel](http://babeljs.io/), and [Gulp](http://gulpjs.com/) to streamline the process of transpiling the react code.
 
 However I have found it slightly frustrating that with most of the workflows I have found, that my with poor working knowledge of react at this time, that browserify bundle method was crashing and kicking me out of `gulp watch` and `browser sync`.
 

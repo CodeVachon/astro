@@ -3,4 +3,4 @@ name: Events
 slug: events
 ---
 
-# Events
+Here are some of the events I have participated in.

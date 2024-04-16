@@ -9,7 +9,7 @@ draft: false
 tags: ["devops"]
 ---
 
-A big part of my current role is building and maintaining multiple online publications using similar or multiple port numbers. It's not uncommon for me to have 10 or 12 [VSCode](https://code.visualstudio.com/?ref=blog.christophervachon.com) editors open on across my desktops. As a result, from time to time, I need to simply kill one application's use of a port to start up another one. Rather than toggle through multiple windows, I opted to have a method to quickly shut down an application associated with a port number.
+A big part of my current role is building and maintaining multiple online publications using similar or multiple port numbers. It's not uncommon for me to have 10 or 12 [VSCode](https://code.visualstudio.com/) editors open on across my desktops. As a result, from time to time, I need to simply kill one application's use of a port to start up another one. Rather than toggle through multiple windows, I opted to have a method to quickly shut down an application associated with a port number.
 
 There is also a use case where a watch process (Gulp or Grunt) crashes leaving the required port open as part of a background thread. (I have encountered this with `node-sass` on more than one occasion).
 

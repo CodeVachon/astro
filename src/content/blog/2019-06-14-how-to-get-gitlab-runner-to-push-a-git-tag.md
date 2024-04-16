@@ -9,7 +9,7 @@ draft: false
 tags: ["devops"]
 ---
 
-A significant part of my development methodology is to use `Tags` for my deployments. Apart from the obvious advantages of marking specific commits as specific versions of your application, it allow allows for the ability to quickly rollback to a previous version of your application. [Gitlab](https://about.gitlab.com/?ref=blog.christophervachon.com) CI, [CircleCI](https://circleci.com/?ref=blog.christophervachon.com), and [TravisCI](https://travis-ci.org/?ref=blog.christophervachon.com) all the ability to be triggered off the creation and push of tag to the repository.
+A significant part of my development methodology is to use `Tags` for my deployments. Apart from the obvious advantages of marking specific commits as specific versions of your application, it allow allows for the ability to quickly rollback to a previous version of your application. [Gitlab](https://about.gitlab.com/) CI, [CircleCI](https://circleci.com/), and [TravisCI](https://travis-ci.org/) all the ability to be triggered off the creation and push of tag to the repository.
 
 The trick is the automation of the creation and push of your tags. When using GitLab CI, the runner itself is given read-only access to your repository. You can easily use the runner to create a git tag, but it does not have the required access to push that tag back into the origin remote. I have found 2 ways to get around this problem.
 
@@ -31,7 +31,7 @@ Another solution is to setup a deployment key which would allow access to your r
 
 ## In Either Case...
 
-Which ever of these potential solutions works for you. You'll need to start by automating the tag creation process. In my case, I usually develop in [Node.js](https://nodejs.org/en/?ref=blog.christophervachon.com) which keeps version number in its `package.json` file. Because I am node based, and require node to build my assets, I already have node installed on my runner server. I store the value into a variable. We can then use that variable to set a tag to that version.
+Which ever of these potential solutions works for you. You'll need to start by automating the tag creation process. In my case, I usually develop in [Node.js](https://nodejs.org/en/) which keeps version number in its `package.json` file. Because I am node based, and require node to build my assets, I already have node installed on my runner server. I store the value into a variable. We can then use that variable to set a tag to that version.
 
 ```
 VERSION=$(node -e "var pkg = require('./package.json'); console.log(pkg.version.toLowerCase());")

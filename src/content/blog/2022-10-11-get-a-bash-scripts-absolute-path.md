@@ -13,7 +13,7 @@ While migrating an application from one CD process to another, I have been updat
 
 I wanted to make the new scripts are generic and reusable as possible so that they were not dependent on a path structure for linking to relatively linked files and paths. eg: A Docker volume mapping does not like relative paths, and because the script can be called from anywhere on the server, the `pwd` command is not a good solution. The `realpath` command is also not consistently available across all platforms.
 
-I eventually came across this [stackoverflow](https://stackoverflow.com/questions/4774054/reliable-way-for-a-bash-script-to-get-the-full-path-to-itself?ref=blog.christophervachon.com) post, which gave me the solution I was looking for
+I eventually came across this [stackoverflow](https://stackoverflow.com/questions/4774054/reliable-way-for-a-bash-script-to-get-the-full-path-to-itself) post, which gave me the solution I was looking for
 
 ```shell
 #!/bin/bash
