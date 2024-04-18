@@ -3,6 +3,28 @@
 @tailwind utilities;
 
 @layer base {
+    /* Register your custom font family and tell the browser where to find it. */
+    @font-face {
+        font-family: "PTSans";
+        src: url("/fonts/PTSans.ttf") format("ttf");
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    html {
+        font-family: "PTSans", system-ui, sans-serif;
+        font-size: 12px;
+
+        @media screen(md) {
+            font-size: 14px;
+        }
+
+        @media screen(lg) {
+            font-size: 16px;
+        }
+    }
+
     :root {
         --color-primary: 219 39 119;
         /* ... */

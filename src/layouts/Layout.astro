@@ -17,11 +17,13 @@ interface Props {
         format: "png" | "jpg" | "jpeg" | "tiff" | "webp" | "gif" | "svg" | "avif";
     };
     className?: string;
+    publishDate?: string;
 }
 
-const navItems: Array<{ name: string; href: string }> = [
-    { name: "Home", href: "/" },
-    { name: "Blog", href: "/blog" }
+const navItems: Array<{ name: string; href: string; className?: string }> = [
+    { name: "Home", href: "/", className: "hidden lg:block" },
+    { name: "Blog", href: "/blog" },
+    { name: "Uses", href: "/uses" }
 ];
 
 const socialMediaItems: Array<{ name: string; href: string; icon: IconName }> = [
@@ -42,7 +44,17 @@ const socialMediaItems: Array<{ name: string; href: string; icon: IconName }> = 
     }
 ];
 
-const { title, description, sideWidth = "full", headerImage, className = "" } = Astro.props;
+const {
+    title,
+    description,
+    sideWidth = "full",
+    headerImage,
+    className = "",
+    publishDate
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const cardImage = headerImage ?? myImage;
 
 import "./../styles/global.css";
 ---
@@ -53,8 +65,45 @@ import "./../styles/global.css";
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href={`${Astro.site}me-300-1.png`} type="image/png" />
         <title>{title}</title>
+        <meta name="generator" content={Astro.generator} />
         <meta name="description" content={description} />
         <meta name="referrer" content="no-referrer-when-downgrade" />
+        <link rel="canonical" href={canonical} />
+
+        <meta property="og:site_name" content="All About Christopher Vachon" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonical} />
+        {publishDate && <meta property="article:published_time" content={publishDate} />}
+        {publishDate && <meta property="article:modified_time" content={publishDate} />}
+        <meta property="article:publisher" content="https://github.com/CodeVachon" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:url" content={canonical} />
+
+        <meta name="twitter:label1" content="Written by" />
+        <meta name="twitter:data1" content="Christopher Vachon" />
+        <meta name="twitter:site" content="@CodeVachon" />
+        {
+            cardImage && (
+                <>
+                    <meta name="twitter:image" content={cardImage.src} />
+                    <meta
+                        property="og:image"
+                        content={
+                            new RegExp("blog").test(canonical.toString())
+                                ? canonical + "/og.png"
+                                : cardImage.src
+                        }
+                    />
+                    <meta property="og:image:width" content={"1200px"} />
+                    <meta property="og:image:height" content={"600px"} />
+                </>
+            )
+        }
+
         <link
             rel="alternate"
             type="application/rss+xml"
@@ -79,27 +128,29 @@ import "./../styles/global.css";
                 id="sidebar-content"
                 class="flex w-full items-center justify-between gap-4 p-4 lg:w-auto lg:flex-col lg:items-start lg:justify-center"
             >
-                <header
-                    class="flex w-1/3 min-w-[115px] items-center gap-4 lg:w-full lg:flex-col lg:items-start"
+                <a
+                    href="/"
+                    class="flex w-1/3 min-w-[115px] items-center gap-4 decoration-transparent lg:w-full lg:flex-col lg:items-start"
                 >
-                    <Picture
-                        id="profile-image"
-                        class="size-6 min-w-[24px] flex-shrink-0 rounded-full lg:size-64 lg:rounded-2xl"
-                        src={myImage}
-                        densities={[1.5, 2]}
-                        formats={["webp", "jpg"]}
-                        fallbackFormat="jpg"
-                        alt="Christopher Vachon"
-                        loading="eager"
-                    />
-
-                    <h1 class="text-lg font-bold lg:text-2xl">Christopher Vachon</h1>
-                </header>
+                    <header class="flex items-center gap-4 lg:flex-col lg:items-start">
+                        <Picture
+                            id="profile-image"
+                            class="size-6 min-w-[24px] flex-shrink-0 rounded-full lg:size-64 lg:rounded-2xl"
+                            src={myImage}
+                            densities={[1.5, 2]}
+                            formats={["webp", "jpg"]}
+                            fallbackFormat="jpg"
+                            alt="Christopher Vachon"
+                            loading="eager"
+                        />
+                        <h1 class="text-lg font-bold lg:text-2xl">Christopher Vachon</h1>
+                    </header>
+                </a>
                 <nav class="w-1/3 lg:w-full">
                     <ul class="flex justify-center gap-6 lg:flex-col lg:gap-2">
                         {
                             navItems.map((item) => (
-                                <li>
+                                <li class={item.className ?? ""}>
                                     <a
                                         href={item.href}
                                         class="text-white decoration-transparent transition duration-200 ease-in-out hover:text-white hover:decoration-primary"
@@ -138,7 +189,7 @@ import "./../styles/global.css";
                         <figure class="-mx-6 -mt-6 mb-6 max-w-[1200px] overflow-hidden lg:-mt-24">
                             <Picture
                                 inferSize={true}
-                                src={headerImage}
+                                src={headerImage as any}
                                 class="w-full object-cover md:aspect-video"
                                 alt={title}
                                 densities={[1.5, 2]}
@@ -157,5 +208,16 @@ import "./../styles/global.css";
                 </p>
             </footer>
         </section>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-RREP1WR95X"></script>
+        <script is:inline>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+
+            gtag("config", "G-RREP1WR95X");
+        </script>
     </body>
 </html>

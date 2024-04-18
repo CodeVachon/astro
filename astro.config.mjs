@@ -5,13 +5,17 @@ import remarkToc from "remark-toc";
 import a11yEmoji from "@fec/remark-a11y-emoji";
 import { remarkReadingTime } from "./src/lib/readingTime";
 import sitemap from "@astrojs/sitemap";
+import metaTags from "astro-meta-tags";
 
 // https://astro.build/config
 export default defineConfig({
     server: {
         port: 4006
     },
-    site: "https://astro.christophervachon.com",
+    site:
+        process.env.NODE_ENV === "development"
+            ? "http://localhost:4006"
+            : "https://astro.christophervachon.com",
     prefetch: true,
     integrations: [
         sitemap(),
@@ -19,7 +23,8 @@ export default defineConfig({
         tailwind({
             nesting: true,
             applyBaseStyles: false
-        })
+        }),
+        metaTags()
     ],
     markdown: {
         // Applied to .md and .mdx files
