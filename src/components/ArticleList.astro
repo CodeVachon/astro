@@ -20,7 +20,7 @@ const { articles = [], grid = false } = Astro.props;
                     <figure class="w-full flex-shrink-0 overflow-hidden md:mr-6 md:w-64 lg:w-full">
                         <Picture
                             inferSize={true}
-                            src={post.data.image}
+                            src={post.data.image as any}
                             class="rounded-md object-cover md:aspect-video lg:aspect-auto lg:rounded-none"
                             alt={post.data.title}
                             densities={[1.5, 2]}
