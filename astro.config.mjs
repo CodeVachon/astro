@@ -15,7 +15,7 @@ export default defineConfig({
     site:
         process.env.NODE_ENV === "development"
             ? "http://localhost:4006"
-            : "https://astro.christophervachon.com",
+            : "https://christophervachon.com",
     prefetch: true,
     integrations: [
         sitemap(),
