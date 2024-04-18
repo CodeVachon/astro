@@ -6,11 +6,13 @@ on:
 
 jobs:
   Check:
-    name: build ${{ github.ref_name }}
+    name: Check Content Links
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v1
+      - run: bun install
+      - run: bun linkCheck.ts
 
   Build:
     name: build ${{ github.ref_name }}

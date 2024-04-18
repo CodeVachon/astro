@@ -1,12 +1,11 @@
 ---
 import Layout from "~layouts/Layout.astro";
 import H1 from "~components/H1.astro";
+
+import missingPeices from "../assets/missing-peices.png";
 ---
 
-<Layout
-    title="404 - Not Found"
-    headerImage={"https://christophervachon.s3.amazonaws.com/astro/missing-peices.png"}
->
+<Layout title="404 - Not Found" headerImage={missingPeices}>
     <div class="flex flex-grow items-center justify-center">
         <section class="text-center">
             <H1>404 - Not Found</H1>
