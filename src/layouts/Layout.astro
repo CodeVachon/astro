@@ -55,6 +55,10 @@ const {
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const cardImage = headerImage ?? myImage;
+const titleTemplate = [title, "Christopher Vachon"]
+    .filter((v) => String(v).trim().length > 0)
+    .join(" | ");
+const descriptionTemplate = description ?? "All About Christopher Vachon";
 
 import "./../styles/global.css";
 ---
@@ -64,23 +68,23 @@ import "./../styles/global.css";
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href={`${Astro.site}me-300-1.png`} type="image/png" />
-        <title>{title}</title>
+        <title>{titleTemplate}</title>
         <meta name="generator" content={Astro.generator} />
-        <meta name="description" content={description} />
+        <meta name="description" content={descriptionTemplate} />
         <meta name="referrer" content="no-referrer-when-downgrade" />
         <link rel="canonical" href={canonical} />
 
         <meta property="og:site_name" content="All About Christopher Vachon" />
         <meta property="og:type" content="article" />
         <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
+        <meta property="og:description" content={descriptionTemplate} />
         <meta property="og:url" content={canonical} />
         {publishDate && <meta property="article:published_time" content={publishDate} />}
         {publishDate && <meta property="article:modified_time" content={publishDate} />}
         <meta property="article:publisher" content="https://github.com/CodeVachon" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
+        <meta name="twitter:description" content={descriptionTemplate} />
         <meta name="twitter:url" content={canonical} />
 
         <meta name="twitter:label1" content="Written by" />
@@ -94,7 +98,7 @@ import "./../styles/global.css";
                         property="og:image"
                         content={
                             new RegExp("blog").test(canonical.toString())
-                                ? canonical + "/og.png"
+                                ? canonical + "og.png"
                                 : cardImage.src
                         }
                     />
@@ -191,7 +195,7 @@ import "./../styles/global.css";
                                 inferSize={true}
                                 src={headerImage as any}
                                 class="w-full object-cover md:aspect-video"
-                                alt={title}
+                                alt={titleTemplate}
                                 densities={[1.5, 2]}
                                 formats={["webp", "jpg"]}
                                 fallbackFormat="jpg"
