@@ -98,7 +98,7 @@ import "./../styles/global.css";
                         property="og:image"
                         content={
                             new RegExp("blog").test(canonical.toString())
-                                ? canonical + "og.png"
+                                ? String(canonical).replace(/\/$/, "") + "/og.png"
                                 : cardImage.src
                         }
                     />
@@ -141,7 +141,7 @@ import "./../styles/global.css";
                             id="profile-image"
                             class="size-6 min-w-[24px] flex-shrink-0 rounded-full lg:size-64 lg:rounded-2xl"
                             src={myImage}
-                            densities={[1.5, 2]}
+                            widths={[24, 100, 300, 450]}
                             formats={["webp", "jpg"]}
                             fallbackFormat="jpg"
                             alt="Christopher Vachon"
@@ -196,7 +196,7 @@ import "./../styles/global.css";
                                 src={headerImage as any}
                                 class="w-full object-cover md:aspect-video"
                                 alt={titleTemplate}
-                                densities={[1.5, 2]}
+                                widths={[320, 640, 1280, 1920]}
                                 formats={["webp", "jpg"]}
                                 fallbackFormat="jpg"
                                 loading="eager"

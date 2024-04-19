@@ -23,9 +23,9 @@ const { articles = [], grid = false } = Astro.props;
                             src={post.data.image as any}
                             class="rounded-md object-cover md:aspect-video lg:aspect-auto lg:rounded-none"
                             alt={post.data.title}
-                            densities={[1.5, 2]}
                             formats={["webp", "jpeg"]}
                             fallbackFormat="jpeg"
+                            widths={[320, 640, 1280, 1920]}
                         />
                     </figure>
                 )}
