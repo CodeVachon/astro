@@ -1,11 +1,13 @@
 import Bun from "bun";
 
+const isTTY = process.stdout.isTTY ?? false;
+
 class Log {
     sleepCount = 25;
     lineLength = 0;
 
     async clearLine() {
-        if (process.stdout.isTTY) {
+        if (isTTY) {
             const sleepDuration = this.sleepCount * Math.ceil(this.lineLength / 1);
             // process.stdout.clearLine(0);
             // await sleep(sleepDuration);
@@ -16,7 +18,7 @@ class Log {
 
     async msg(msg: string) {
         this.clearLine();
-        if (process.stdout.isTTY) {
+        if (isTTY) {
             process.stdout.write(msg);
         } else {
             console.log(msg);
@@ -27,7 +29,7 @@ class Log {
     }
 
     async next() {
-        if (process.stdout.isTTY) {
+        if (isTTY) {
             process.stdout.write("\n");
             await sleep(this.sleepCount);
         }
@@ -44,10 +46,13 @@ const glob = new Bun.Glob("**/*.md");
 const contentPath = "./src/content";
 for await (const filePath of glob.scan(contentPath)) {
     const fullFilePath = [contentPath, filePath].join("/");
+    if (!isTTY) {
+        console.log();
+    }
     console.log(`📔 Checking ${fullFilePath}`);
     const record = Bun.file(fullFilePath);
 
-    await log.msg(`🔍 Reading File`);
+    await log.msg(`📖 Reading File`);
     const contents = await record.text();
     await log.msg(`🔍 Looking for Links`);
     const links = Array.from(
@@ -57,12 +62,14 @@ for await (const filePath of glob.scan(contentPath)) {
     if (links.length > 0) {
         for (const link of links) {
             const url = new URL(link);
-            await log.msg(`🔄 ${url.origin}`);
-
+            await log.msg(`🔄 ${isTTY ? url.origin : link}`);
+            if (!isTTY) {
+                console.log();
+            }
             if (link) {
                 try {
                     await fetch(link, { signal: AbortSignal.timeout(5000) });
-                    await log.msg(`✅ ${url.origin}`);
+                    await log.msg(`✅ ${isTTY ? url.origin : link}`);
                 } catch (e) {
                     if (!brokenLinks[fullFilePath]) {
                         brokenLinks[fullFilePath] = [];
@@ -75,7 +82,7 @@ for await (const filePath of glob.scan(contentPath)) {
                         url: link,
                         error: e instanceof Error ? e : new Error(String(e))
                     });
-                    await log.msg(`❌ ${url.origin}`);
+                    await log.msg(`❌ ${isTTY ? url.origin : link}`);
                 }
             }
 
