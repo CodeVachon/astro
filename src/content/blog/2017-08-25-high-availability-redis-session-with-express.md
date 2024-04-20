@@ -17,7 +17,7 @@ The solution moving forward is to create a cluster of Redis servers using [Redis
 
 To do this, we needed to change from using Redis module to create a client to using the [redis-sentinel](https://www.npmjs.com/package/redis-sentinel) module. Because sentinel returns a Redis Client as if I was manually creating one from the redis module, the update was simply to swap out Redis clients. We went from this
 
-```
+```js
 // app.js
 const express = require("express"),
     app = express(),
@@ -44,7 +44,7 @@ app.use(session({
 
 to this
 
-```
+```js
 // app.js
 const express = require("express"),
     app = express(),
