@@ -33,6 +33,7 @@ jobs:
             /dist/**/*.webp
           key: ${{ runner.os }}-assets
 
+      - run: echo "GHCR_TOKEN=${{ secrets.GHCR_TOKEN }}" >> .env
       - run: bun install
       - run: bun run build
 
