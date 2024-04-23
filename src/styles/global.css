@@ -63,7 +63,11 @@
             @apply mt-[32rem];
         }
     }
-
+    @media (min-height: 1500px) and (max-width: 1024px) {
+        #sidebar-content {
+            @apply mt-0;
+        }
+    }
     @media (max-height: 700px) and (min-width: 1024px) {
         #sidebar-content header {
             @apply relative;

@@ -19,7 +19,7 @@ Here is how I set up TypeScript paths in a ViTest project.
         "baseUrl": ".",
         "paths": {
             "~lib/*": ["src/lib/*"],
-            "~assets/*": ["src/assets/*"],c d
+            "~assets/*": ["src/assets/*"],
             "~ui/*": ["src/ui/*"]
         },
         "types": ["vitest/globals"]
