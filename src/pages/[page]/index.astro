@@ -24,12 +24,7 @@ const entry = await getEntry("page", page);
 const { Content } = await entry.render();
 ---
 
-<Layout
-    title={entry.data.name}
-    description={entry.data.description}
-    sideWidth="half"
-    headerImage={entry.data.image}
->
+<Layout title={entry.data.name} description={entry.data.description} headerImage={entry.data.image}>
     <MarkdownContent>
         <Content />
     </MarkdownContent>

@@ -8,23 +8,23 @@ const highlightColor = "rgba(256, 89, 248, 0.4)";
 <div
     class:list={[
         className ?? "",
-        "absolute inset-0 -z-10 overflow-hidden bg-gray-950 lg:right-0 lg:min-w-[12rem]"
+        "absolute inset-0 -z-10 overflow-hidden bg-gray-950  lg:right-0 lg:min-w-[12rem]"
     ]}
 >
     <svg
-        class="absolute -bottom-48 left-[-40%] h-[80rem] w-[180%] lg:-right-40 lg:bottom-auto lg:left-auto lg:top-[-40%] lg:h-[180%] lg:w-[80rem]"
+        class="absolute -bottom-48 left-[-40%] h-[80rem] w-[180%] text-primary lg:-right-40 lg:bottom-auto lg:left-auto lg:top-[-40%] lg:h-[180%] lg:w-[80rem]"
         aria-hidden="true"
     >
         <defs>
             <radialGradient id={`glow-desktop`} cx="100%">
-                <stop offset="0%" stop-color={highlightColor}></stop>
-                <stop offset="53.95%" stop-color="rgba(0, 71, 255, 0.09)"></stop>
-                <stop offset="100%" stop-color="rgba(10, 14, 23, 0)"></stop>
+                <stop offset="0%" stop-color={"currentcolor"} stop-opacity="0.4"></stop>
+                <stop offset="53.95%" stop-color={"currentcolor"} stop-opacity="0.09"></stop>
+                <stop offset="100%" stop-color={"currentcolor"} stop-opacity="0"></stop>
             </radialGradient>
             <radialGradient id={`glow-mobile`} cy="100%">
-                <stop offset="0%" stop-color={highlightColor}></stop>
-                <stop offset="53.95%" stop-color="rgba(0, 71, 255, 0.09)"></stop>
-                <stop offset="100%" stop-color="rgba(10, 14, 23, 0)"></stop>
+                <stop offset="0%" stop-color={"currentcolor"} fill-opacity="0.4"></stop>
+                <stop offset="53.95%" stop-color={"currentcolor"} stop-opacity="0.09"></stop>
+                <stop offset="100%" stop-color={"currentcolor"} stop-opacity="0"></stop>
             </radialGradient>
         </defs>
         <rect width="100%" height="100%" fill={`url(#glow-desktop)`} class="hidden lg:block"></rect>

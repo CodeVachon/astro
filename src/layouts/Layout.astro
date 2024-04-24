@@ -5,6 +5,8 @@ import type { IconName } from "~components/Icons";
 import myImage from "../assets/me.png";
 import Glow from "~components/Glow.astro";
 import { ViewTransitions } from "astro:transitions";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import { fade } from "astro:transitions";
 
 interface Props {
     title: string;
@@ -187,7 +189,10 @@ import "./../styles/global.css";
                 </nav>
             </div>
         </section>
-        <section class="z-[90] flex h-full flex-grow flex-col lg:overflow-auto">
+        <section
+            class="z-[90] flex h-full flex-grow flex-col lg:overflow-auto"
+            transition:animate={fade({ duration: "0.8s" })}
+        >
             <main class:list={["flex-grow p-6 lg:py-24", className]}>
                 {
                     headerImage && (
@@ -207,7 +212,10 @@ import "./../styles/global.css";
                 }
                 <slot />
             </main>
-            <footer class="px-6 py-4">
+            <footer class="flex max-w-[1200px] items-center gap-6 px-6 py-4">
+                <div>
+                    <ThemeToggle />
+                </div>
                 <p class="text-center text-xs text-gray-500 dark:text-gray-400">
                     &copy; {new Date().getFullYear()} Christopher Vachon. All rights reserved.
                 </p>
