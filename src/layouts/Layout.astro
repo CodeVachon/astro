@@ -100,7 +100,7 @@ import "./../styles/global.css";
                     <meta
                         property="og:image"
                         content={
-                            new RegExp("blog").test(canonical.toString())
+                            new RegExp("blog/[a-z0-9]+").test(canonical.toString())
                                 ? String(canonical).replace(/\/$/, "") + "/og.png"
                                 : cardImage.src
                         }
@@ -142,7 +142,7 @@ import "./../styles/global.css";
                     <header class="flex items-center gap-4 lg:flex-col lg:items-start">
                         <Picture
                             id="profile-image"
-                            class="size-6 min-w-[24px] flex-shrink-0 rounded-full lg:size-64 lg:rounded-2xl"
+                            class="size-6 min-h-[24px] min-w-[24px] flex-shrink-0 flex-grow-0 rounded-full lg:size-64 lg:rounded-2xl"
                             src={myImage}
                             widths={[24, 100, 300, 450]}
                             formats={["webp", "jpg"]}
@@ -193,7 +193,7 @@ import "./../styles/global.css";
             class="z-[90] flex h-full flex-grow flex-col lg:overflow-auto"
             transition:animate={fade({ duration: "0.8s" })}
         >
-            <main class:list={["flex-grow p-6 lg:py-24", className]}>
+            <main class:list={["flex-grow p-6 lg:py-24", className]} data-pagefind-body>
                 {
                     headerImage && (
                         <figure class="-mx-6 -mt-6 mb-6 max-w-[1200px] overflow-hidden lg:-mt-24">

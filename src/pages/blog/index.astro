@@ -11,9 +11,16 @@ import ArticleList from "~components/ArticleList.astro";
 const allBlogPosts = await getCollection("blog", ({ data }) => {
     return !data.draft;
 });
+
+import deafultImage from "./../../assets/default-1.png";
 ---
 
-<Layout title="Blog Posts" sideWidth="full" className="flex flex-col gap-12">
+<Layout
+    title="Blog Posts"
+    sideWidth="full"
+    className="flex flex-col gap-12"
+    headerImage={deafultImage}
+>
     <header>
         <H1>Recent Posts</H1>
         <p>

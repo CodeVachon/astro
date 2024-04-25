@@ -7,14 +7,16 @@ import { remarkReadingTime } from "./src/lib/readingTime";
 import sitemap from "@astrojs/sitemap";
 import metaTags from "astro-meta-tags";
 
+const runningPort = 4006;
+
 // https://astro.build/config
 export default defineConfig({
     server: {
-        port: 4006
+        port: runningPort
     },
     site:
         process.env.NODE_ENV === "development"
-            ? "http://localhost:4006"
+            ? `http://localhost:${runningPort}`
             : "https://christophervachon.com",
     prefetch: true,
     integrations: [
@@ -48,6 +50,10 @@ export default defineConfig({
             "blog.christophervachon.com",
             "christophervachon.s3.amazonaws.com"
         ],
-        remotePatterns: [{ protocol: "https" }]
+        remotePatterns: [
+            {
+                protocol: "https"
+            }
+        ]
     }
 });
