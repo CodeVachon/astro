@@ -9,6 +9,8 @@ tags:
 image: ../../assets/blog/max-prepared-statements.png
 featured: false
 draft: false
+related:
+    - 2024-04-24-mysql-prisma-and-views
 ---
 
 Over the course of a year, we have been fighting with MySQL and Prisma regarding an error referencing `max_prepared_stmt_count`. This error occurred when we pushed an update to our production application with a seemingly light sql query.
@@ -53,7 +55,7 @@ const records = prisma.user.findMany({
 
 This query would create 4 prepared statements, one for each of the included tables. So our solution was to reduce the number of included tables in the query. We did this by creating a view in the database that joined the tables and then querying the view instead of the tables. This effectively reduced the number of prepared statements created for this request from 4 to 1.
 
-However, Prisma does not support views natively, so we had to create a reusable method for selecting the dataset and supporting changes and migrations. I'll post more on that in a separate post.
+However, Prisma does not support views natively, so we had to create a reusable method for selecting the dataset and supporting changes and migrations. I'll post more on that in a separate post ([MySQL, Prisma, and Views](/blog/2024-04-24-mysql-prisma-and-views)).
 
 Once we had reduced the number of prepared statements being created, we were able to push the update to production without any issues. The application ran smoothly and we were able to run the application for another few months before we hit the limit again.
 
