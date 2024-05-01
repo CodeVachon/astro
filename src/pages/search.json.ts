@@ -20,7 +20,7 @@ export async function GET() {
                     return {
                         id: post.id,
                         title: post.data.title,
-                        slug: post.slug,
+                        slug: ["/blog", post.slug].join("/"),
                         description: post.data.description,
                         image: imageSrc.src,
                         text: post.body,

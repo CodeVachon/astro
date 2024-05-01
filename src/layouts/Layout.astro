@@ -64,6 +64,7 @@ const titleTemplate = [title, "Christopher Vachon"]
 const descriptionTemplate = description ?? "All About Christopher Vachon";
 
 import "./../styles/global.css";
+import { Search } from "~components/Search";
 ---
 
 <html lang="en" class="dark h-full antialiased" style="color-scheme: dark;">
@@ -153,6 +154,7 @@ import "./../styles/global.css";
                         <h1 class="text-lg font-bold lg:text-2xl">Christopher Vachon</h1>
                     </header>
                 </a>
+                <Search client:only />
                 <nav class="w-1/3 lg:w-full">
                     <ul class="flex justify-center gap-6 lg:flex-col lg:gap-2">
                         {
