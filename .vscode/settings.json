@@ -13,5 +13,5 @@
   "workbench.editor.customLabels.patterns": {
     "**/*.astro": "${dirname(0)}/${filename}.${extname}"
   },
-  "cSpell.words": ["astro", "astrojs"]
+  "cSpell.words": ["astro", "astrojs", "browserconfig"]
 }

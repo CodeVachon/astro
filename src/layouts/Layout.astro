@@ -1,5 +1,5 @@
 ---
-import { Picture } from "astro:assets";
+import { Picture, getImage } from "astro:assets";
 import { Icon } from "~components/Icons";
 import type { IconName } from "~components/Icons";
 import myImage from "../assets/me.png";
@@ -56,15 +56,16 @@ const {
     publishDate
 } = Astro.props;
 
+const siteTitle = "Christopher Vachon";
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const cardImage = headerImage ?? myImage;
-const titleTemplate = [title, "Christopher Vachon"]
-    .filter((v) => String(v).trim().length > 0)
-    .join(" | ");
+const titleTemplate = [title, siteTitle].filter((v) => String(v).trim().length > 0).join(" | ");
 const descriptionTemplate =
     description ??
     "Hi, I Christopher Vachon, a Web Application Developer in Canada. I write about web development, programming, and technology.";
 
+const ogImgSrc = await getImage({ src: cardImage, width: 1200, height: 600, format: "jpg" });
+const ogAuthor = "Christopher Vachon";
 import "./../styles/global.css";
 ---
 
@@ -72,7 +73,7 @@ import "./../styles/global.css";
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href={`${Astro.site}/me-300.png`} type="image/png" />
+        <link rel="icon" href={`${Astro.site}me-300.png`} type="image/png" />
         <title>{titleTemplate}</title>
         <meta name="generator" content={Astro.generator} />
         <meta name="description" content={descriptionTemplate} />
@@ -80,11 +81,17 @@ import "./../styles/global.css";
         <link rel="canonical" href={canonical} />
 
         <meta name="theme-color" content="#0ea5e9" />
+        <meta property="author" content={ogAuthor} />
+        <meta name="article:author" content={ogAuthor} />
+        <meta name="color-scheme" content="dark" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta property="og:site_name" content="All About Christopher Vachon" />
         <meta property="og:type" content="article" />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={descriptionTemplate} />
         <meta property="og:url" content={canonical} />
+        <meta property="og:author" content={ogAuthor} />
         {publishDate && <meta property="article:published_time" content={publishDate} />}
         {publishDate && <meta property="article:modified_time" content={publishDate} />}
         <meta property="article:publisher" content="https://github.com/CodeVachon" />
@@ -94,22 +101,25 @@ import "./../styles/global.css";
         <meta name="twitter:url" content={canonical} />
 
         <meta name="twitter:label1" content="Written by" />
-        <meta name="twitter:data1" content="Christopher Vachon" />
+        <meta name="twitter:data1" content={ogAuthor} />
         <meta name="twitter:site" content="@CodeVachon" />
         {
             cardImage && (
                 <>
-                    <meta name="twitter:image" content={cardImage.src} />
+                    <meta name="twitter:image" content={new URL(ogImgSrc.src, Astro.site)} />
+                    <meta name="twitter:image:alt" content={titleTemplate} />
+                    <meta property="og:image:alt" content={titleTemplate} />
                     <meta
                         property="og:image"
                         content={
                             new RegExp("blog/[a-z0-9]+").test(canonical.toString())
                                 ? String(canonical).replace(/\/$/, "") + "/og.png"
-                                : cardImage.src
+                                : new URL(ogImgSrc.src, Astro.site)
                         }
                     />
                     <meta property="og:image:width" content={"1200px"} />
                     <meta property="og:image:height" content={"600px"} />
+                    <meta property="og:image:type" content="image/png." />
                 </>
             )
         }
@@ -117,13 +127,13 @@ import "./../styles/global.css";
         <link
             rel="alternate"
             type="application/rss+xml"
-            title="Your Site's Title"
+            title={siteTitle}
             href={`${Astro.site}rss.xml`}
         />
         <ViewTransitions />
     </head>
     <body
-        class="flex h-screen min-w-[350px] flex-col bg-white text-slate-900 lg:flex-row lg:overflow-hidden dark:bg-gray-950 dark:text-slate-50"
+        class="absolute inset-0 flex h-screen min-w-[350px] flex-col bg-white text-slate-900 lg:flex-row lg:overflow-hidden dark:bg-gray-950 dark:text-slate-50"
     >
         <section
             id="sidebar"
@@ -193,7 +203,7 @@ import "./../styles/global.css";
             </div>
         </section>
         <section
-            class="z-[90] flex h-full flex-grow flex-col lg:overflow-auto"
+            class="z-[90] flex h-full flex-grow flex-col lg:overflow-y-auto"
             transition:animate={fade({ duration: "0.8s" })}
         >
             <main class:list={["flex-grow p-6 lg:py-24", className]} data-pagefind-body>
