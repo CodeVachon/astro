@@ -61,7 +61,9 @@ const cardImage = headerImage ?? myImage;
 const titleTemplate = [title, "Christopher Vachon"]
     .filter((v) => String(v).trim().length > 0)
     .join(" | ");
-const descriptionTemplate = description ?? "All About Christopher Vachon";
+const descriptionTemplate =
+    description ??
+    "Hi, I Christopher Vachon, a Web Application Developer in Canada. I write about web development, programming, and technology.";
 
 import "./../styles/global.css";
 ---
@@ -70,13 +72,14 @@ import "./../styles/global.css";
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href={`${Astro.site}me-300-1.png`} type="image/png" />
+        <link rel="icon" href={`${Astro.site}/me-300.png`} type="image/png" />
         <title>{titleTemplate}</title>
         <meta name="generator" content={Astro.generator} />
         <meta name="description" content={descriptionTemplate} />
         <meta name="referrer" content="no-referrer-when-downgrade" />
         <link rel="canonical" href={canonical} />
 
+        <meta name="theme-color" content="#0ea5e9" />
         <meta property="og:site_name" content="All About Christopher Vachon" />
         <meta property="og:type" content="article" />
         <meta property="og:title" content={title} />
@@ -180,7 +183,7 @@ import "./../styles/global.css";
                                         title={`Check me out on ${name}`}
                                         class="text-primary hover:text-white"
                                     >
-                                        <Icon name={icon} className="size-5" />
+                                        <Icon name={icon} className="size-8 lg:size-5" />
                                     </a>
                                 </li>
                             ))

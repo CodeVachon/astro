@@ -9,15 +9,17 @@ import metaTags from "astro-meta-tags";
 
 const runningPort = 4006;
 
+const url =
+    process.env.NODE_ENV === "development"
+        ? `http://localhost:${runningPort}`
+        : "https://christophervachon.com";
+
 // https://astro.build/config
 export default defineConfig({
     server: {
         port: runningPort
     },
-    site:
-        process.env.NODE_ENV === "development"
-            ? `http://localhost:${runningPort}`
-            : "https://christophervachon.com",
+    site: url,
     prefetch: true,
     integrations: [
         sitemap(),
