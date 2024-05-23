@@ -137,9 +137,9 @@ const rgb = (hex: string) => {
     <li class="flex items-center">
         <button
             id="ThemeToggle"
-            class="size-8 rounded-full bg-transparent transition duration-200 hover:bg-primary/50 lg:size-6"
+            class="rounded-full bg-transparent p-1 transition duration-200 hover:bg-primary/50"
         >
-            <svg class="h-full w-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <svg class="size-8 lg:size-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path
                     class="sun"
                     fill-rule="evenodd"
@@ -157,9 +157,13 @@ const rgb = (hex: string) => {
         colors.map((color, i) => (
             <li class="flex items-center">
                 <button
-                    class="theme-button flex size-8 items-center justify-center rounded-full lg:size-6"
+                    class:list={[
+                        "theme-button flex size-8 items-center justify-center rounded-full lg:size-6",
+                        i === 0 ? "selected" : ""
+                    ]}
                     data-value={rgb(color)}
                     style={{ backgroundColor: `#${color}` }}
+                    aria-label="Toggle theme color"
                 >
                     <span class="sr-only">color {i + 1}</span>
                     <span class="toggle block size-3 rounded-full" />
