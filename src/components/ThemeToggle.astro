@@ -55,7 +55,7 @@ const rgb = (hex: string) => {
 </style>
 
 <script is:inline>
-    const handleToggleClick = (e) => {
+    function handleToggleClick(e) {
         if (e) {
             e.preventDefault();
             e.stopPropagation();
@@ -65,9 +65,9 @@ const rgb = (hex: string) => {
 
         const isDark = element.classList.contains("dark");
         localStorage.setItem("theme", isDark ? "dark" : "light");
-    };
+    }
 
-    const setThemeColor = (color) => {
+    function setThemeColor(color) {
         if (!color) {
             return;
         }
@@ -81,7 +81,7 @@ const rgb = (hex: string) => {
         document
             .querySelector(".theme-button[data-value='" + color + "']")
             .classList.add("selected");
-    };
+    }
 
     function pageSetup() {
         const theme = (() => {
@@ -107,15 +107,14 @@ const rgb = (hex: string) => {
             setThemeColor(color);
         }
 
-        const modeButton = document.getElementById("ThemeToggle");
-        if (modeButton) {
+        const modeButtons = document.querySelectorAll(".light-dark-toggle");
+        for (const modeButton of modeButtons) {
             modeButton.addEventListener("click", handleToggleClick);
         }
 
         const themeButtons = document.querySelectorAll(".theme-button");
         for (const themeButton of themeButtons) {
             themeButton.addEventListener("click", (e) => {
-                console.log("themeButton click");
                 if (e) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -136,8 +135,7 @@ const rgb = (hex: string) => {
 <ul class="flex items-center gap-2">
     <li class="flex items-center">
         <button
-            id="ThemeToggle"
-            class="rounded-full bg-transparent p-1 transition duration-200 hover:bg-primary/50"
+            class="light-dark-toggle rounded-full bg-transparent p-1 transition duration-200 hover:bg-primary/50"
         >
             <svg class="size-8 lg:size-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path
