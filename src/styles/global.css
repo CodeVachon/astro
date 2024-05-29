@@ -71,4 +71,32 @@
             @apply absolute -left-36 top-4 size-32;
         }
     }
+
+    #flyout-menu {
+        #backdrop {
+            @apply fixed inset-0 z-0 bg-slate-500/0 backdrop-blur-none duration-300 ease-in-out;
+            label {
+                @apply absolute left-4 top-0 -translate-y-full transform cursor-pointer duration-500 ease-in-out;
+            }
+        }
+        nav {
+            @apply z-[1001] translate-x-full transform duration-500 ease-in-out;
+        }
+
+        #menu-toggle:checked ~ & {
+            #backdrop {
+                @apply fixed inset-0 z-[1000] bg-slate-500/30 backdrop-blur-sm;
+                label {
+                    @apply sm:translate-y-4;
+                }
+            }
+            nav {
+                @apply translate-x-0;
+            }
+        }
+    }
+
+    #menu-toggle {
+        @apply hidden;
+    }
 }
