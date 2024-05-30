@@ -100,10 +100,14 @@ const Search: React.FC<ISearchProps> = ({ className = "" }) => {
 
         found.sort((a, b) => b.score - a.score);
 
-        return found.map((record) => record.article);
+        return found.map((record) => record.article).slice(0, 5);
     }, [term, recordSet]);
 
     useEffect(() => {
+        if (selectedElementIndex === -1) {
+            return;
+        }
+
         if (selectedElementIndex >= results.length) {
             setSelectedElementIndex(0);
         } else if (selectedElementIndex < 0) {

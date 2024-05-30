@@ -68,6 +68,7 @@ const ogImgSrc = await getImage({ src: cardImage, width: 1200, height: 600, form
 const ogAuthor = "Christopher Vachon";
 import "./../styles/global.css";
 import Search from "~components/Search";
+import KeyBoardKey from "~components/KeyBoardKey";
 ---
 
 <html lang="en" class="dark h-full antialiased" style="color-scheme: dark;">
@@ -184,11 +185,7 @@ import Search from "~components/Search";
                         }
                         <li class="hidden pt-6 lg:block">
                             <p class="text-xs text-slate-500">
-                                <code
-                                    id="CommandPalletShortcutNote"
-                                    class="inline-block rounded bg-primary px-1 py-0.5 font-mono text-white"
-                                    >⌘K</code
-                                > to open Command Pallet
+                                <KeyBoardKey keyModifier="cmd">K</KeyBoardKey> to open Command Pallet
                             </p>
                         </li>
                     </ul>
@@ -363,10 +360,6 @@ import Search from "~components/Search";
                     }
                 }
             });
-
-            if (navigator.platform === "Win32") {
-                CommandPalletShortcutNote.innerText = "Ctrl+K";
-            }
         </script>
     </body>
 </html>
