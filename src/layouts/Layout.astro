@@ -350,7 +350,8 @@ import Search from "~components/Search";
                 }
 
                 if (ev.code === "KeyK" && (ev.ctrlKey || ev.metaKey)) {
-                    console.log("Toggling menu", ev);
+                    ev.preventDefault();
+                    ev.stopPropagation();
                     if (toggle.checked) {
                         toggle.checked = false;
                     } else {
