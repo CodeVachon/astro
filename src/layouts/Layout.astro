@@ -185,6 +185,7 @@ import Search from "~components/Search";
                         <li class="hidden pt-6 lg:block">
                             <p class="text-xs text-slate-500">
                                 <code
+                                    id="CommandPalletShortcutNote"
                                     class="inline-block rounded bg-primary px-1 py-0.5 font-mono text-white"
                                     >⌘K</code
                                 > to open Command Pallet
@@ -348,7 +349,7 @@ import Search from "~components/Search";
                     }
                 }
 
-                if (ev.code === "KeyK") {
+                if (ev.code === "KeyK" && (ev.ctrlKey || ev.metaKey)) {
                     console.log("Toggling menu", ev);
                     if (toggle.checked) {
                         toggle.checked = false;
@@ -361,6 +362,10 @@ import Search from "~components/Search";
                     }
                 }
             });
+
+            if (navigator.platform === "Win32") {
+                CommandPalletShortcutNote.innerText = "Ctrl+K";
+            }
         </script>
     </body>
 </html>
