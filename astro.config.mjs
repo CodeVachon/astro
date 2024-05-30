@@ -6,6 +6,7 @@ import a11yEmoji from "@fec/remark-a11y-emoji";
 import { remarkReadingTime } from "./src/lib/readingTime";
 import sitemap from "@astrojs/sitemap";
 import metaTags from "astro-meta-tags";
+import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 
 const runningPort = 4006;
 
@@ -21,6 +22,23 @@ export default defineConfig({
     },
     site: url,
     prefetch: true,
+    // Required to Add Buffer Polyfill to the Browser for Bloom Filters
+    // vite: {
+    //     optimizeDeps: {
+    //         esbuildOptions: {
+    //             // Node.js global to browser globalThis
+    //             define: {
+    //                 global: "globalThis"
+    //             },
+    //             // Enable esbuild polyfill plugins
+    //             plugins: [
+    //                 NodeGlobalsPolyfillPlugin({
+    //                     buffer: true
+    //                 })
+    //             ]
+    //         }
+    //     }
+    // },
     integrations: [
         sitemap(),
         react(),

@@ -67,6 +67,7 @@ const descriptionTemplate =
 const ogImgSrc = await getImage({ src: cardImage, width: 1200, height: 600, format: "jpg" });
 const ogAuthor = "Christopher Vachon";
 import "./../styles/global.css";
+import Search from "~components/Search";
 ---
 
 <html lang="en" class="dark h-full antialiased" style="color-scheme: dark;">
@@ -167,16 +168,6 @@ import "./../styles/global.css";
                         <h1 class="text-lg font-bold lg:text-2xl">Christopher Vachon</h1>
                     </header>
                 </a>
-                <nav>
-                    <label
-                        for="menu-toggle"
-                        id="menu-open-toggle"
-                        class="flex h-8 w-8 cursor-pointer items-center justify-center rounded transition-colors duration-200 ease-in-out hover:bg-primary md:hidden dark:bg-slate-800 dark:text-white"
-                        aria-label="Toggle menu"
-                    >
-                        <HamburgerIcon className={"size-8"} />
-                    </label>
-                </nav>
                 <nav class="hidden w-1/3 md:block lg:w-full">
                     <ul class="flex justify-center gap-6 lg:flex-col lg:gap-2">
                         {
@@ -193,7 +184,17 @@ import "./../styles/global.css";
                         }
                     </ul>
                 </nav>
-                <nav class="hidden w-1/3 justify-end md:flex lg:w-full lg:justify-start">
+                <nav class="w-auto md:flex md:w-1/3 md:justify-end md:text-right">
+                    <label
+                        for="menu-toggle"
+                        id="menu-open-toggle"
+                        class="flex h-8 w-8 cursor-pointer items-center justify-center rounded transition-colors duration-200 ease-in-out hover:bg-primary lg:hidden dark:bg-slate-800 dark:text-white"
+                        aria-label="Toggle menu"
+                    >
+                        <HamburgerIcon className={"size-8"} />
+                    </label>
+                </nav>
+                <nav class="hidden w-1/3 justify-end lg:flex lg:w-full lg:justify-start">
                     <ol class="flex items-center gap-2">
                         {
                             socialMediaItems.map(({ name, href, icon }) => (
@@ -259,6 +260,9 @@ import "./../styles/global.css";
                 class="fixed bottom-0 right-0 top-0 flex w-[90vw] min-w-[300px] flex-col justify-between overflow-y-auto bg-white shadow-md sm:w-[400px] dark:bg-slate-800"
             >
                 <ol class="">
+                    <li>
+                        <Search client:visible />
+                    </li>
                     {
                         navItems.map((item) => (
                             <li class={Astro.url.pathname === item.href ? "bg-primary/50" : ""}>
@@ -325,6 +329,28 @@ import "./../styles/global.css";
                 const toggle = document.getElementById("menu-toggle");
                 if (toggle.checked) {
                     toggle.checked = false;
+                }
+            });
+
+            document.addEventListener("keydown", (ev) => {
+                const toggle = document.getElementById("menu-toggle");
+                if (ev.key === "Escape") {
+                    if (toggle.checked) {
+                        toggle.checked = false;
+                    }
+                }
+
+                if (ev.code === "KeyK") {
+                    console.log("Toggling menu", ev);
+                    if (toggle.checked) {
+                        toggle.checked = false;
+                    } else {
+                        toggle.checked = true;
+                        const input = document.querySelector("input[type=search]");
+                        if (input) {
+                            input.focus();
+                        }
+                    }
                 }
             });
         </script>
