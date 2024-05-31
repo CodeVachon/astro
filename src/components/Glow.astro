@@ -8,7 +8,7 @@ const highlightColor = "rgba(256, 89, 248, 0.4)";
 <div
     class:list={[
         className ?? "",
-        "absolute inset-0 -z-10 overflow-hidden bg-gray-950  lg:right-0 lg:min-w-[12rem]"
+        "absolute inset-0 -z-10 overflow-hidden bg-gray-950 lg:right-0 lg:min-w-[12rem]"
     ]}
 >
     <svg
@@ -28,7 +28,7 @@ const highlightColor = "rgba(256, 89, 248, 0.4)";
             </radialGradient>
         </defs>
         <rect width="100%" height="100%" fill={`url(#glow-desktop)`} class="hidden lg:block"></rect>
-        <rect width="100%" height="100%" fill={`url(#glow-mobile)`} class="lg:hidden"></rect>
+        <rect width="100%" height="100%" fill={`url(#glow-mobile)`} class="h-full lg:hidden"></rect>
     </svg>
     <div
         class="absolute inset-x-0 bottom-0 right-0 h-px bg-white mix-blend-overlay lg:left-auto lg:top-0 lg:h-auto lg:w-px"

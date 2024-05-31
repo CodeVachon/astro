@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { SearchIcon, SpinnerIcon } from "./Icons";
 // import * as pkg from "bloom-filters";
 // const { BloomFilter } = pkg;
@@ -21,6 +21,31 @@ const Search: React.FC<ISearchProps> = ({ className = "" }) => {
             bloom: Array<string>;
         }>;
     }>({ articles: [] });
+    const [selectedElementIndex, setSelectedElementIndex] = useState<number>(-1);
+
+    const onKeyDown = useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.code === "ArrowDown" || event.code === "ArrowUp" || event.code === "Enter") {
+            event.preventDefault();
+            event.stopPropagation();
+
+            if (event.code === "ArrowDown") {
+                setSelectedElementIndex((prev) => {
+                    return prev + 1;
+                });
+            } else if (event.code === "ArrowUp") {
+                setSelectedElementIndex((prev) => {
+                    return prev - 1;
+                });
+            } else if (event.code === "Enter") {
+                const selectedElement = document.querySelector(
+                    "#BlogSearchResult > li.selected > a"
+                );
+                if (selectedElement) {
+                    window.location.href = (selectedElement as HTMLAnchorElement).href;
+                }
+            }
+        }
+    }, []);
 
     useEffect(() => {
         setIsLoading(true);
@@ -75,8 +100,20 @@ const Search: React.FC<ISearchProps> = ({ className = "" }) => {
 
         found.sort((a, b) => b.score - a.score);
 
-        return found.map((record) => record.article);
+        return found.map((record) => record.article).slice(0, 5);
     }, [term, recordSet]);
+
+    useEffect(() => {
+        if (selectedElementIndex === -1) {
+            return;
+        }
+
+        if (selectedElementIndex >= results.length) {
+            setSelectedElementIndex(0);
+        } else if (selectedElementIndex < 0) {
+            setSelectedElementIndex(results.length - 1);
+        }
+    }, [selectedElementIndex, results]);
 
     return (
         <div className={className}>
@@ -86,9 +123,16 @@ const Search: React.FC<ISearchProps> = ({ className = "" }) => {
                     id="BlogSearch"
                     type="search"
                     value={term}
-                    onChange={(e) => setTerm(e.target.value)}
-                    className="w-full rounded-none bg-white py-4 pl-14 pr-4 text-slate-950 dark:bg-slate-900 dark:text-white"
+                    onChange={(e) => {
+                        setTerm(e.target.value);
+                        setSelectedElementIndex(-1);
+                    }}
+                    className="w-full rounded-none bg-white py-4 pl-14 pr-4 text-slate-950 outline outline-1 outline-transparent ring-0 focus:outline-primary focus:ring-primary dark:bg-slate-900 dark:text-white"
                     placeholder="Search Blog Posts..."
+                    autoComplete="off"
+                    autoCapitalize="off"
+                    autoCorrect="off"
+                    onKeyDown={onKeyDown}
                 />
                 <div className="absolute bottom-0 left-4 top-0 flex items-center">
                     {isLoading ? (
@@ -99,9 +143,14 @@ const Search: React.FC<ISearchProps> = ({ className = "" }) => {
                 </div>
             </div>
             {term.length > 0 && (
-                <ul className="my-2">
-                    {results.map((result: any) => (
-                        <li key={result.title}>
+                <ul className="my-2" id="BlogSearchResult">
+                    {results.map((result: any, index) => (
+                        <li
+                            key={result.title}
+                            className={
+                                index === selectedElementIndex ? "selected bg-primary/50" : ""
+                            }
+                        >
                             <a
                                 href={result.link}
                                 className="flex gap-4 px-4 py-2 decoration-transparent  hover:decoration-transparent"
