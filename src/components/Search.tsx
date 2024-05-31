@@ -127,7 +127,7 @@ const Search: React.FC<ISearchProps> = ({ className = "" }) => {
                         setTerm(e.target.value);
                         setSelectedElementIndex(-1);
                     }}
-                    className="w-full rounded-none bg-white py-4 pl-14 pr-4 text-slate-950 dark:bg-slate-900 dark:text-white"
+                    className="w-full rounded-none bg-white py-4 pl-14 pr-4 text-slate-950 outline outline-1 outline-transparent ring-0 focus:outline-primary focus:ring-primary dark:bg-slate-900 dark:text-white"
                     placeholder="Search Blog Posts..."
                     autoComplete="off"
                     autoCapitalize="off"
