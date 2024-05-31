@@ -79,7 +79,7 @@
                 @apply absolute left-4 top-0 -translate-y-full transform cursor-pointer duration-500 ease-in-out;
             }
         }
-        nav {
+        #flyout-menu-content {
             @apply z-[1001] translate-x-full transform duration-500 ease-in-out;
         }
 
@@ -90,7 +90,7 @@
                     @apply sm:translate-y-4;
                 }
             }
-            nav {
+            #flyout-menu-content {
                 @apply translate-x-0;
             }
         }

@@ -137,7 +137,7 @@ import KeyBoardKey from "~components/KeyBoardKey";
     <body
         class="absolute inset-0 flex h-screen min-w-[350px] flex-col bg-white text-slate-900 lg:flex-row lg:overflow-hidden dark:bg-gray-950 dark:text-slate-50"
     >
-        <input type="checkbox" id="menu-toggle" title="Toggle the Mobile Navigation" />
+        <input type="checkbox" id="menu-toggle" checked title="Toggle the Mobile Navigation" />
         <section
             id="sidebar"
             class:list={[
@@ -262,61 +262,66 @@ import KeyBoardKey from "~components/KeyBoardKey";
                     />
                 </label>
             </label>
-            <nav
-                class="fixed bottom-0 right-0 top-0 flex w-[90vw] min-w-[300px] flex-col justify-between overflow-y-auto bg-white shadow-md sm:w-[400px] dark:bg-slate-800"
+            <div
+                id="flyout-menu-content"
+                class="fixed bottom-0 right-0 top-0 h-screen w-[90vw] min-w-[300px] bg-white shadow-md sm:w-[400px] dark:bg-slate-800"
             >
-                <ol class="">
-                    <li>
-                        <Search client:visible />
-                    </li>
-                    {
-                        navItems.map((item) => (
-                            <li class={Astro.url.pathname === item.href ? "bg-primary/50" : ""}>
-                                <a
-                                    href={item.href}
-                                    title={`Check me out on ${item.name}`}
-                                    class="flex cursor-pointer items-center gap-6 p-4 decoration-transparent transition duration-200 ease-in-out hover:bg-primary hover:text-white"
-                                >
-                                    <Icon name={item.icon ?? "link"} className="size-12" />
-                                    <span class="text-xl">{item.name}</span>
-                                </a>
-                            </li>
-                        ))
-                    }
-                </ol>
+                <Glow />
 
-                <ol>
-                    {
-                        socialMediaItems.map(({ name, href, icon }) => (
-                            <li>
-                                <a
-                                    href={href}
-                                    target="_blank"
-                                    title={`Check me out on ${name}`}
-                                    class=" flex cursor-pointer items-center gap-6 p-4 decoration-transparent transition duration-200 ease-in-out hover:bg-primary hover:text-white"
-                                >
-                                    <Icon name={icon} className="size-12" />
-                                    <span class="text-xl">{name}</span>
-                                </a>
-                            </li>
-                        ))
-                    }
+                <nav class="flex h-full w-full flex-col justify-between overflow-y-auto">
+                    <ol class="">
+                        <li>
+                            <Search client:visible />
+                        </li>
+                        {
+                            navItems.map((item) => (
+                                <li class={Astro.url.pathname === item.href ? "bg-primary/50" : ""}>
+                                    <a
+                                        href={item.href}
+                                        title={`Check me out on ${item.name}`}
+                                        class="flex cursor-pointer items-center gap-6 p-4 decoration-transparent transition duration-200 ease-in-out hover:bg-primary hover:text-white"
+                                    >
+                                        <Icon name={item.icon ?? "link"} className="size-12" />
+                                        <span class="text-xl">{item.name}</span>
+                                    </a>
+                                </li>
+                            ))
+                        }
+                    </ol>
 
-                    <li>
-                        <label for="menu-toggle">
-                            <div
-                                class="flex cursor-pointer items-center gap-6 p-4 transition duration-200 ease-in-out hover:bg-primary hover:text-white"
-                            >
-                                <CloseIcon className={"size-12"} />
-                                <span class="text-xl">Close</span>
-                            </div>
-                        </label>
-                    </li>
-                    <li class="p-4">
-                        <ThemeToggle />
-                    </li>
-                </ol>
-            </nav>
+                    <ol>
+                        {
+                            socialMediaItems.map(({ name, href, icon }) => (
+                                <li>
+                                    <a
+                                        href={href}
+                                        target="_blank"
+                                        title={`Check me out on ${name}`}
+                                        class=" flex cursor-pointer items-center gap-6 p-4 decoration-transparent transition duration-200 ease-in-out hover:bg-primary hover:text-white"
+                                    >
+                                        <Icon name={icon} className="size-12" />
+                                        <span class="text-xl">{name}</span>
+                                    </a>
+                                </li>
+                            ))
+                        }
+
+                        <li>
+                            <label for="menu-toggle">
+                                <div
+                                    class="flex cursor-pointer items-center gap-6 p-4 transition duration-200 ease-in-out hover:bg-primary hover:text-white"
+                                >
+                                    <CloseIcon className={"size-12"} />
+                                    <span class="text-xl">Close</span>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="p-4">
+                            <ThemeToggle />
+                        </li>
+                    </ol>
+                </nav>
+            </div>
         </section>
 
         <!-- Google tag (gtag.js) -->
