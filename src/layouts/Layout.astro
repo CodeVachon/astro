@@ -137,7 +137,7 @@ import KeyBoardKey from "~components/KeyBoardKey";
     <body
         class="absolute inset-0 flex h-screen min-w-[350px] flex-col bg-white text-slate-900 lg:flex-row lg:overflow-hidden dark:bg-gray-950 dark:text-slate-50"
     >
-        <input type="checkbox" id="menu-toggle" checked title="Toggle the Mobile Navigation" />
+        <input type="checkbox" id="menu-toggle" title="Toggle the Mobile Navigation" />
         <section
             id="sidebar"
             class:list={[
@@ -266,9 +266,34 @@ import KeyBoardKey from "~components/KeyBoardKey";
                 id="flyout-menu-content"
                 class="fixed bottom-0 right-0 top-0 h-screen w-[90vw] min-w-[300px] bg-white shadow-md sm:w-[400px] dark:bg-slate-800"
             >
-                <Glow />
-
-                <nav class="flex h-full w-full flex-col justify-between overflow-y-auto">
+                <!-- GLOW:START -->
+                <div
+                    class="absolute -top-[40%] bottom-auto left-0 right-0 -z-10 h-[180%] overflow-hidden dark:bg-gray-950"
+                >
+                    <svg
+                        class="absolute bottom-0 left-0 right-0 top-0 h-full w-full text-primary"
+                        aria-hidden="true"
+                    >
+                        <defs>
+                            <radialGradient id={`glow-command-pallet`} cx="0%">
+                                <stop offset="0%" stop-color={"currentcolor"} stop-opacity="0.4"
+                                ></stop>
+                                <stop
+                                    offset="53.95%"
+                                    stop-color={"currentcolor"}
+                                    stop-opacity="0.09"></stop>
+                                <stop offset="100%" stop-color={"currentcolor"} stop-opacity="0"
+                                ></stop>
+                            </radialGradient>
+                        </defs>
+                        <rect width="100%" height="100%" fill={`url(#glow-command-pallet)`} class=""
+                        ></rect>
+                    </svg>
+                </div>
+                <!-- GLOW:END -->
+                <nav
+                    class="flex h-full w-full flex-col justify-between overflow-y-auto border-l-2 border-l-primary/50"
+                >
                     <ol class="">
                         <li>
                             <Search client:visible />
