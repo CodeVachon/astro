@@ -7,11 +7,10 @@ export const GET: APIRoute = async () => {
 
     return new Response(
         `
-${figlet.textSync("Christopher Vachon", { font: "Colossal" })}
-
+${figlet.textSync("Christopher", { font: "Colossal" })}
+${figlet.textSync("Vachon", { font: "Colossal" })}
 ${figlet.textSync("Dev Blog", {})}
 
-${homepageData.body}
-    `.trim()
+${homepageData.body.trim()}`
     );
 };
