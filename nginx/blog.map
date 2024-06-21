@@ -1,3 +1,5 @@
+/tag/devops/ /blog/tags/devops/;
+/about-me/ /;
 /react-with-gulp-babel-and-browserify/ /blog/2016-05-06-react-with-gulp-babel-and-browserify/;
 /mysql-workbench-safe-mode/ /blog/2024-03-26-mysql-workbench-safe-mode/;
 /docker-run-internal-container-command/ /blog/2022-10-12-docker-run-internal-container-command/;
