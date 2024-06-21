@@ -1,3 +1,4 @@
+import ClassNames from "@codevachon/classnames";
 import type { FC } from "react";
 
 interface IKeyBoardKeyProps {
@@ -16,24 +17,28 @@ const KeyBoardKey: FC<IKeyBoardKeyProps> = ({ className = "", children, keyModif
         if (isMac) {
             mod = "⌘";
         } else {
-            mod = "Ctrl";
+            mod = "Ctrl+";
         }
     } else if (keyModifier === "ctrl") {
-        mod = "Ctrl";
+        mod = "Ctrl+";
     } else if (keyModifier === "alt") {
         if (isMac) {
             mod = "⌥";
         } else {
-            mod = "Alt";
+            mod = "Alt+";
         }
     } else if (keyModifier === "shift") {
-        mod = "Shift";
+        mod = "Shift+";
     }
 
     return (
         <code
             id="CommandPalletShortcutNote"
-            className="inline-block rounded bg-primary px-1 py-0.5 font-mono text-white"
+            className={new ClassNames(
+                "inline-block rounded bg-primary px-1 py-0.5 font-mono text-white"
+            )
+                .add(className)
+                .list()}
         >
             {mod && mod.length > 0 && <span>{mod}</span>}
             {children}
