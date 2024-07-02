@@ -66,6 +66,6 @@ This [Gist](https://gist.github.com/liaodrake/019d5eb1c31f1866399f) shows the us
 
 ## So Which Should I Use?
 
-Both of these methodologies have there pros and cons, and ultimately, they handle the same functionality in the end. So to answer the question of which you should use depends entirely on what is already being utilized in your project.  If you are using [express](http://expressjs.com/), which uses callbacks, than it makes sense for you to use callbacks to maintain consistency in the project. If you are using jQuery, than you should use promises.
+Both of these methodologies have there pros and cons, and ultimately, they handle the same functionality in the end. So to answer the question of which you should use depends entirely on what is already being utilized in your project.  If you are using [express](https://expressjs.com/), which uses callbacks, than it makes sense for you to use callbacks to maintain consistency in the project. If you are using jQuery, than you should use promises.
 
 I hope this sheds some light on things for a few people

@@ -1,7 +1,7 @@
 ---
 title: What is DevOps
 featured: false
-description: Several Months ago, I attended a conference in Toronto called DevOpsDays. The purpose is like any other technical conference, ameans to get like minded individuals together and to share new ideas. In thiscase, DevOps.I have long counted myself as the DevOps Engineer of the company I work for, andhave had a lot of issue getting the company to believe that DevOps is a realthing. It doesn't help when goggling "DevOps" gives you a large and varyingdescription of the r
+description: Several Months ago, I attended a conference in Toronto called DevOpsDays. The purpose is like any other technical conference, a means to get like minded individuals together and to share new ideas. In this case, DevOps.
 image: ./../../assets/blog/devops-2.jpg
 date_orig: 2014-12-03T16:00:00.000-05:00
 date: 2014-12-03
@@ -9,7 +9,7 @@ draft: false
 tags: ["devops"]
 ---
 
-Several Months ago, I attended a conference in Toronto called [DevOpsDays](http://devopsdays.org/). The purpose is like any other technical conference, a means to get like minded individuals together and to share new ideas. In this case, DevOps.
+Several Months ago, I attended a conference in Toronto called [DevOpsDays](https://devopsdays.org/). The purpose is like any other technical conference, a means to get like minded individuals together and to share new ideas. In this case, DevOps.
 
 <figure class="kg-card kg-image-card"><img src="https://s3.amazonaws.com/christophervachon/articles/2014/12/banner_DevOpsDays.jpg" class="kg-image" alt="DevOpsDays" loading="lazy"></figure>
 
@@ -17,7 +17,7 @@ I have long counted myself as the DevOps Engineer of the company I work for, and
 
 ## What is the definition of DevOps?
 
-[Wikipedia](http://en.wikipedia.org/wiki/DevOps) has this to say on the topic.
+[Wikipedia](https://en.wikipedia.org/wiki/DevOps) has this to say on the topic.
 
 DevOps (a portmanteau of "development" and "operations") is a software development method that stresses communication, collaboration and integration between software developers and Information Technology(IT) professionals.
 
@@ -46,9 +46,9 @@ The other big piece of this is the integration of technologies with developers a
 
 Automate All The Things!
 
-This is where things get to be really fun for a guy like me. Scripting as much as possible to make the life of developers and operations as easy as possible. Its where we incorporate tools like [Grunt](http://gruntjs.com/) (Watch, Less, Uglify, Minify etc...) and [Vagrant](https://www.vagrantup.com/) for the developers. For operations and QA, we deploy automation tools like Git and Continuous Integration (CI) to handle automated testing and deployments on the result of that testing.
+This is where things get to be really fun for a guy like me. Scripting as much as possible to make the life of developers and operations as easy as possible. Its where we incorporate tools like [Grunt](https://gruntjs.com/) (Watch, Less, Uglify, Minify etc...) and [Vagrant](https://www.vagrantup.com/) for the developers. For operations and QA, we deploy automation tools like Git and Continuous Integration (CI) to handle automated testing and deployments on the result of that testing.
 
-And will all these tools, we want to also automate some of the communication on the results of these tools. With webhooks, we can easily integrate tools like [Slack](http://slack.com/) or HipChat. At the end of a build, [Jenkins](http://jenkins-ci.org/) can made to send the result of the build (or deployment) into these communication tools in addition to using an email notification.
+And will all these tools, we want to also automate some of the communication on the results of these tools. With webhooks, we can easily integrate tools like [Slack](https://slack.com/) or HipChat. At the end of a build, [Jenkins](https://jenkins-ci.org/) can made to send the result of the build (or deployment) into these communication tools in addition to using an email notification.
 
 ## Conclusion
 

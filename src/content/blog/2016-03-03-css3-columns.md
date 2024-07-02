@@ -35,7 +35,7 @@ Today we had an issue where we needed to split an ordered list into multiple col
 
 In the past, I would have done on server side by dividing the number items in the list by the number of columns needed to give me `Nth` number of items place per column. I would then use an iteration loop to detect how many I had placed into a "column", and when `Nth` was reached, start a new column.  You would then use CSS to float the columns as needed.
 
-I have also used `JavaScript` to take an existing list of items on a page, and following a similar process, split the list into the selected number of columns.  Using [jQuery](http://jquery.com/), you can also quickly inject closing and opening code into the DOM accomplishing the same thing.
+I have also used `JavaScript` to take an existing list of items on a page, and following a similar process, split the list into the selected number of columns.  Using [jQuery](https://jquery.com/), you can also quickly inject closing and opening code into the DOM accomplishing the same thing.
 
 The resulting code ends up like this:
 

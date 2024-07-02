@@ -20,11 +20,11 @@ whats nice about selector is that it will accept arguments.  If I supply an int
 
 I want to have a dynamically sized grid of an unknown number of elements. The last element needs to be selected, and if not a multiple of 3, change its width to fill the white space in the container.
 
-See the Pen [CSS Box Width Based on Content](http://codepen.io/liaodrake/pen/nkAoJ/) by Christopher Vachon ([@liaodrake](http://codepen.io/liaodrake)) on [CodePen](http://codepen.io/).
+See the Pen [CSS Box Width Based on Content](https://codepen.io/liaodrake/pen/nkAoJ/) by Christopher Vachon ([@liaodrake](https://codepen.io/liaodrake)) on [CodePen](https://codepen.io/).
 
 ### So what am I doing here?
 
-I am first using less to compile my css for me to make my life quicker and easier. If you don't know what less is, [check it out here](http://lesscss.org/).
+I am first using less to compile my css for me to make my life quicker and easier. If you don't know what less is, [check it out here](https://lesscss.org/).
 
 So, the first thing I want to do is select out the last box in my grid, and I do that with the `:nth-last-of-type()` pseudo-class.
 

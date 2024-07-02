@@ -19,9 +19,9 @@ This should be a high level discussion, and doesn't need the input of your entir
 
 ## Step 2 - Identify the Tools You're Using.
 
-Identify the tools you have. List out everything thing from issue tracking, repositories, to editors. Any virtualizaions like [Vagrant](https://www.vagrantup.com/) and [Docker](https://www.docker.com/) should be listed here as well. You can even get as far as task automation systems like [Grunt](http://gruntjs.com/) or [Gulp](http://gulpjs.com/), and preprocessors like [LESS](http://lesscss.org/) and [CoffeeScript](http://coffeescript.org/).
+Identify the tools you have. List out everything thing from issue tracking, repositories, to editors. Any virtualizaions like [Vagrant](https://www.vagrantup.com/) and [Docker](https://www.docker.com/) should be listed here as well. You can even get as far as task automation systems like [Grunt](https://gruntjs.com/) or [Gulp](https://gulpjs.com/), and preprocessors like [LESS](https://lesscss.org/) and [CoffeeScript](https://coffeescript.org/).
 
-If you are not using a repository, this is definitely the time to start. There are several free services available including what is probably the most popular tool, [GitHub](http://www.github.com/). If you are interested in having your own locally hosted service, you can use something like [GitLab](http://gitlab.org/) to handle that, but again, there are several other solutions available for that. But git is not your only options for a repository, just the most popular, take some time to research the options available to you and your team.
+If you are not using a repository, this is definitely the time to start. There are several free services available including what is probably the most popular tool, [GitHub](https://www.github.com/). If you are interested in having your own locally hosted service, you can use something like [GitLab](https://gitlab.org/) to handle that, but again, there are several other solutions available for that. But git is not your only options for a repository, just the most popular, take some time to research the options available to you and your team.
 
 Once you have the tools you are using identified, find what you need to close any holes, or what you can update/upgrade/remove. Is the code editor you are using the best ones for your needs?
 

@@ -9,7 +9,7 @@ draft: false
 tags: ["devops"]
 ---
 
-with my change over to the [Ghost](http://ghost.org/) Blogging platform from my own custom engine, I had one major problem.
+with my change over to the [Ghost](https://ghost.org/) Blogging platform from my own custom engine, I had one major problem.
 
 The URL's from my old blog did not directly match the URL's of the new blog
 

@@ -9,7 +9,7 @@ draft: false
 tags: ["devops"]
 ---
 
-Over the past couple of weeks I have been exploring Application Monitoring tools which has resulting in me playing with [StatsD](https://github.com/etsy/statsd) and [Graphite](http://graphite.readthedocs.org/en/latest/).  I quickly found a [Docker](https://www.docker.com/) Container, and plugged in an [NPM](https://www.npmjs.com/) library called [node-statsd](https://www.npmjs.com/package/node-statsd) into an [Express](http://expressjs.com/) RESTful api to see what kind of data I could get.
+Over the past couple of weeks I have been exploring Application Monitoring tools which has resulting in me playing with [StatsD](https://github.com/etsy/statsd) and [Graphite](https://graphite.readthedocs.org/en/latest/).  I quickly found a [Docker](https://www.docker.com/) Container, and plugged in an [NPM](https://www.npmjs.com/) library called [node-statsd](https://www.npmjs.com/package/node-statsd) into an [Express](https://expressjs.com/) RESTful api to see what kind of data I could get.
 
 At first, I started with only posting API hits.  This was accomplished by sending a `count` into StatsD.
 

@@ -43,6 +43,6 @@ googletag
 ;
 ```
 
-Now we have our advertisement block.  Depending on your settings, your advertisements may be loaded via an iFrame. From this point on, We decided to leverage [jQuery](http://www.jquery.com/) which is already loaded on our page.
+Now we have our advertisement block.  Depending on your settings, your advertisements may be loaded via an iFrame. From this point on, We decided to leverage [jQuery](https://www.jquery.com/) which is already loaded on our page.
 
 This gist of this being that for each advertisement that is loaded on the site from DFP we are performing this function on the content we got from DFP.  From here, we can change and modify the contents as required.

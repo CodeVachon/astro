@@ -11,13 +11,13 @@ tags: ["web-development", "devops"]
 
 Recently I wrote a small custom piece of middleware for an express application to consume on its requests. It takes a query parameter and reworks it for later use in the event loop. Nothing too fancy or overly complicated.
 
-But as is the good practice, and because this was for a production application, I wanted to test this bit of middleware with [mocha](http://mochajs.org/). But how?
+But as is the good practice, and because this was for a production application, I wanted to test this bit of middleware with [mocha](https://mochajs.org/). But how?
 
 A brief google search did not return to me any relevant information, so that's what prompted this post.
 
 ## Writing Middleware
 
-Middleware works off of a promise event loop.  When a task is completed, its expected that something tell the framework to move on to the next event in the event loop. In [express](http://expressjs.com/), and indeed with most node frameworks, middleware assumes that are going to pass in a minimum three arguments (`request`, `response`, and `next`), and that the last argument is the callback or the promise which will tell the framework to fire its next event.
+Middleware works off of a promise event loop.  When a task is completed, its expected that something tell the framework to move on to the next event in the event loop. In [express](https://expressjs.com/), and indeed with most node frameworks, middleware assumes that are going to pass in a minimum three arguments (`request`, `response`, and `next`), and that the last argument is the callback or the promise which will tell the framework to fire its next event.
 
 ## Testing Middleware
 
