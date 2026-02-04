@@ -28,7 +28,7 @@ export const GET: APIRoute = async (context) => {
         const image = post.data.image
             ? await getImage({ src: post.data.image, width: 100, height: "auto" })
             : null;
-        const link = `/blog/${post.slug}/`;
+        const link = `/blog/${post.id}/`;
 
         const uniqueWords = new Set<string>();
         for (const word of post.body.split(new RegExp("[\\s]{1,}", "g"))) {
@@ -62,7 +62,7 @@ export const GET: APIRoute = async (context) => {
                   }
                 : undefined,
             link,
-            tags: post.data.tags.map((tag) => tag.slug),
+            tags: post.data.tags.map((tag) => tag.id),
             bloom: Array.from(uniqueWords) //filter.saveAsJSON()
         });
     }

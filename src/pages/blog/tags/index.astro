@@ -26,7 +26,7 @@ const singletonTags: Array<TagWithArticles> = [];
 
 for (const thisTag of allTags) {
     const articles = allBlogPosts.filter((post) =>
-        post.data.tags.some((articleTag) => articleTag.slug === thisTag.slug)
+        post.data.tags.some((articleTag) => articleTag.id === thisTag.id)
     );
     if (articles.length >= 3) {
         tagsWithAricles.push({ tag: thisTag, articles: articles });
@@ -55,7 +55,7 @@ for (const thisTag of allTags) {
                     return (
                         <li class="flex flex-col gap-4">
                             <h3 class="-mx-6 bg-slate-900 px-6 py-4 text-xl font-semibold text-white">
-                                <a href={["tags", record.tag.slug].join("/")} class="capitalize">
+                                <a href={["tags", record.tag.id].join("/")} class="capitalize">
                                     {record.tag.data.name}
                                 </a>
                             </h3>
@@ -70,7 +70,7 @@ for (const thisTag of allTags) {
                             </div>
                             {record.articles.length > 3 && (
                                 <p>
-                                    <a href={`/blog/tags/${record.tag.slug}`}>
+                                    <a href={`/blog/tags/${record.tag.id}`}>
                                         See {remainingPostsLength} more {record.tag.data.name}
                                         {`Post${remainingPostsLength === 1 ? "" : "s"}`}
                                     </a>
@@ -88,7 +88,7 @@ for (const thisTag of allTags) {
             {
                 singletonTags.map((record) => (
                     <li>
-                        <a href={["tags", record.tag.slug].join("/")} class="capitalize">
+                        <a href={["tags", record.tag.id].join("/")} class="capitalize">
                             {record.tag.data.name}
                         </a>
                     </li>

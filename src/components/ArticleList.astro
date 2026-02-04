@@ -30,7 +30,7 @@ const { articles = [], grid = false } = Astro.props;
                     </figure>
                 )}
                 <article class="z-40 flex flex-col gap-2 lg:absolute lg:bottom-0 lg:left-0 lg:right-0 lg:bg-slate-50/75 lg:p-6 lg:backdrop-blur-lg lg:dark:bg-slate-500/50">
-                    <a href={["/blog", post.slug].join("/")} class="text-2xl font-bold lg:text-xl">
+                    <a href={["/blog", post.id].join("/")} class="text-2xl font-bold lg:text-xl">
                         {post.data.title}
                     </a>
                     <p class="lg:line-clamp-2">{post.data.description}</p>

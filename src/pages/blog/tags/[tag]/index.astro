@@ -3,7 +3,7 @@ import Layout from "~layouts/Layout.astro";
 import ArticleList from "~components/ArticleList.astro";
 import H1 from "~components/H1.astro";
 import BreadCrumbs from "~components/BreadCrumbs.astro";
-import { getEntry, getCollection } from "astro:content";
+import { getEntry, getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
     const allTags = await getCollection("tag");
@@ -11,7 +11,7 @@ export async function getStaticPaths() {
     return Array.from(allTags).map((tag) => {
         return {
             params: {
-                tag: tag.slug
+                tag: tag.id
             }
         };
     });
@@ -22,10 +22,10 @@ const { tag } = Astro.params;
 const thisTag = await getEntry("tag", tag);
 
 const allBlogPosts = await getCollection("blog", ({ data }) => {
-    return !data.draft && data.tags.some((articleTag) => articleTag.slug === tag);
+    return !data.draft && data.tags.some((articleTag) => articleTag.id === tag);
 }).then((recordSet) => recordSet.reverse());
 
-const { Content } = await thisTag.render();
+const { Content } = await render(thisTag);
 ---
 
 <Layout title={`Tag: ${thisTag.data.name}`} description={thisTag.data.description} sideWidth="half">

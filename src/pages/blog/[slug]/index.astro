@@ -1,7 +1,7 @@
 ---
 import dayjs from "dayjs";
 import Layout from "~layouts/Layout.astro";
-import { getCollection, getEntries, getEntry } from "astro:content";
+import { getCollection, getEntries, getEntry, render } from "astro:content";
 import ArticleList from "~components/ArticleList.astro";
 import MarkdownContent from "~components/MarkdownContent.astro";
 import Badge from "~components/Badge.astro";
@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 
     return allBlogPosts.map((blogPost) => ({
         params: {
-            slug: blogPost.slug
+            slug: blogPost.id
         }
     }));
 }
@@ -22,13 +22,13 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 
 const entry = await getEntry("blog", slug);
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 
 const bolsterArticles = await Promise.all([
     getCollection("blog", ({ data }) => {
         return data.tags.some(
             (tag) =>
-                entry.data.tags.some((articleTag) => articleTag.slug === tag.slug) &&
+                entry.data.tags.some((articleTag) => articleTag.id === tag.id) &&
                 entry.data.title !== data.title
         );
     }).then((articles) => articles.reverse().slice(0, 3)),
@@ -36,7 +36,7 @@ const bolsterArticles = await Promise.all([
         return (
             !data.tags.some(
                 (tag) =>
-                    entry.data.tags.some((articleTag) => articleTag.slug === tag.slug) &&
+                    entry.data.tags.some((articleTag) => articleTag.id === tag.id) &&
                     entry.data.title !== data.title
             ) && data.title !== entry.data.title
             // !related.some((related) => related.data.title && data.title)
@@ -44,8 +44,8 @@ const bolsterArticles = await Promise.all([
     }).then((articles) => articles.reverse().slice(0, 3))
 ]).then((recordset) => recordset.flat().slice(0, 3));
 
-const sharedArticles = await getCollection("blog", ({ slug }) => {
-    return (entry.data.relatedPosts ?? []).some((related) => related.slug === slug);
+const sharedArticles = await getCollection("blog", ({ id }) => {
+    return (entry.data.relatedPosts ?? []).some((related) => related.id === id);
 });
 
 while (sharedArticles.length < 3) {
@@ -85,7 +85,7 @@ const tags = await getEntries(entry.data.tags);
                         <ul class="flex gap-2">
                             {tags.map((tag) => (
                                 <li class="">
-                                    <Badge href={`/blog/tags/${tag.slug}`}>{tag.data.name}</Badge>
+                                    <Badge href={`/blog/tags/${tag.id}`}>{tag.data.name}</Badge>
                                 </li>
                             ))}
                         </ul>

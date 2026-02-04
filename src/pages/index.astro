@@ -1,7 +1,7 @@
 ---
 import Layout from "~layouts/Layout.astro";
 
-import { getCollection, getEntry } from "astro:content";
+import { getCollection, getEntry, render } from "astro:content";
 import ArticleList from "~components/ArticleList.astro";
 import MarkdownContent from "~components/MarkdownContent.astro";
 
@@ -14,7 +14,7 @@ const allBlogPosts = await getCollection("blog", ({ data }) => {
 
 const recentBlogPosts = allBlogPosts.reverse().slice(0, 5);
 const homepageData = await getEntry("page", "homepage");
-const { Content } = await homepageData.render();
+const { Content } = await render(homepageData);
 ---
 
 <Layout title="Home" className="flex flex-col gap-12">

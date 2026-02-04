@@ -1,19 +1,10 @@
 // 1. Import utilities from `astro:content`
 import { z, defineCollection, reference } from "astro:content";
-
-const imageConfig = z
-    .string()
-    .or(
-        z.object({
-            src: z.string(),
-            alt: z.string()
-        })
-    )
-    .optional();
+import { glob } from "astro/loaders";
 
 // 2. Define your collection(s)
 const blogCollection = defineCollection({
-    type: "content",
+    loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
     schema: ({ image }) =>
         z.object({
             draft: z.boolean().optional().default(false),
@@ -31,7 +22,7 @@ const blogCollection = defineCollection({
 });
 
 const tagCollection = defineCollection({
-    type: "content",
+    loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/tag" }),
     schema: z.object({
         name: z.string(),
         description: z.string().optional()
@@ -39,7 +30,7 @@ const tagCollection = defineCollection({
 });
 
 const pageContentCollection = defineCollection({
-    type: "content",
+    loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/page" }),
     schema: ({ image }) =>
         z.object({
             draft: z.boolean().optional().default(false),
