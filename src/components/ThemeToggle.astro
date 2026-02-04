@@ -11,8 +11,10 @@ const rgb = (hex: string) => {
 ---
 
 <style>
+    @reference "tailwindcss";
+
     .sun {
-        fill: theme("colors.primary");
+        fill: var(--color-primary);
     }
     .moon {
         fill: transparent;
@@ -22,7 +24,7 @@ const rgb = (hex: string) => {
         fill: transparent;
     }
     :global(.dark) .moon {
-        fill: theme("colors.primary");
+        fill: var(--color-primary);
     }
 
     .theme-button {

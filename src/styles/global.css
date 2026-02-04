@@ -1,12 +1,51 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+    /* Custom colors */
+    --color-primary: oklch(0.685 0.169 237.323);
+
+    /* Custom font sizes */
+    --font-size-2xs: 0.6875rem;
+    --font-size-2xs--line-height: 1rem;
+
+    /* Custom font families */
+    --font-family-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    --font-family-display: var(--font-mona-sans), ui-sans-serif, system-ui, sans-serif;
+
+    /* Custom opacity values */
+    --opacity-2\.5: 0.025;
+    --opacity-7\.5: 0.075;
+    --opacity-15: 0.15;
+
+    /* Custom z-index values */
+    --z-index-1000: 1000;
+    --z-index-1001: 1001;
+
+    /* Custom spacing */
+    --spacing-128: 32rem;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+*/
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentcolor);
+    }
+}
 
 @layer base {
     /* Register your custom font family and tell the browser where to find it. */
     @font-face {
         font-family: "PTSans";
-        src: url("/fonts/PTSans.ttf") format("ttf");
+        src: url("/fonts/PTSans.ttf") format("truetype");
         font-weight: normal;
         font-style: normal;
         font-display: swap;
@@ -16,13 +55,9 @@
         font-family: "PTSans", system-ui, sans-serif;
         font-size: 14px;
 
-        @media screen(lg) {
+        @media (width >= theme(--breakpoint-lg)) {
             font-size: 16px;
         }
-    }
-
-    :root {
-        --color-primary: 14 165 233;
     }
 
     a {
@@ -55,7 +90,7 @@
         }
 
         #sidebar-content {
-            @apply mt-[32rem];
+            @apply mt-128;
         }
     }
     @media (min-height: 1500px) and (max-width: 1024px) {
@@ -80,12 +115,12 @@
             }
         }
         #flyout-menu-content {
-            @apply z-[1001] translate-x-full transform duration-500 ease-in-out;
+            @apply z-1001 translate-x-full transform duration-500 ease-in-out;
         }
 
         #menu-toggle:checked ~ & {
             #backdrop {
-                @apply fixed inset-0 z-[1000] bg-slate-500/30 backdrop-blur-sm;
+                @apply fixed inset-0 z-1000 bg-slate-500/30 backdrop-blur-xs;
                 label {
                     @apply sm:translate-y-4;
                 }
@@ -98,5 +133,74 @@
 
     #menu-toggle {
         @apply hidden;
+    }
+
+    /* kg-card styles (from old tailwind.config.mjs plugin) */
+    .kg-card {
+        color: var(--color-slate-900);
+        background-color: white;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+        overflow: hidden;
+    }
+
+    .prose .kg-card a {
+        color: var(--color-slate-900);
+        text-decoration: none;
+    }
+
+    .prose .kg-card a:after {
+        content: "";
+    }
+
+    .kg-card img {
+        margin: 0;
+    }
+
+    .kg-bookmark-container {
+        width: 100%;
+        display: flex;
+        gap: var(--spacing-4);
+        align-items: center;
+        text-decoration: none;
+    }
+
+    .kg-bookmark-content {
+        flex-grow: 1;
+        padding-top: var(--spacing-2);
+        padding-bottom: var(--spacing-2);
+        padding-left: var(--spacing-4);
+        padding-right: var(--spacing-4);
+    }
+
+    .kg-bookmark-title {
+        font-weight: bold;
+    }
+
+    .kg-bookmark-description {
+        font-size: 0.8em;
+        color: var(--color-slate-500);
+    }
+
+    .kg-bookmark-metadata {
+        display: flex;
+        font-size: 0.8em;
+        gap: 0.5rem;
+        align-items: center;
+        margin-top: var(--spacing-4);
+    }
+
+    .kg-bookmark-metadata .kg-bookmark-publisher {
+        opacity: 0.5;
+    }
+
+    .kg-bookmark-icon {
+        width: var(--spacing-10);
+        height: var(--spacing-10);
+    }
+
+    .kg-bookmark-thumbnail img {
+        width: var(--spacing-64);
+        object-fit: cover;
     }
 }
