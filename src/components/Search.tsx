@@ -2,6 +2,19 @@ import { useCallback, useEffect, useState, useMemo } from "react";
 import type { FC, ReactNode, KeyboardEvent } from "react";
 import { SearchIcon, SpinnerIcon } from "./Icons";
 
+interface IArticle {
+    title: string;
+    description: string;
+    image?: { width: number; height: number; src: string };
+    link: string;
+    tags: Array<string>;
+    bloom: Array<string>;
+}
+
+interface ISearchRecordSet {
+    articles: Array<IArticle>;
+}
+
 interface ISearchProps {
     className?: string;
     children?: ReactNode;
@@ -10,16 +23,7 @@ interface ISearchProps {
 const Search: FC<ISearchProps> = ({ className = "" }) => {
     const [term, setTerm] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [recordSet, setRecordSet] = useState<{
-        articles: Array<{
-            title: string;
-            description: string;
-            image?: { width: number; height: number; src: string };
-            link: string;
-            tags: Array<string>;
-            bloom: Array<string>;
-        }>;
-    }>({ articles: [] });
+    const [recordSet, setRecordSet] = useState<ISearchRecordSet>({ articles: [] });
     const [selectedElementIndex, setSelectedElementIndex] = useState<number>(-1);
 
     const onKeyDown = useCallback((event: KeyboardEvent<HTMLInputElement>) => {
@@ -66,7 +70,7 @@ const Search: FC<ISearchProps> = ({ className = "" }) => {
             return [];
         }
 
-        const found: Array<{ article: any; score: number }> = [];
+        const found: Array<{ article: IArticle; score: number }> = [];
         const searchTerms = term.split(new RegExp("[\\s]{1,}", "g"));
         for (const article of recordSet.articles) {
             // const filter = BloomFilter.fromJSON(article.bloom);
@@ -143,7 +147,7 @@ const Search: FC<ISearchProps> = ({ className = "" }) => {
             </div>
             {term.length > 0 && (
                 <ul className="my-2 rounded border border-primary/20 bg-bg-panel" id="BlogSearchResult">
-                    {results.map((result: any, index) => (
+                    {results.map((result, index) => (
                         <li
                             key={result.title}
                             className={
@@ -154,15 +158,17 @@ const Search: FC<ISearchProps> = ({ className = "" }) => {
                                 href={result.link}
                                 className="flex gap-4 px-4 py-3 text-text-primary no-underline hover:no-underline"
                             >
-                                <figure className="shrink-0">
-                                    <img
-                                        src={result.image.src}
-                                        alt={result.title}
-                                        width={result.image.width}
-                                        height={result.image.height}
-                                        className="rounded"
-                                    />
-                                </figure>
+                                {result.image && (
+                                    <figure className="shrink-0">
+                                        <img
+                                            src={result.image.src}
+                                            alt={result.title}
+                                            width={result.image.width}
+                                            height={result.image.height}
+                                            className="rounded"
+                                        />
+                                    </figure>
+                                )}
                                 <div>
                                     <p className="text-lg font-medium text-primary">{result.title}</p>
                                     <p className="line-clamp-2 overflow-hidden text-ellipsis text-sm text-text-secondary">
