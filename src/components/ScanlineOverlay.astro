@@ -1,0 +1,63 @@
+---
+/**
+ * ScanlineOverlay - Optional CRT scanline effect
+ * Adds retro monitor aesthetic
+ */
+
+interface Props {
+    intensity?: "subtle" | "medium" | "strong";
+    animated?: boolean;
+    class?: string;
+}
+
+const { intensity = "subtle", animated = false, class: className = "" } = Astro.props;
+
+const intensityMap = {
+    subtle: 0.02,
+    medium: 0.05,
+    strong: 0.1
+};
+---
+
+<div
+    class:list={["scanline-overlay", animated && "scanline-animated", className]}
+    style={`--scanline-opacity: ${intensityMap[intensity]};`}
+    aria-hidden="true"
+>
+</div>
+
+<style>
+    .scanline-overlay {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 100;
+        background: repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, var(--scanline-opacity, 0.02)) 2px,
+            rgba(0, 0, 0, var(--scanline-opacity, 0.02)) 4px
+        );
+    }
+
+    .scanline-animated {
+        animation: scanline-drift 8s linear infinite;
+    }
+
+    @keyframes scanline-drift {
+        0% {
+            transform: translateY(0);
+        }
+        100% {
+            transform: translateY(4px);
+        }
+    }
+
+    /* Respect reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+        .scanline-animated {
+            animation: none;
+        }
+    }
+</style>

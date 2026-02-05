@@ -1,63 +1,183 @@
 ---
-import { colors } from "~lib/themeColors";
-const rgb = (hex: string) => {
-    hex = hex.replace("#", "");
-
-    const r = parseInt(hex.substring(0, 2), 16);
-    const g = parseInt(hex.substring(2, 4), 16);
-    const b = parseInt(hex.substring(4, 6), 16);
-    return [r, g, b].join(" ");
-};
+/**
+ * ThemeToggle - Multi-theme switcher supporting 4 color palettes
+ * Cool Cyber, Synthwave, Matrix, and Amber Terminal
+ */
+import { themes } from "~lib/themeColors";
 ---
 
 <style>
     @reference "tailwindcss";
 
-    .sun {
-        fill: var(--color-primary);
+    .theme-toggle-container {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
     }
-    .moon {
+
+    /* Dark/Light mode toggle */
+    .mode-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border: 1px solid oklch(0.75 0.18 195 / 0.3);
+        border-radius: 0.375rem;
+        background: transparent;
+        color: var(--color-primary, oklch(0.75 0.18 195));
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .mode-toggle:hover {
+        background: oklch(0.75 0.18 195 / 0.1);
+        border-color: var(--color-primary, oklch(0.75 0.18 195));
+        box-shadow: 0 0 8px oklch(0.75 0.18 195 / 0.3);
+    }
+
+    .mode-toggle:focus-visible {
+        outline: 2px solid var(--color-primary, oklch(0.75 0.18 195));
+        outline-offset: 2px;
+    }
+
+    .sun-icon,
+    .moon-icon {
+        transition: all 0.3s ease;
+    }
+
+    .sun-icon {
+        fill: var(--color-primary, oklch(0.75 0.18 195));
+    }
+
+    .moon-icon {
         fill: transparent;
     }
 
-    :global(.dark) .sun {
+    :global(.dark) .sun-icon {
         fill: transparent;
     }
-    :global(.dark) .moon {
-        fill: var(--color-primary);
+
+    :global(.dark) .moon-icon {
+        fill: var(--color-primary, oklch(0.75 0.18 195));
+    }
+
+    /* Theme color buttons */
+    .theme-colors {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding-left: 0.75rem;
+        border-left: 1px solid oklch(0.75 0.18 195 / 0.2);
     }
 
     .theme-button {
-        border: 0;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: 2px solid transparent;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        overflow: hidden;
     }
 
-    .theme-button .toggle {
-        @apply bg-transparent transition-colors duration-200;
+    .theme-button::before {
+        content: "";
+        position: absolute;
+        inset: 2px;
+        border-radius: 50%;
+        background: inherit;
     }
 
-    /* .theme-button.selected {
-        @apply ring-8 ring-primary;
-    } */
-
-    .theme-button.selected .toggle {
-        @apply bg-white;
+    .theme-button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 12px currentColor;
     }
 
-    .theme-button:hover .toggle {
-        @apply bg-white/50;
+    .theme-button:focus-visible {
+        outline: 2px solid white;
+        outline-offset: 2px;
     }
 
-    :global(.dark) .theme-button.selected .toggle {
-        @apply bg-gray-950;
+    .theme-button.selected {
+        border-color: white;
+        box-shadow: 0 0 8px currentColor;
     }
 
-    :global(.dark) .theme-button:hover .toggle {
-        @apply bg-gray-950/50;
+    .theme-button .check-mark {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+
+    .theme-button.selected .check-mark {
+        opacity: 1;
+    }
+
+    .check-mark svg {
+        width: 14px;
+        height: 14px;
+        stroke: white;
+        stroke-width: 3;
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+    }
+
+    /* Tooltip */
+    .theme-button[title] {
+        position: relative;
+    }
+
+    @media (min-width: 768px) {
+        .theme-button::after {
+            content: attr(title);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.25rem 0.5rem;
+            background: oklch(0.15 0.02 260);
+            border: 1px solid oklch(0.75 0.18 195 / 0.3);
+            border-radius: 0.25rem;
+            font-family: var(--font-family-mono, monospace);
+            font-size: 0.65rem;
+            white-space: nowrap;
+            color: var(--color-text-primary, oklch(0.95 0.01 260));
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            margin-bottom: 0.5rem;
+        }
+
+        .theme-button:hover::after {
+            opacity: 1;
+        }
+    }
+
+    /* Light mode adjustments */
+    :global(html:not(.dark)) .mode-toggle {
+        border-color: oklch(0.5 0.18 195 / 0.3);
+        color: oklch(0.4 0.18 195);
+    }
+
+    :global(html:not(.dark)) .theme-colors {
+        border-left-color: oklch(0.5 0.18 195 / 0.2);
+    }
+
+    :global(html:not(.dark)) .theme-button.selected {
+        border-color: oklch(0.2 0.01 260);
     }
 </style>
 
 <script is:inline>
-    function handleToggleClick(e) {
+    function handleModeToggle(e) {
         if (e) {
             e.preventDefault();
             e.stopPropagation();
@@ -67,26 +187,28 @@ const rgb = (hex: string) => {
 
         const isDark = element.classList.contains("dark");
         localStorage.setItem("theme", isDark ? "dark" : "light");
+        element.style.colorScheme = isDark ? "dark" : "light";
     }
 
-    function setThemeColor(color) {
-        if (!color) {
-            return;
-        }
+    function setThemeColor(themeId) {
+        if (!themeId) return;
 
-        document.documentElement.style.setProperty("--color-primary", color);
-        window.localStorage.setItem("theme-color", color);
+        document.documentElement.setAttribute("data-theme", themeId);
+        localStorage.setItem("theme-color", themeId);
 
+        // Update button states
         document.querySelectorAll(".theme-button").forEach((button) => {
             button.classList.remove("selected");
         });
-        document
-            .querySelector(".theme-button[data-value='" + color + "']")
-            .classList.add("selected");
+        const activeButton = document.querySelector(`.theme-button[data-theme="${themeId}"]`);
+        if (activeButton) {
+            activeButton.classList.add("selected");
+        }
     }
 
-    function pageSetup() {
-        const theme = (() => {
+    function themeSetup() {
+        // Dark/light mode
+        const mode = (() => {
             if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
                 return localStorage.getItem("theme");
             }
@@ -96,79 +218,72 @@ const rgb = (hex: string) => {
             return "light";
         })();
 
-        if (theme === "light") {
+        if (mode === "light") {
             document.documentElement.classList.remove("dark");
+            document.documentElement.style.colorScheme = "light";
         } else {
             document.documentElement.classList.add("dark");
+            document.documentElement.style.colorScheme = "dark";
         }
+        localStorage.setItem("theme", mode);
 
-        window.localStorage.setItem("theme", theme);
+        // Color theme
+        const colorTheme = localStorage.getItem("theme-color") || "cool-cyber";
+        setThemeColor(colorTheme);
 
-        const color = window.localStorage.getItem("theme-color");
-        if (color) {
-            setThemeColor(color);
-        }
+        // Event listeners
+        document.querySelectorAll(".mode-toggle").forEach((btn) => {
+            btn.addEventListener("click", handleModeToggle);
+        });
 
-        const modeButtons = document.querySelectorAll(".light-dark-toggle");
-        for (const modeButton of modeButtons) {
-            modeButton.addEventListener("click", handleToggleClick);
-        }
-
-        const themeButtons = document.querySelectorAll(".theme-button");
-        for (const themeButton of themeButtons) {
-            themeButton.addEventListener("click", (e) => {
-                if (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    const target = e.currentTarget;
-                    const color = target.getAttribute("data-value");
-                    setThemeColor(color);
-                }
+        document.querySelectorAll(".theme-button").forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                const themeId = btn.getAttribute("data-theme");
+                setThemeColor(themeId);
             });
-        }
+        });
     }
 
-    document.addEventListener("astro:page-load", () => {
-        pageSetup();
-    });
+    document.addEventListener("astro:page-load", themeSetup);
 </script>
 
-<ul class="flex items-center gap-2">
-    <li class="flex items-center">
-        <button
-            class="light-dark-toggle rounded-full bg-transparent p-1 transition duration-200 hover:bg-primary/50"
-        >
-            <svg class="size-8 lg:size-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path
-                    class="sun"
-                    fill-rule="evenodd"
-                    d="M12 17.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zm0 1.5a7 7 0 1 0 0-14 7 7 0 0 0 0 14zm12-7a.8.8 0 0 1-.8.8h-2.4a.8.8 0 0 1 0-1.6h2.4a.8.8 0 0 1 .8.8zM4 12a.8.8 0 0 1-.8.8H.8a.8.8 0 0 1 0-1.6h2.5a.8.8 0 0 1 .8.8zm16.5-8.5a.8.8 0 0 1 0 1l-1.8 1.8a.8.8 0 0 1-1-1l1.7-1.8a.8.8 0 0 1 1 0zM6.3 17.7a.8.8 0 0 1 0 1l-1.7 1.8a.8.8 0 1 1-1-1l1.7-1.8a.8.8 0 0 1 1 0zM12 0a.8.8 0 0 1 .8.8v2.5a.8.8 0 0 1-1.6 0V.8A.8.8 0 0 1 12 0zm0 20a.8.8 0 0 1 .8.8v2.4a.8.8 0 0 1-1.6 0v-2.4a.8.8 0 0 1 .8-.8zM3.5 3.5a.8.8 0 0 1 1 0l1.8 1.8a.8.8 0 1 1-1 1L3.5 4.6a.8.8 0 0 1 0-1zm14.2 14.2a.8.8 0 0 1 1 0l1.8 1.7a.8.8 0 0 1-1 1l-1.8-1.7a.8.8 0 0 1 0-1z"
-                ></path>
-                <path
-                    class="moon"
-                    fill-rule="evenodd"
-                    d="M16.5 6A10.5 10.5 0 0 1 4.7 16.4 8.5 8.5 0 1 0 16.4 4.7l.1 1.3zm-1.7-2a9 9 0 0 1 .2 2 9 9 0 0 1-11 8.8 9.4 9.4 0 0 1-.8-.3c-.4 0-.8.3-.7.7a10 10 0 0 0 .3.8 10 10 0 0 0 9.2 6 10 10 0 0 0 4-19.2 9.7 9.7 0 0 0-.9-.3c-.3-.1-.7.3-.6.7a9 9 0 0 1 .3.8z"
-                ></path>
-            </svg>
-        </button>
-    </li>
-    {
-        colors.map((color, i) => (
-            <li class="flex items-center">
+<div class="theme-toggle-container">
+    {/* Dark/Light mode toggle */}
+    <button class="mode-toggle" aria-label="Toggle dark/light mode" type="button">
+        <svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+                class="sun-icon"
+                fill-rule="evenodd"
+                d="M12 17.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zm0 1.5a7 7 0 1 0 0-14 7 7 0 0 0 0 14zm12-7a.8.8 0 0 1-.8.8h-2.4a.8.8 0 0 1 0-1.6h2.4a.8.8 0 0 1 .8.8zM4 12a.8.8 0 0 1-.8.8H.8a.8.8 0 0 1 0-1.6h2.5a.8.8 0 0 1 .8.8zm16.5-8.5a.8.8 0 0 1 0 1l-1.8 1.8a.8.8 0 0 1-1-1l1.7-1.8a.8.8 0 0 1 1 0zM6.3 17.7a.8.8 0 0 1 0 1l-1.7 1.8a.8.8 0 1 1-1-1l1.7-1.8a.8.8 0 0 1 1 0zM12 0a.8.8 0 0 1 .8.8v2.5a.8.8 0 0 1-1.6 0V.8A.8.8 0 0 1 12 0zm0 20a.8.8 0 0 1 .8.8v2.4a.8.8 0 0 1-1.6 0v-2.4a.8.8 0 0 1 .8-.8zM3.5 3.5a.8.8 0 0 1 1 0l1.8 1.8a.8.8 0 1 1-1 1L3.5 4.6a.8.8 0 0 1 0-1zm14.2 14.2a.8.8 0 0 1 1 0l1.8 1.7a.8.8 0 0 1-1 1l-1.8-1.7a.8.8 0 0 1 0-1z"
+            ></path>
+            <path
+                class="moon-icon"
+                fill-rule="evenodd"
+                d="M16.5 6A10.5 10.5 0 0 1 4.7 16.4 8.5 8.5 0 1 0 16.4 4.7l.1 1.3zm-1.7-2a9 9 0 0 1 .2 2 9 9 0 0 1-11 8.8 9.4 9.4 0 0 1-.8-.3c-.4 0-.8.3-.7.7a10 10 0 0 0 .3.8 10 10 0 0 0 9.2 6 10 10 0 0 0 4-19.2 9.7 9.7 0 0 0-.9-.3c-.3-.1-.7.3-.6.7a9 9 0 0 1 .3.8z"
+            ></path>
+        </svg>
+    </button>
+
+    {/* Theme color buttons */}
+    <div class="theme-colors">
+        {
+            themes.map((theme, index) => (
                 <button
-                    class:list={[
-                        "theme-button flex size-8 items-center justify-center rounded-full lg:size-6",
-                        i === 0 ? "selected" : ""
-                    ]}
-                    data-value={rgb(color)}
-                    style={{ backgroundColor: `#${color}` }}
-                    aria-label="Toggle theme color"
+                    class:list={["theme-button", index === 0 && "selected"]}
+                    data-theme={theme.id}
+                    title={theme.name}
+                    style={`background-color: ${theme.preview}; color: ${theme.preview};`}
+                    aria-label={`Switch to ${theme.name} theme`}
+                    type="button"
                 >
-                    <span class="sr-only">color {i + 1}</span>
-                    <span class="toggle block size-3 rounded-full" />
+                    <span class="check-mark">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M5 12l5 5L20 7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
                 </button>
-            </li>
-        ))
-    }
-</ul>
+            ))
+        }
+    </div>
+</div>

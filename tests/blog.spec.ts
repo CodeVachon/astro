@@ -7,8 +7,8 @@ test.describe("Blog Index", () => {
         // Check page title
         await expect(page).toHaveTitle(/Blog/i);
 
-        // Check for posts heading
-        await expect(page.getByRole("heading", { name: /recent posts/i })).toBeVisible();
+        // Check for blog archive heading (terminal-style header)
+        await expect(page.getByRole("heading", { name: /blog archive/i })).toBeVisible();
     });
 
     test("displays multiple blog posts", async ({ page }) => {
@@ -35,8 +35,8 @@ test.describe("Blog Post", () => {
         // Check page has title
         await expect(page).toHaveTitle(/DevOps/i);
 
-        // Check article heading exists (use article scope to avoid sidebar h1)
-        const articleHeading = page.locator("article h1, .font-serif");
+        // Check article heading exists
+        const articleHeading = page.locator("article h1, .article-title");
         await expect(articleHeading.first()).toBeVisible();
 
         // Check article content exists
@@ -48,8 +48,8 @@ test.describe("Blog Post", () => {
         await page.goto("/blog/2014-12-03-what-is-devops/");
 
         // Check that the article header section exists
-        const header = page.locator("article header");
-        await expect(header).toBeVisible();
+        const header = page.locator("article header, .article-header");
+        await expect(header.first()).toBeVisible();
     });
 
     test("displays tags on blog post", async ({ page }) => {
@@ -73,8 +73,9 @@ test.describe("Blog Post", () => {
     test("has GitHub source link", async ({ page }) => {
         await page.goto("/blog/2014-12-03-what-is-devops/");
 
-        // Check for View on GitHub link
-        await expect(page.getByRole("link", { name: /view on github/i })).toBeVisible();
+        // Check for View source on GitHub link (in article footer, more specific)
+        const githubLink = page.locator("a.github-link, a[href*='github.com/CodeVachon/astro/blob']");
+        await expect(githubLink.first()).toBeVisible();
     });
 
     test("renders code blocks with syntax highlighting", async ({ page }) => {

@@ -1,0 +1,162 @@
+---
+/**
+ * NeonButton - Glowing CTA button with sci-fi styling
+ */
+
+interface Props {
+    href?: string;
+    variant?: "outline" | "filled";
+    size?: "sm" | "md" | "lg";
+    class?: string;
+    type?: "button" | "submit" | "reset";
+}
+
+const {
+    href,
+    variant = "outline",
+    size = "md",
+    class: className = "",
+    type = "button"
+} = Astro.props;
+
+const Tag = href ? "a" : "button";
+
+const sizeClasses = {
+    sm: "px-4 py-2 text-xs",
+    md: "px-6 py-3 text-sm",
+    lg: "px-8 py-4 text-base"
+};
+---
+
+<Tag
+    href={href}
+    type={!href ? type : undefined}
+    class:list={[
+        "neon-button",
+        variant === "filled" && "neon-button-filled",
+        sizeClasses[size],
+        className
+    ]}
+>
+    <span class="button-content">
+        <slot />
+    </span>
+    <span class="button-glow" aria-hidden="true"></span>
+</Tag>
+
+<style>
+    .neon-button {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        font-family: var(--font-family-mono, "JetBrains Mono", monospace);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-decoration: none;
+        border: 1px solid oklch(0.75 0.18 195 / 0.5);
+        border-radius: 0.5rem;
+        background: transparent;
+        color: var(--color-primary, oklch(0.75 0.18 195));
+        cursor: pointer;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .neon-button:hover {
+        border-color: var(--color-primary, oklch(0.75 0.18 195));
+        color: white;
+        text-shadow: none;
+        box-shadow:
+            0 0 4px var(--color-primary, oklch(0.75 0.18 195)),
+            0 0 8px var(--color-primary, oklch(0.75 0.18 195)),
+            0 0 16px var(--color-primary, oklch(0.75 0.18 195));
+    }
+
+    .neon-button:active {
+        transform: scale(0.98);
+    }
+
+    .neon-button:focus-visible {
+        outline: 2px solid var(--color-primary, oklch(0.75 0.18 195));
+        outline-offset: 2px;
+    }
+
+    .neon-button-filled {
+        background: oklch(0.75 0.18 195 / 0.15);
+        color: white;
+    }
+
+    .neon-button-filled:hover {
+        background: oklch(0.75 0.18 195 / 0.3);
+    }
+
+    .button-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .button-glow {
+        position: absolute;
+        inset: 0;
+        background: oklch(0.75 0.18 195 / 0.1);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .neon-button:hover .button-glow {
+        opacity: 1;
+    }
+
+    /* Animated border effect on hover */
+    .neon-button::before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        border-radius: 0.6rem;
+        background: linear-gradient(
+            45deg,
+            var(--color-primary, oklch(0.75 0.18 195)),
+            var(--color-secondary, oklch(0.65 0.2 250)),
+            var(--color-accent, oklch(0.72 0.22 145)),
+            var(--color-primary, oklch(0.75 0.18 195))
+        );
+        background-size: 300% 300%;
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 0.3s ease;
+    }
+
+    .neon-button:hover::before {
+        opacity: 0.5;
+        animation: gradient-rotate 3s linear infinite;
+    }
+
+    @keyframes gradient-rotate {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    /* Light mode */
+    :global(html:not(.dark)) .neon-button {
+        border-color: oklch(0.5 0.18 195 / 0.5);
+        color: oklch(0.4 0.18 195);
+    }
+
+    :global(html:not(.dark)) .neon-button:hover {
+        border-color: oklch(0.4 0.18 195);
+        color: oklch(0.2 0.18 195);
+        box-shadow:
+            0 0 4px oklch(0.5 0.18 195),
+            0 0 8px oklch(0.5 0.18 195);
+    }
+</style>

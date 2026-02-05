@@ -6,6 +6,7 @@ import myImage from "../assets/me.png";
 import Glow from "~components/Glow.astro";
 import { ClientRouter } from "astro:transitions";
 import ThemeToggle from "../components/ThemeToggle.astro";
+import GridBackground from "~components/GridBackground.astro";
 import { fade } from "astro:transitions";
 
 interface Props {
@@ -71,7 +72,7 @@ import Search from "~components/Search";
 import KeyBoardKey from "~components/KeyBoardKey";
 ---
 
-<html lang="en" class="dark h-full antialiased" style="color-scheme: dark;">
+<html lang="en" class="dark h-full antialiased" style="color-scheme: dark;" data-theme="cool-cyber">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -82,10 +83,10 @@ import KeyBoardKey from "~components/KeyBoardKey";
         <meta name="referrer" content="no-referrer-when-downgrade" />
         <link rel="canonical" href={canonical} />
 
-        <meta name="theme-color" content="#0ea5e9" />
+        <meta name="theme-color" content="#00d4ff" />
         <meta property="author" content={ogAuthor} />
         <meta name="article:author" content={ogAuthor} />
-        <meta name="color-scheme" content="dark" />
+        <meta name="color-scheme" content="dark light" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta property="og:site_name" content="All About Christopher Vachon" />
@@ -135,15 +136,20 @@ import KeyBoardKey from "~components/KeyBoardKey";
         <ClientRouter />
     </head>
     <body
-        class="absolute inset-0 flex h-screen min-w-[350px] flex-col bg-white text-slate-900 lg:flex-row lg:overflow-hidden dark:bg-gray-950 dark:text-slate-50"
+        class="relative min-h-screen min-w-[350px] bg-bg-deep text-text-primary lg:flex lg:flex-row lg:overflow-hidden"
     >
+        {/* Grid background */}
+        <GridBackground opacity={0.025} size="md" fade={true} class="fixed inset-0 z-0" />
+
         <input type="checkbox" id="menu-toggle" title="Toggle the Mobile Navigation" />
+
+        {/* Sidebar / Profile Section */}
         <section
             id="sidebar"
             class:list={[
-                "relative sticky top-0 z-[100] flex items-center justify-center transition duration-500 lg:flex-shrink-0",
-                sideWidth === "full" ? "lg:w-1/2" : "lg:w-1/3",
-                "text-slate-50"
+                "relative z-50 flex items-center justify-center transition duration-500 bg-bg-deep",
+                "sticky top-0 lg:h-screen lg:flex-shrink-0",
+                sideWidth === "full" ? "lg:w-1/2 sidebar-full" : "lg:w-1/3 sidebar-half"
             ]}
         >
             <Glow />
@@ -153,20 +159,35 @@ import KeyBoardKey from "~components/KeyBoardKey";
             >
                 <a
                     href="/"
-                    class="flex w-full min-w-[115px] items-center gap-4 decoration-transparent sm:w-1/3 lg:w-full lg:flex-col lg:items-start"
+                    class="flex w-full min-w-[115px] items-center gap-4 no-underline sm:w-1/3 lg:w-full lg:flex-col lg:items-start"
                 >
                     <header class="flex items-center gap-4 lg:flex-col lg:items-start">
-                        <Picture
-                            id="profile-image"
-                            class="size-6 min-h-[24px] min-w-[24px] flex-shrink-0 flex-grow-0 rounded-full lg:size-64 lg:rounded-2xl"
-                            src={myImage}
-                            widths={[24, 100, 300, 450]}
-                            formats={["webp", "jpg"]}
-                            fallbackFormat="jpg"
-                            alt="Christopher Vachon"
-                            loading="eager"
-                        />
-                        <h1 class="text-lg font-bold lg:text-2xl">Christopher Vachon</h1>
+                        {/* Hexagonal profile image */}
+                        <div class="hex-profile-wrapper aspect-square size-8 lg:size-48 flex-shrink-0">
+                            <Picture
+                                id="profile-image"
+                                class="hex-profile-image size-full"
+                                src={myImage}
+                                widths={[32, 100, 200, 300]}
+                                formats={["webp", "jpg"]}
+                                fallbackFormat="jpg"
+                                alt="Christopher Vachon"
+                                loading="eager"
+                            />
+                            <div class="hex-glow" aria-hidden="true"></div>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <h1 class="font-display text-lg font-bold tracking-wider text-white lg:text-2xl">
+                                Christopher Vachon
+                            </h1>
+                            <div class="hidden items-center gap-2 font-mono text-xs text-accent lg:flex">
+                                <span class="status-dot"></span>
+                                <span>STATUS: ONLINE</span>
+                            </div>
+                            <div class="hidden font-mono text-xs text-text-secondary lg:block">
+                                <span class="opacity-50">//</span> DEVELOPER
+                            </div>
+                        </div>
                     </header>
                 </a>
                 <nav class="hidden w-1/3 md:block lg:w-full">
@@ -176,15 +197,25 @@ import KeyBoardKey from "~components/KeyBoardKey";
                                 <li class={item.className ?? ""}>
                                     <a
                                         href={item.href}
-                                        class="text-white decoration-transparent transition duration-200 ease-in-out hover:text-white hover:decoration-primary"
+                                        class:list={[
+                                            "nav-link flex items-center gap-2 text-white no-underline transition duration-200 ease-in-out",
+                                            Astro.url.pathname === item.href ||
+                                            (item.href !== "/" &&
+                                                Astro.url.pathname.startsWith(item.href))
+                                                ? "text-primary"
+                                                : "hover:text-primary"
+                                        ]}
                                     >
+                                        <span class="font-mono text-xs text-primary/50 lg:inline hidden">
+                                            &gt;
+                                        </span>
                                         {item.name}
                                     </a>
                                 </li>
                             ))
                         }
                         <li class="hidden pt-6 lg:block">
-                            <p class="text-xs text-slate-500">
+                            <p class="font-mono text-xs text-text-muted">
                                 <KeyBoardKey keyModifier="cmd" client:load>K</KeyBoardKey> to open Command
                                 Pallet
                             </p>
@@ -195,10 +226,10 @@ import KeyBoardKey from "~components/KeyBoardKey";
                     <label
                         for="menu-toggle"
                         id="menu-open-toggle"
-                        class="flex h-8 w-8 cursor-pointer items-center justify-center rounded transition-colors duration-200 ease-in-out hover:bg-primary lg:hidden dark:bg-slate-800 dark:text-white"
+                        class="flex h-8 w-8 cursor-pointer items-center justify-center rounded border border-primary/30 transition-colors duration-200 ease-in-out hover:border-primary hover:bg-primary/10 lg:hidden"
                         aria-label="Toggle menu"
                     >
-                        <HamburgerIcon className={"size-8"} />
+                        <HamburgerIcon className={"size-6 text-primary"} />
                     </label>
                 </nav>
                 <nav class="hidden w-1/3 justify-end lg:flex lg:w-full lg:justify-start">
@@ -209,10 +240,10 @@ import KeyBoardKey from "~components/KeyBoardKey";
                                     <a
                                         href={href}
                                         target="_blank"
-                                        title={`Check me out on ${name}`}
-                                        class="text-primary hover:text-white"
+                                        title={`Connect on ${name}`}
+                                        class="social-link flex h-9 w-9 items-center justify-center rounded border border-primary/30 text-primary no-underline transition-all duration-200 hover:border-primary hover:bg-primary/10 hover:shadow-[0_0_8px_var(--color-primary)]"
                                     >
-                                        <Icon name={icon} className="size-8 lg:size-5" />
+                                        <Icon name={icon} className="size-5" />
                                     </a>
                                 </li>
                             ))
@@ -221,14 +252,16 @@ import KeyBoardKey from "~components/KeyBoardKey";
                 </nav>
             </div>
         </section>
+
+        {/* Main Content Section */}
         <section
-            class="z-[90] flex h-full flex-grow flex-col lg:overflow-y-auto"
-            transition:animate={fade({ duration: "0.8s" })}
+            class="relative z-10 flex h-full flex-grow flex-col overflow-x-hidden lg:h-screen lg:overflow-y-auto"
+            transition:animate={fade({ duration: "0.5s" })}
         >
             <main class:list={["flex-grow p-6 lg:py-24", className]} data-pagefind-body>
                 {
                     headerImage && (
-                        <figure class="-mx-6 -mt-6 mb-6 max-w-[1200px] overflow-hidden lg:-mt-24">
+                        <figure class="header-image-wrapper -mx-6 -mt-6 mb-6 max-w-[1200px] overflow-hidden lg:-mt-24">
                             <Picture
                                 inferSize={true}
                                 src={headerImage as any}
@@ -239,76 +272,84 @@ import KeyBoardKey from "~components/KeyBoardKey";
                                 fallbackFormat="jpg"
                                 loading="eager"
                             />
+                            {/* Gradient overlay */}
+                            <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg-deep via-transparent to-transparent" />
                         </figure>
                     )
                 }
                 <slot />
             </main>
             <footer
-                class="flex max-w-[1200px] items-center justify-between gap-6 px-6 py-4 lg:justify-normal"
+                class="flex max-w-[1200px] items-center justify-between gap-6 border-t border-primary/10 px-6 py-4 lg:justify-normal"
             >
                 <div class="order-2 lg:order-1">
                     <ThemeToggle />
                 </div>
-                <p class="order-1 text-center text-xs text-gray-500 lg:order-2 dark:text-gray-400">
-                    &copy; {new Date().getFullYear()} Christopher Vachon. All rights reserved.
+                <p class="order-1 font-mono text-xs text-text-muted lg:order-2">
+                    &copy; {new Date().getFullYear()} Christopher Vachon
                 </p>
             </footer>
         </section>
-        <section id="flyout-menu">
+
+        {/* Flyout Menu */}
+        <section id="flyout-menu" class="z-[1000]">
             <label id="backdrop" for="menu-toggle">
                 <label for="menu-toggle">
                     <CloseIcon
-                        className={"size-12 text-white transition-colors duration-200 hover:text-primary dark:text-white"}
+                        className={"size-12 text-white transition-colors duration-200 hover:text-primary"}
                     />
                 </label>
             </label>
             <div
                 id="flyout-menu-content"
-                class="fixed bottom-0 right-0 top-0 h-screen w-[90vw] min-w-[300px] bg-white shadow-md sm:w-[400px] dark:bg-slate-800"
+                class="fixed bottom-0 right-0 top-0 h-screen w-[90vw] min-w-[300px] border-l border-primary/30 bg-bg-deep shadow-lg sm:w-[400px]"
             >
-                <!-- GLOW:START -->
+                {/* Menu glow */}
                 <div
-                    class="absolute -top-[40%] bottom-auto left-0 right-0 -z-10 h-[180%] overflow-hidden dark:bg-gray-950"
+                    class="absolute -top-[40%] bottom-auto left-0 right-0 -z-10 h-[180%] overflow-hidden"
                 >
                     <svg
                         class="absolute bottom-0 left-0 right-0 top-0 h-full w-full text-primary"
                         aria-hidden="true"
                     >
                         <defs>
-                            <radialGradient id={`glow-command-pallet`} cx="0%">
-                                <stop offset="0%" stop-color={"currentcolor"} stop-opacity="0.4"
+                            <radialGradient id={`glow-menu`} cx="0%">
+                                <stop offset="0%" stop-color={"currentcolor"} stop-opacity="0.3"
                                 ></stop>
                                 <stop
                                     offset="53.95%"
                                     stop-color={"currentcolor"}
-                                    stop-opacity="0.09"></stop>
+                                    stop-opacity="0.06"></stop>
                                 <stop offset="100%" stop-color={"currentcolor"} stop-opacity="0"
                                 ></stop>
                             </radialGradient>
                         </defs>
-                        <rect width="100%" height="100%" fill={`url(#glow-command-pallet)`} class=""
-                        ></rect>
+                        <rect width="100%" height="100%" fill={`url(#glow-menu)`}></rect>
                     </svg>
                 </div>
-                <!-- GLOW:END -->
+
                 <nav
-                    class="flex h-full w-full flex-col justify-between overflow-y-auto border-l-2 border-l-primary/50"
+                    class="flex h-full w-full flex-col justify-between overflow-y-auto"
                 >
-                    <ol class="">
-                        <li>
-                            <Search client:visible />
+                    <ol>
+                        <li class="p-4">
+                            <Search client:load />
                         </li>
                         {
                             navItems.map((item) => (
-                                <li class={Astro.url.pathname === item.href ? "bg-primary/50" : ""}>
+                                <li class={Astro.url.pathname === item.href ? "bg-primary/20" : ""}>
                                     <a
                                         href={item.href}
-                                        title={`Check me out on ${item.name}`}
-                                        class="flex cursor-pointer items-center gap-6 p-4 decoration-transparent transition duration-200 ease-in-out hover:bg-primary hover:text-white"
+                                        title={`Go to ${item.name}`}
+                                        class="flex cursor-pointer items-center gap-6 p-4 no-underline transition duration-200 ease-in-out hover:bg-primary/10"
                                     >
-                                        <Icon name={item.icon ?? "link"} className="size-12" />
-                                        <span class="text-xl">{item.name}</span>
+                                        <Icon
+                                            name={item.icon ?? "link"}
+                                            className="size-10 text-primary"
+                                        />
+                                        <span class="font-display text-lg tracking-wider">
+                                            {item.name}
+                                        </span>
                                     </a>
                                 </li>
                             ))
@@ -322,11 +363,13 @@ import KeyBoardKey from "~components/KeyBoardKey";
                                     <a
                                         href={href}
                                         target="_blank"
-                                        title={`Check me out on ${name}`}
-                                        class=" flex cursor-pointer items-center gap-6 p-4 decoration-transparent transition duration-200 ease-in-out hover:bg-primary hover:text-white"
+                                        title={`Connect on ${name}`}
+                                        class="flex cursor-pointer items-center gap-6 p-4 no-underline transition duration-200 ease-in-out hover:bg-primary/10"
                                     >
-                                        <Icon name={icon} className="size-12" />
-                                        <span class="text-xl">{name}</span>
+                                        <Icon name={icon} className="size-10 text-primary" />
+                                        <span class="font-display text-lg tracking-wider">
+                                            {name}
+                                        </span>
                                     </a>
                                 </li>
                             ))
@@ -335,10 +378,10 @@ import KeyBoardKey from "~components/KeyBoardKey";
                         <li>
                             <label for="menu-toggle">
                                 <div
-                                    class="flex cursor-pointer items-center gap-6 p-4 transition duration-200 ease-in-out hover:bg-primary hover:text-white"
+                                    class="flex cursor-pointer items-center gap-6 p-4 transition duration-200 ease-in-out hover:bg-primary/10"
                                 >
-                                    <CloseIcon className={"size-12"} />
-                                    <span class="text-xl">Close</span>
+                                    <CloseIcon className={"size-10 text-primary"} />
+                                    <span class="font-display text-lg tracking-wider">Close</span>
                                 </div>
                             </label>
                         </li>
@@ -358,7 +401,6 @@ import KeyBoardKey from "~components/KeyBoardKey";
                 dataLayer.push(arguments);
             }
             gtag("js", new Date());
-
             gtag("config", "G-RREP1WR95X");
         </script>
         <script is:inline>
@@ -394,3 +436,126 @@ import KeyBoardKey from "~components/KeyBoardKey";
         </script>
     </body>
 </html>
+
+<style>
+    /* Hexagonal profile image styles */
+    .hex-profile-wrapper {
+        position: relative;
+        flex-shrink: 0;
+        transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
+    }
+
+    .hex-profile-image {
+        clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+
+    @media (min-width: 1024px) {
+        .hex-profile-image {
+            border: 2px solid var(--color-primary);
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
+
+        .hex-glow {
+            position: absolute;
+            inset: -4px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background: var(--color-primary);
+            opacity: 0.2;
+            filter: blur(12px);
+            z-index: -1;
+            animation: profile-glow 3s ease-in-out infinite;
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out, inset 0.5s ease-in-out;
+        }
+    }
+
+    /* Narrower sidebar (blog posts) at intermediate widths */
+    @media (min-width: 1024px) and (max-width: 1279px) {
+        .sidebar-half .hex-profile-wrapper {
+            position: relative;
+        }
+
+        /* Swap: move glow to the left (behind/outside), keep image centered */
+        .sidebar-half .hex-glow {
+            inset: -4px -4px -4px -80px;
+            opacity: 0.15;
+            filter: blur(20px);
+            z-index: -1;
+        }
+
+        .sidebar-half .hex-profile-image {
+            position: relative;
+            z-index: 1;
+        }
+    }
+
+    @keyframes profile-glow {
+        0%,
+        100% {
+            opacity: 0.15;
+            filter: blur(8px);
+        }
+        50% {
+            opacity: 0.3;
+            filter: blur(16px);
+        }
+    }
+
+    /* Status dot animation */
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--color-accent);
+        box-shadow: 0 0 8px var(--color-accent);
+        animation: status-blink 2s ease-in-out infinite;
+    }
+
+    @keyframes status-blink {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.4;
+        }
+    }
+
+    /* Header image styling */
+    .header-image-wrapper {
+        position: relative;
+    }
+
+    .header-image-wrapper::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 50%;
+        background: linear-gradient(to top, var(--color-bg-deep), transparent);
+        pointer-events: none;
+    }
+
+    /* Navigation link hover effect */
+    .nav-link {
+        position: relative;
+    }
+
+    .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 0;
+        height: 1px;
+        background: var(--color-primary);
+        transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+        width: 100%;
+    }
+</style>

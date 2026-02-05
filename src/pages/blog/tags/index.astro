@@ -1,9 +1,12 @@
 ---
 import Layout from "~layouts/Layout.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
-import H1 from "~components/H1.astro";
+import TerminalHeader from "~components/TerminalHeader.astro";
 import BreadCrumbs from "~components/BreadCrumbs.astro";
-import ArticleList from "~components/ArticleList.astro";
+import HexGrid from "~components/HexGrid.astro";
+import Badge from "~components/Badge.astro";
+import DashboardPanel from "~components/DashboardPanel.astro";
+import NeonButton from "~components/NeonButton.astro";
 
 const allTags = await getCollection("tag");
 const allBlogPosts = await getCollection("blog", ({ data }) => {
@@ -14,14 +17,12 @@ allBlogPosts.sort((a, b) => {
     return +(b.data.featured ?? false) < +(a.data.featured ?? false) ? 1 : -1;
 });
 
-// const tagList = Array.from(tags.keys()).sort();
-
 interface TagWithArticles {
     tag: CollectionEntry<"tag">;
     articles: Array<CollectionEntry<"blog">>;
 }
 
-const tagsWithAricles: Array<TagWithArticles> = [];
+const tagsWithArticles: Array<TagWithArticles> = [];
 const singletonTags: Array<TagWithArticles> = [];
 
 for (const thisTag of allTags) {
@@ -29,71 +30,220 @@ for (const thisTag of allTags) {
         post.data.tags.some((articleTag) => articleTag.id === thisTag.id)
     );
     if (articles.length >= 3) {
-        tagsWithAricles.push({ tag: thisTag, articles: articles });
-    } else {
+        tagsWithArticles.push({ tag: thisTag, articles: articles });
+    } else if (articles.length > 0) {
         singletonTags.push({ tag: thisTag, articles });
     }
 }
+
+// Sort by article count
+tagsWithArticles.sort((a, b) => b.articles.length - a.articles.length);
+singletonTags.sort((a, b) => b.articles.length - a.articles.length);
 ---
 
-<Layout title="Tags" sideWidth="half">
-    <H1>All Tags</H1>
-    <BreadCrumbs
-        crumbs={[
-            { label: "Home", href: "/" },
-            { label: "Blog", href: "/blog" }
-        ]}
-    >
-        Tags
-    </BreadCrumbs>
-    <div class="flex flex-col gap-4">
-        <h2 class="text-2xl font-bold">Popular Tags</h2>
-        <ol class="flex flex-col gap-12">
+<Layout title="Tags" sideWidth="half" className="flex flex-col gap-8">
+    <header class="page-header">
+        <TerminalHeader level={1}>Tag Index</TerminalHeader>
+        <BreadCrumbs
+            crumbs={[
+                { label: "Home", href: "/" },
+                { label: "Blog", href: "/blog" }
+            ]}
+        >
+            Tags
+        </BreadCrumbs>
+        <p class="header-description">
+            Browse articles by topic. Tags with 3+ articles are shown with previews.
+        </p>
+    </header>
+
+    {/* Popular Tags with Article Grids */}
+    <section class="popular-tags">
+        <TerminalHeader level={2}>Popular Tags</TerminalHeader>
+
+        <div class="tags-grid">
             {
-                tagsWithAricles.map(async (record) => {
-                    const remainingPostsLength = record.articles.length - 3;
+                tagsWithArticles.map((record) => {
+                    const remainingCount = record.articles.length - 3;
                     return (
-                        <li class="flex flex-col gap-4">
-                            <h3 class="-mx-6 bg-slate-900 px-6 py-4 text-xl font-semibold text-white">
-                                <a href={["tags", record.tag.id].join("/")} class="capitalize">
-                                    {record.tag.data.name}
-                                </a>
-                            </h3>
+                        <div class="tag-section">
+                            <header class="tag-header">
+                                <div class="tag-info">
+                                    <Badge href={`/blog/tags/${record.tag.id}`} variant="glow" size="lg">
+                                        {record.tag.data.name}
+                                    </Badge>
+                                    <span class="article-count">
+                                        {record.articles.length} articles
+                                    </span>
+                                </div>
+                                {record.tag.data.description && (
+                                    <p class="tag-description">{record.tag.data.description}</p>
+                                )}
+                            </header>
 
-                            <p class="text-slate-700 dark:text-slate-300">
-                                {record.tag.data.description ??
-                                    `Blog posts on ${record.tag.data.name}`}
-                            </p>
+                            <HexGrid
+                                posts={record.articles.slice(0, 3)}
+                                columns={3}
+                                variant="rounded"
+                            />
 
-                            <div class="">
-                                <ArticleList articles={record.articles.slice(0, 3)} grid />
-                            </div>
-                            {record.articles.length > 3 && (
-                                <p>
-                                    <a href={`/blog/tags/${record.tag.id}`}>
-                                        See {remainingPostsLength} more {record.tag.data.name}
-                                        {`Post${remainingPostsLength === 1 ? "" : "s"}`}
-                                    </a>
-                                </p>
+                            {remainingCount > 0 && (
+                                <footer class="tag-footer">
+                                    <NeonButton
+                                        href={`/blog/tags/${record.tag.id}`}
+                                        size="sm"
+                                        variant="outline"
+                                    >
+                                        View {remainingCount} more
+                                    </NeonButton>
+                                </footer>
                             )}
-                        </li>
+                        </div>
                     );
                 })
             }
-        </ol>
-    </div>
-    <div class="mt-12 flex flex-col gap-6">
-        <h2 class="text-2xl font-bold">Less Popular Tags</h2>
-        <ol class="flex flex-col gap-4">
-            {
-                singletonTags.map((record) => (
-                    <li>
-                        <a href={["tags", record.tag.id].join("/")} class="capitalize">
-                            {record.tag.data.name}
-                        </a>
-                    </li>
-                ))
-            }
-        </ol>
-    </div>
+        </div>
+    </section>
+
+    {/* Other Tags */}
+    {
+        singletonTags.length > 0 && (
+            <section class="other-tags">
+                <TerminalHeader level={2}>Other Tags</TerminalHeader>
+
+                <DashboardPanel title="All Tags" status="idle">
+                    <div class="singleton-tags">
+                        {singletonTags.map((record) => (
+                            <a href={`/blog/tags/${record.tag.id}`} class="singleton-tag">
+                                <span class="tag-name">{record.tag.data.name}</span>
+                                <span class="tag-count">{record.articles.length}</span>
+                            </a>
+                        ))}
+                    </div>
+                </DashboardPanel>
+            </section>
+        )
+    }
+
+    {/* Back navigation */}
+    <footer class="page-footer">
+        <NeonButton href="/blog" variant="outline">Back to Blog</NeonButton>
+    </footer>
 </Layout>
+
+<style>
+    .page-header {
+        max-width: 800px;
+    }
+
+    .header-description {
+        margin-top: 1rem;
+        color: var(--color-text-secondary);
+        line-height: 1.7;
+    }
+
+    .popular-tags {
+        max-width: 1200px;
+    }
+
+    .tags-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+        margin-top: 2rem;
+    }
+
+    .tag-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        border: 1px solid oklch(0.75 0.18 195 / 0.1);
+        border-radius: 0.5rem;
+        background: oklch(0.1 0.01 260 / 0.3);
+    }
+
+    .tag-header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .tag-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .article-count {
+        font-family: var(--font-family-mono);
+        font-size: 0.75rem;
+        color: var(--color-text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .tag-description {
+        color: var(--color-text-secondary);
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    .tag-footer {
+        display: flex;
+        justify-content: flex-start;
+        padding-top: 1rem;
+        border-top: 1px solid oklch(0.75 0.18 195 / 0.1);
+    }
+
+    .other-tags {
+        max-width: 800px;
+    }
+
+    .singleton-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .singleton-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border: 1px solid oklch(0.75 0.18 195 / 0.2);
+        border-radius: 0.375rem;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        font-family: var(--font-family-mono);
+    }
+
+    .singleton-tag:hover {
+        border-color: var(--color-primary);
+        background: oklch(0.75 0.18 195 / 0.1);
+        text-shadow: none;
+    }
+
+    .tag-name {
+        color: var(--color-primary);
+        font-size: 0.875rem;
+    }
+
+    .tag-count {
+        color: var(--color-text-muted);
+        font-size: 0.7rem;
+        padding: 0.125rem 0.375rem;
+        background: oklch(0.75 0.18 195 / 0.1);
+        border-radius: 0.25rem;
+    }
+
+    .page-footer {
+        padding-top: 2rem;
+        border-top: 1px solid oklch(0.75 0.18 195 / 0.1);
+    }
+
+    /* Light mode */
+    :global(html:not(.dark)) .tag-section {
+        background: oklch(0.95 0.01 260 / 0.5);
+    }
+</style>

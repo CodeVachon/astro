@@ -1,0 +1,57 @@
+---
+/**
+ * TerminalHeader - Section headers with "// SECTION NAME" style
+ * Gives a terminal/code comment aesthetic
+ */
+
+interface Props {
+    level?: 1 | 2 | 3;
+    class?: string;
+}
+
+const { level = 2, class: className = "" } = Astro.props;
+
+const Tag = `h${level}` as "h1" | "h2" | "h3";
+
+const sizeClasses = {
+    1: "text-3xl lg:text-4xl",
+    2: "text-2xl lg:text-3xl",
+    3: "text-xl lg:text-2xl"
+};
+---
+
+<Tag
+    class:list={[
+        "terminal-header font-display font-bold tracking-wider text-primary",
+        sizeClasses[level],
+        className
+    ]}
+>
+    <slot />
+</Tag>
+
+<style>
+    .terminal-header {
+        font-family: var(--font-family-display, "Orbitron", system-ui);
+        letter-spacing: 0.1em;
+        line-height: 1.2;
+    }
+
+    .terminal-header::before {
+        content: "// ";
+        opacity: 0.5;
+        font-family: var(--font-family-mono, "JetBrains Mono", monospace);
+        font-weight: 400;
+    }
+
+    /* Add subtle glow on hover */
+    .terminal-header {
+        transition:
+            text-shadow 0.3s ease,
+            color 0.3s ease;
+    }
+
+    .terminal-header:hover {
+        text-shadow: 0 0 8px var(--color-primary, oklch(0.75 0.18 195));
+    }
+</style>

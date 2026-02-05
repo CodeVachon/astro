@@ -7,8 +7,8 @@ test.describe("Tags Index", () => {
         // Check page title
         await expect(page).toHaveTitle(/Tags/i);
 
-        // Check for all tags heading
-        await expect(page.getByRole("heading", { name: /all tags/i })).toBeVisible();
+        // Check for tag index heading
+        await expect(page.getByRole("heading", { name: /tag index/i })).toBeVisible();
     });
 
     test("displays tags sections", async ({ page }) => {

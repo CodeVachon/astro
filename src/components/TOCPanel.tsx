@@ -1,0 +1,261 @@
+import { useState, useEffect } from "react";
+
+interface TOCItem {
+    id: string;
+    text: string;
+    level: number;
+}
+
+interface TOCPanelProps {
+    selector?: string;
+    title?: string;
+}
+
+/**
+ * TOCPanel - Interactive table of contents panel
+ * Automatically generates TOC from headings in the article
+ */
+export default function TOCPanel({
+    selector = "article h2, article h3, article h4",
+    title = "TABLE OF CONTENTS"
+}: TOCPanelProps) {
+    const [items, setItems] = useState<TOCItem[]>([]);
+    const [activeId, setActiveId] = useState<string>("");
+
+    useEffect(() => {
+        // Collect headings
+        const headings = document.querySelectorAll(selector);
+        const tocItems: TOCItem[] = [];
+
+        headings.forEach((heading) => {
+            const id = heading.id || heading.textContent?.toLowerCase().replace(/\s+/g, "-") || "";
+            if (!heading.id) {
+                heading.id = id;
+            }
+
+            tocItems.push({
+                id,
+                text: heading.textContent || "",
+                level: parseInt(heading.tagName[1]) || 2
+            });
+        });
+
+        setItems(tocItems);
+
+        // Intersection observer for active heading
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setActiveId(entry.target.id);
+                    }
+                });
+            },
+            {
+                rootMargin: "-20% 0% -60% 0%",
+                threshold: 0
+            }
+        );
+
+        headings.forEach((heading) => observer.observe(heading));
+
+        return () => observer.disconnect();
+    }, [selector]);
+
+    if (items.length === 0) {
+        return null;
+    }
+
+    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+        e.preventDefault();
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: "smooth", block: "start" });
+            setActiveId(id);
+        }
+    };
+
+    const minLevel = Math.min(...items.map((item) => item.level));
+
+    return (
+        <div className="toc-panel">
+            <header className="toc-header">
+                <span className="status-dot" aria-hidden="true" />
+                <span className="header-text">// {title}</span>
+            </header>
+            <nav className="toc-nav" aria-label="Table of contents">
+                <ol className="toc-list">
+                    {items.map((item, index) => (
+                        <li
+                            key={item.id}
+                            className="toc-item"
+                            style={{ "--indent": item.level - minLevel } as React.CSSProperties}
+                        >
+                            <a
+                                href={`#${item.id}`}
+                                onClick={(e) => handleClick(e, item.id)}
+                                className={`toc-link ${activeId === item.id ? "active" : ""}`}
+                            >
+                                <span className="toc-index">{String(index + 1).padStart(2, "0")}</span>
+                                <span className="toc-text">{item.text}</span>
+                            </a>
+                        </li>
+                    ))}
+                </ol>
+            </nav>
+            <style>{`
+                .toc-panel {
+                    border: 1px solid oklch(0.75 0.18 195 / 0.2);
+                    border-radius: 0.5rem;
+                    background: oklch(0.15 0.02 260 / 0.5);
+                    backdrop-filter: blur(4px);
+                    overflow: hidden;
+                }
+
+                /* Corner accents */
+                .toc-panel {
+                    position: relative;
+                }
+
+                .toc-panel::before,
+                .toc-panel::after {
+                    content: "";
+                    position: absolute;
+                    width: 16px;
+                    height: 16px;
+                    border: 2px solid var(--color-primary, oklch(0.75 0.18 195));
+                    opacity: 0.4;
+                    pointer-events: none;
+                }
+
+                .toc-panel::before {
+                    top: -1px;
+                    left: -1px;
+                    border-right: none;
+                    border-bottom: none;
+                }
+
+                .toc-panel::after {
+                    bottom: -1px;
+                    right: -1px;
+                    border-left: none;
+                    border-top: none;
+                }
+
+                .toc-header {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    padding: 0.5rem 1rem;
+                    border-bottom: 1px solid oklch(0.75 0.18 195 / 0.15);
+                    font-family: var(--font-family-mono, "JetBrains Mono", monospace);
+                    font-size: 0.7rem;
+                    letter-spacing: 0.1em;
+                    color: oklch(0.75 0.18 195 / 0.8);
+                }
+
+                .status-dot {
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 50%;
+                    background: var(--color-accent, oklch(0.72 0.22 145));
+                    animation: toc-pulse 2s ease-in-out infinite;
+                }
+
+                @keyframes toc-pulse {
+                    0%, 100% { opacity: 1; }
+                    50% { opacity: 0.4; }
+                }
+
+                .toc-nav {
+                    max-height: 300px;
+                    overflow-y: auto;
+                    scrollbar-width: thin;
+                    scrollbar-color: oklch(0.75 0.18 195 / 0.3) transparent;
+                }
+
+                .toc-nav::-webkit-scrollbar {
+                    width: 4px;
+                }
+
+                .toc-nav::-webkit-scrollbar-track {
+                    background: transparent;
+                }
+
+                .toc-nav::-webkit-scrollbar-thumb {
+                    background: oklch(0.75 0.18 195 / 0.3);
+                    border-radius: 2px;
+                }
+
+                .toc-list {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                }
+
+                .toc-item {
+                    padding-left: calc(var(--indent, 0) * 1rem);
+                }
+
+                .toc-link {
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 0.75rem;
+                    padding: 0.5rem 1rem;
+                    text-decoration: none;
+                    transition: all 0.2s ease;
+                    border-left: 2px solid transparent;
+                }
+
+                .toc-link:hover {
+                    background: oklch(0.75 0.18 195 / 0.1);
+                    text-shadow: none;
+                }
+
+                .toc-link.active {
+                    background: oklch(0.75 0.18 195 / 0.15);
+                    border-left-color: var(--color-primary, oklch(0.75 0.18 195));
+                }
+
+                .toc-index {
+                    font-family: var(--font-family-mono, "JetBrains Mono", monospace);
+                    font-size: 0.65rem;
+                    color: oklch(0.75 0.18 195 / 0.5);
+                    flex-shrink: 0;
+                    margin-top: 0.15rem;
+                }
+
+                .toc-link.active .toc-index {
+                    color: var(--color-primary, oklch(0.75 0.18 195));
+                }
+
+                .toc-text {
+                    font-family: var(--font-family-body, "Space Grotesk", system-ui);
+                    font-size: 0.8rem;
+                    line-height: 1.4;
+                    color: oklch(0.75 0.02 260);
+                    transition: color 0.2s ease;
+                }
+
+                .toc-link:hover .toc-text,
+                .toc-link.active .toc-text {
+                    color: var(--color-primary, oklch(0.75 0.18 195));
+                }
+
+                /* Light mode */
+                :global(html:not(.dark)) .toc-panel {
+                    background: oklch(0.95 0.01 260 / 0.8);
+                }
+
+                :global(html:not(.dark)) .toc-text {
+                    color: oklch(0.3 0.02 260);
+                }
+
+                :global(html:not(.dark)) .toc-link:hover .toc-text,
+                :global(html:not(.dark)) .toc-link.active .toc-text {
+                    color: oklch(0.4 0.18 195);
+                }
+            `}</style>
+        </div>
+    );
+}

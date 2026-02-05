@@ -1,17 +1,52 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* =============================================================================
+   CYBER THEME SYSTEM
+   Retro-futuristic aesthetic with neon colors and sci-fi elements
+   ============================================================================= */
+
 @theme {
-    /* Custom colors */
-    --color-primary: oklch(0.685 0.169 237.323);
+    /* Primary Neon Colors (Cool Cyber default) */
+    --color-neon-cyan: oklch(0.75 0.18 195);
+    --color-neon-blue: oklch(0.65 0.20 250);
+    --color-neon-green: oklch(0.72 0.22 145);
+    --color-neon-magenta: oklch(0.65 0.25 330);
+
+    /* Theme-aware primary color */
+    --color-primary: var(--color-neon-cyan);
+    --color-secondary: var(--color-neon-blue);
+    --color-accent: var(--color-neon-green);
+    --color-highlight: var(--color-neon-magenta);
+
+    /* Background colors */
+    --color-bg-deep: oklch(0.08 0.01 260);
+    --color-bg-dark: oklch(0.12 0.015 260);
+    --color-bg-panel: oklch(0.15 0.02 260);
+    --color-bg-elevated: oklch(0.18 0.02 260);
+
+    /* Light mode backgrounds */
+    --color-bg-light: oklch(0.98 0.005 260);
+    --color-bg-light-panel: oklch(0.95 0.01 260);
+
+    /* Text colors */
+    --color-text-primary: oklch(0.95 0.01 260);
+    --color-text-secondary: oklch(0.75 0.02 260);
+    --color-text-muted: oklch(0.55 0.02 260);
+
+    /* Border colors */
+    --color-border-subtle: oklch(0.25 0.02 260);
+    --color-border-default: oklch(0.35 0.03 260);
 
     /* Custom font sizes */
     --font-size-2xs: 0.6875rem;
     --font-size-2xs--line-height: 1rem;
 
-    /* Custom font families */
-    --font-family-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-    --font-family-display: var(--font-mona-sans), ui-sans-serif, system-ui, sans-serif;
+    /* Font families */
+    --font-family-display: "Orbitron", "Exo 2", system-ui, sans-serif;
+    --font-family-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+    --font-family-body: "Space Grotesk", "Inter", system-ui, sans-serif;
+    --font-family-sans: var(--font-family-body);
 
     /* Custom opacity values */
     --opacity-2\.5: 0.025;
@@ -24,64 +59,573 @@
 
     /* Custom spacing */
     --spacing-128: 32rem;
+
+    /* Animation durations */
+    --duration-glow: 2s;
+    --duration-scan: 8s;
 }
 
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-*/
+/* =============================================================================
+   FONT FACES
+   ============================================================================= */
+
+@layer base {
+    @font-face {
+        font-family: "Orbitron";
+        src: url("/fonts/cyber/Orbitron-Regular.woff2") format("woff2");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "Orbitron";
+        src: url("/fonts/cyber/Orbitron-Bold.woff2") format("woff2");
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "JetBrains Mono";
+        src: url("/fonts/cyber/JetBrainsMono-Regular.woff2") format("woff2");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "JetBrains Mono";
+        src: url("/fonts/cyber/JetBrainsMono-Medium.woff2") format("woff2");
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "Space Grotesk";
+        src: url("/fonts/cyber/SpaceGrotesk-Regular.woff2") format("woff2");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "Space Grotesk";
+        src: url("/fonts/cyber/SpaceGrotesk-Medium.woff2") format("woff2");
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    /* Legacy PT Sans for fallback */
+    @font-face {
+        font-family: "PTSans";
+        src: url("/fonts/PTSans-Regular.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
+}
+
+/* =============================================================================
+   BASE STYLES
+   ============================================================================= */
+
 @layer base {
     *,
     ::after,
     ::before,
     ::backdrop,
     ::file-selector-button {
-        border-color: var(--color-gray-200, currentcolor);
-    }
-}
-
-@layer base {
-    /* Register your custom font family and tell the browser where to find it. */
-    @font-face {
-        font-family: "PTSans";
-        src: url("/fonts/PTSans.ttf") format("truetype");
-        font-weight: normal;
-        font-style: normal;
-        font-display: swap;
+        border-color: var(--color-border-subtle);
     }
 
     html {
-        font-family: "PTSans", system-ui, sans-serif;
+        font-family: var(--font-family-body);
         font-size: 14px;
+        scroll-behavior: smooth;
 
         @media (width >= theme(--breakpoint-lg)) {
             font-size: 16px;
         }
     }
 
+    /* Dark mode (default) */
+    html.dark {
+        color-scheme: dark;
+        --color-bg-base: var(--color-bg-deep);
+        --color-text-base: var(--color-text-primary);
+    }
+
+    /* Light mode */
+    html:not(.dark) {
+        color-scheme: light;
+        --color-bg-base: var(--color-bg-light);
+        --color-text-base: oklch(0.15 0.02 260);
+    }
+
+    body {
+        background-color: var(--color-bg-base);
+        color: var(--color-text-base);
+    }
+
+    /* Links with neon glow effect */
     a {
-        @apply underline decoration-primary transition-colors duration-300 ease-in-out;
+        @apply underline decoration-primary transition-all duration-300 ease-in-out;
 
         &:hover {
             @apply text-primary;
+            text-shadow: 0 0 8px var(--color-primary);
         }
     }
 
+    /* Headings with display font */
+    h1,
+    h2,
+    h3 {
+        font-family: var(--font-family-display);
+        letter-spacing: 0.05em;
+    }
+
+    /* Code elements with mono font */
+    code,
+    pre,
+    kbd {
+        font-family: var(--font-family-mono);
+    }
+
+    /* Prose link styling */
     .prose {
         a[href^="http"] {
-            @apply underline decoration-primary transition-colors duration-300 ease-in-out;
+            @apply underline decoration-primary transition-all duration-300 ease-in-out;
 
             &:after {
                 content: "↗";
-                @apply ml-1 font-mono;
+                @apply ml-1 font-mono text-xs opacity-50;
             }
             &:hover {
                 @apply text-primary;
+                text-shadow: 0 0 8px var(--color-primary);
+            }
+        }
+
+        /* Terminal-style code blocks */
+        pre {
+            @apply relative overflow-hidden rounded-lg border border-primary/20;
+            background: var(--color-bg-panel) !important;
+
+            &::before {
+                content: "// TERMINAL";
+                @apply absolute left-4 top-2 font-mono text-xs text-primary/50;
+            }
+
+            code {
+                @apply block p-4 pt-8;
+            }
+        }
+
+        /* Inline code */
+        :not(pre) > code {
+            @apply rounded bg-primary/10 px-1.5 py-0.5 text-primary;
+        }
+    }
+}
+
+/* =============================================================================
+   HEXAGON UTILITIES
+   ============================================================================= */
+
+@layer utilities {
+    /* Hexagonal clip path (pointy-top) */
+    .hex-clip {
+        clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    }
+
+    /* Hexagonal clip path (flat-top) */
+    .hex-clip-flat {
+        clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    }
+
+}
+
+/* =============================================================================
+   NEON GLOW EFFECTS
+   ============================================================================= */
+
+@layer utilities {
+    /* Primary neon glow */
+    .neon-glow {
+        box-shadow:
+            0 0 4px var(--color-primary),
+            0 0 8px var(--color-primary),
+            0 0 16px var(--color-primary);
+    }
+
+    .neon-glow-sm {
+        box-shadow:
+            0 0 2px var(--color-primary),
+            0 0 4px var(--color-primary);
+    }
+
+    .neon-glow-lg {
+        box-shadow:
+            0 0 8px var(--color-primary),
+            0 0 16px var(--color-primary),
+            0 0 32px var(--color-primary),
+            0 0 64px var(--color-primary);
+    }
+
+    /* Text neon glow */
+    .neon-text {
+        text-shadow:
+            0 0 4px var(--color-primary),
+            0 0 8px var(--color-primary);
+    }
+
+    .neon-text-sm {
+        text-shadow: 0 0 4px var(--color-primary);
+    }
+
+    /* Border glow */
+    .neon-border {
+        border: 1px solid var(--color-primary);
+        box-shadow:
+            0 0 4px var(--color-primary),
+            inset 0 0 4px var(--color-primary);
+    }
+
+    /* Animated glow pulse */
+    .neon-pulse {
+        animation: neon-pulse var(--duration-glow) ease-in-out infinite;
+    }
+}
+
+/* =============================================================================
+   GRID BACKGROUND
+   ============================================================================= */
+
+@layer utilities {
+    .grid-bg {
+        background-image:
+            linear-gradient(var(--color-primary) 1px, transparent 1px),
+            linear-gradient(90deg, var(--color-primary) 1px, transparent 1px);
+        background-size: 40px 40px;
+    }
+
+    .grid-bg-sm {
+        background-size: 20px 20px;
+    }
+
+    .grid-bg-lg {
+        background-size: 60px 60px;
+    }
+
+    /* Fade grid from top */
+    .grid-fade {
+        mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+    }
+}
+
+/* =============================================================================
+   SCANLINE EFFECTS
+   ============================================================================= */
+
+@layer utilities {
+    .scanlines {
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.1) 2px,
+                rgba(0, 0, 0, 0.1) 4px
+            );
+            pointer-events: none;
+            animation: scanline-move var(--duration-scan) linear infinite;
+        }
+    }
+
+    .scanlines-subtle::after {
+        background: repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 4px,
+            rgba(0, 0, 0, 0.03) 4px,
+            rgba(0, 0, 0, 0.03) 8px
+        );
+    }
+
+    /* CRT vignette effect */
+    .crt-vignette {
+        box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* =============================================================================
+   TERMINAL HEADER STYLES
+   ============================================================================= */
+
+@layer components {
+    .terminal-header {
+        font-family: var(--font-family-mono);
+        letter-spacing: 0.1em;
+
+        &::before {
+            content: "// ";
+            opacity: 0.5;
+        }
+    }
+
+    .data-readout {
+        font-family: var(--font-family-mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+
+        .label {
+            @apply text-primary/70;
+        }
+
+        .value {
+            @apply text-primary;
+        }
+
+        .separator {
+            @apply mx-2 text-primary/30;
+        }
+    }
+}
+
+/* =============================================================================
+   DASHBOARD PANEL STYLES
+   ============================================================================= */
+
+@layer components {
+    .dashboard-panel {
+        @apply relative rounded-lg border border-primary/20 bg-bg-panel/50 backdrop-blur-sm;
+
+        .panel-header {
+            @apply border-b border-primary/20 px-4 py-2;
+            @apply flex items-center gap-2;
+            font-family: var(--font-family-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+
+            .status-indicator {
+                @apply h-2 w-2 rounded-full bg-accent;
+                animation: status-blink 2s ease-in-out infinite;
+            }
+        }
+
+        .panel-content {
+            @apply p-4;
+        }
+    }
+}
+
+/* =============================================================================
+   HEX CARD STYLES
+   ============================================================================= */
+
+@layer components {
+    .hex-card {
+        @apply relative overflow-hidden transition-all duration-300 ease-out;
+
+        &::before {
+            content: "";
+            @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+            background: linear-gradient(
+                135deg,
+                transparent 0%,
+                var(--color-primary) 50%,
+                transparent 100%
+            );
+            opacity: 0;
+        }
+
+        &:hover {
+            transform: translateY(-4px) scale(1.02);
+
+            &::before {
+                opacity: 0.1;
+            }
+        }
+
+        &:hover .hex-card-border {
+            box-shadow:
+                0 0 4px var(--color-primary),
+                0 0 8px var(--color-primary),
+                0 0 16px var(--color-primary);
+        }
+    }
+
+    .hex-card-border {
+        @apply absolute inset-0 rounded-lg border border-primary/30 transition-all duration-300;
+    }
+
+    .hex-card-content {
+        @apply relative z-10 p-4;
+    }
+}
+
+/* =============================================================================
+   BUTTON STYLES
+   ============================================================================= */
+
+@layer components {
+    .neon-button {
+        @apply relative inline-flex items-center justify-center gap-2 overflow-hidden;
+        @apply rounded-lg border border-primary/50 bg-transparent px-6 py-3;
+        @apply font-mono text-sm uppercase tracking-wider text-primary;
+        @apply transition-all duration-300 ease-out;
+
+        &::before {
+            content: "";
+            @apply absolute inset-0 bg-primary/10 opacity-0 transition-opacity duration-300;
+        }
+
+        &:hover {
+            @apply border-primary text-white no-underline;
+            box-shadow:
+                0 0 4px var(--color-primary),
+                0 0 8px var(--color-primary),
+                0 0 16px var(--color-primary);
+
+            &::before {
+                @apply opacity-100;
+            }
+        }
+
+        &:active {
+            transform: scale(0.98);
+        }
+
+        /* Filled variant */
+        &.neon-button-filled {
+            @apply bg-primary/20 text-white;
+
+            &:hover {
+                @apply bg-primary/40;
             }
         }
     }
 }
+
+/* =============================================================================
+   ANIMATIONS
+   ============================================================================= */
+
+@layer utilities {
+    @keyframes neon-pulse {
+        0%,
+        100% {
+            box-shadow:
+                0 0 4px var(--color-primary),
+                0 0 8px var(--color-primary),
+                0 0 16px var(--color-primary);
+        }
+        50% {
+            box-shadow:
+                0 0 8px var(--color-primary),
+                0 0 16px var(--color-primary),
+                0 0 32px var(--color-primary);
+        }
+    }
+
+    @keyframes status-blink {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.3;
+        }
+    }
+
+    @keyframes scanline-move {
+        0% {
+            transform: translateY(0);
+        }
+        100% {
+            transform: translateY(8px);
+        }
+    }
+
+    @keyframes hex-entrance {
+        from {
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    @keyframes glow-rotate {
+        from {
+            filter: hue-rotate(0deg);
+        }
+        to {
+            filter: hue-rotate(360deg);
+        }
+    }
+
+    /* Staggered entrance for hex cards */
+    .hex-entrance {
+        animation: hex-entrance 0.5s ease-out both;
+    }
+
+    .hex-entrance-delay-1 {
+        animation-delay: 50ms;
+    }
+    .hex-entrance-delay-2 {
+        animation-delay: 100ms;
+    }
+    .hex-entrance-delay-3 {
+        animation-delay: 150ms;
+    }
+    .hex-entrance-delay-4 {
+        animation-delay: 200ms;
+    }
+    .hex-entrance-delay-5 {
+        animation-delay: 250ms;
+    }
+}
+
+/* =============================================================================
+   REDUCED MOTION
+   ============================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .scanlines::after {
+        animation: none;
+    }
+
+    .neon-pulse {
+        animation: none;
+    }
+}
+
+/* =============================================================================
+   SIDEBAR & LAYOUT COMPONENTS (Legacy compatibility)
+   ============================================================================= */
 
 @layer components {
     @media (min-height: 1500px) {
@@ -99,17 +643,23 @@
         }
     }
     @media (max-height: 700px) and (min-width: 1024px) {
-        #sidebar-content header {
+        /* Only apply offset positioning to full-width sidebars */
+        .sidebar-full #sidebar-content header {
             @apply relative;
         }
-        #sidebar-content #profile-image {
+        .sidebar-full #sidebar-content #profile-image {
             @apply absolute -left-36 top-4 size-32;
+        }
+
+        /* For half-width sidebar (blog posts), scale down image instead of offsetting */
+        .sidebar-half .hex-profile-wrapper {
+            @apply lg:size-24;
         }
     }
 
     #flyout-menu {
         #backdrop {
-            @apply fixed inset-0 z-0 bg-slate-500/0 backdrop-blur-none duration-300 ease-in-out;
+            @apply fixed inset-0 z-0 bg-slate-500/0 backdrop-blur-none duration-300 ease-in-out pointer-events-none;
             label {
                 @apply absolute left-4 top-0 -translate-y-full transform cursor-pointer duration-500 ease-in-out;
             }
@@ -120,7 +670,7 @@
 
         #menu-toggle:checked ~ & {
             #backdrop {
-                @apply fixed inset-0 z-1000 bg-slate-500/30 backdrop-blur-xs;
+                @apply fixed inset-0 z-1000 bg-slate-500/30 backdrop-blur-xs pointer-events-auto;
                 label {
                     @apply sm:translate-y-4;
                 }
@@ -134,19 +684,23 @@
     #menu-toggle {
         @apply hidden;
     }
+}
 
-    /* kg-card styles (from old tailwind.config.mjs plugin) */
+/* =============================================================================
+   BOOKMARK CARD STYLES (Ghost CMS compatibility)
+   ============================================================================= */
+
+@layer components {
     .kg-card {
-        color: var(--color-slate-900);
-        background-color: white;
-        border-radius: var(--radius-lg);
-        box-shadow: var(--shadow-sm);
-        overflow: hidden;
+        @apply rounded-lg bg-bg-panel border border-primary/20 overflow-hidden;
+
+        .dark & {
+            background-color: var(--color-bg-panel);
+        }
     }
 
     .prose .kg-card a {
-        color: var(--color-slate-900);
-        text-decoration: none;
+        @apply text-text-primary no-underline;
     }
 
     .prose .kg-card a:after {
@@ -175,11 +729,12 @@
 
     .kg-bookmark-title {
         font-weight: bold;
+        font-family: var(--font-family-display);
     }
 
     .kg-bookmark-description {
         font-size: 0.8em;
-        color: var(--color-slate-500);
+        @apply text-text-secondary;
     }
 
     .kg-bookmark-metadata {
@@ -188,6 +743,7 @@
         gap: 0.5rem;
         align-items: center;
         margin-top: var(--spacing-4);
+        font-family: var(--font-family-mono);
     }
 
     .kg-bookmark-metadata .kg-bookmark-publisher {
@@ -203,4 +759,37 @@
         width: var(--spacing-64);
         object-fit: cover;
     }
+}
+
+/* =============================================================================
+   THEME COLOR OVERRIDES
+   Applied via data attribute on html element
+   ============================================================================= */
+
+html[data-theme="cool-cyber"] {
+    --color-primary: oklch(0.75 0.18 195);
+    --color-secondary: oklch(0.65 0.20 250);
+    --color-accent: oklch(0.72 0.22 145);
+    --color-highlight: oklch(0.65 0.25 330);
+}
+
+html[data-theme="synthwave"] {
+    --color-primary: oklch(0.65 0.28 330);
+    --color-secondary: oklch(0.55 0.25 290);
+    --color-accent: oklch(0.75 0.18 195);
+    --color-highlight: oklch(0.80 0.20 85);
+}
+
+html[data-theme="matrix"] {
+    --color-primary: oklch(0.72 0.25 140);
+    --color-secondary: oklch(0.55 0.20 145);
+    --color-accent: oklch(0.80 0.22 135);
+    --color-highlight: oklch(0.65 0.15 150);
+}
+
+html[data-theme="amber-terminal"] {
+    --color-primary: oklch(0.75 0.18 70);
+    --color-secondary: oklch(0.60 0.15 55);
+    --color-accent: oklch(0.80 0.20 80);
+    --color-highlight: oklch(0.70 0.22 45);
 }

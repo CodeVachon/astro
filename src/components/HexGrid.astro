@@ -1,0 +1,106 @@
+---
+/**
+ * HexGrid - Honeycomb layout container for hex cards
+ * Creates a staggered hexagonal grid pattern
+ */
+import type { CollectionEntry } from "astro:content";
+import HexCard from "./HexCard.astro";
+
+interface Props {
+    posts: Array<CollectionEntry<"blog">>;
+    columns?: 2 | 3 | 4;
+    variant?: "hex" | "rounded";
+}
+
+const { posts, columns = 3, variant = "hex" } = Astro.props;
+---
+
+<div
+    class:list={[
+        "hex-grid",
+        `hex-grid-cols-${columns}`,
+        variant === "hex" ? "hex-layout" : "standard-layout"
+    ]}
+>
+    {
+        posts.map((post, index) => (
+            <div class="hex-grid-item" style={`--item-index: ${index}`}>
+                <HexCard post={post} index={index} variant={variant} />
+            </div>
+        ))
+    }
+</div>
+
+<style>
+    .hex-grid {
+        display: grid;
+        gap: 1.5rem;
+        width: 100%;
+    }
+
+    /* Mobile: single column, rectangular cards */
+    @media (max-width: 639px) {
+        .hex-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+    }
+
+    /* Tablet and small desktop: 2 columns */
+    @media (min-width: 640px) and (max-width: 1279px) {
+        .hex-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        /* Offset every other row for honeycomb effect */
+        .hex-layout .hex-grid-item:nth-child(4n + 3),
+        .hex-layout .hex-grid-item:nth-child(4n + 4) {
+            transform: translateX(25%);
+        }
+    }
+
+    /* Large desktop (1280px+): variable columns */
+    @media (min-width: 1280px) {
+        .hex-grid-cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .hex-grid-cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .hex-grid-cols-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        /* Honeycomb offset for hex variant */
+        .hex-layout.hex-grid-cols-3 .hex-grid-item:nth-child(6n + 4),
+        .hex-layout.hex-grid-cols-3 .hex-grid-item:nth-child(6n + 5),
+        .hex-layout.hex-grid-cols-3 .hex-grid-item:nth-child(6n + 6) {
+            transform: translateX(16.67%);
+        }
+
+        .hex-layout.hex-grid-cols-4 .hex-grid-item:nth-child(8n + 5),
+        .hex-layout.hex-grid-cols-4 .hex-grid-item:nth-child(8n + 6),
+        .hex-layout.hex-grid-cols-4 .hex-grid-item:nth-child(8n + 7),
+        .hex-layout.hex-grid-cols-4 .hex-grid-item:nth-child(8n + 8) {
+            transform: translateX(12.5%);
+        }
+
+        /* Negative margin to reduce vertical gap for hex overlap */
+        .hex-layout .hex-grid-item:nth-child(n + 4) {
+            margin-top: -2rem;
+        }
+    }
+
+    /* Standard grid layout (non-hex) */
+    .standard-layout {
+        gap: 1.5rem;
+    }
+
+    .standard-layout .hex-grid-item {
+        transform: none !important;
+        margin-top: 0 !important;
+    }
+</style>
