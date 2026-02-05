@@ -170,6 +170,58 @@
         color: var(--color-text-base);
     }
 
+    /* =============================================================================
+       CUSTOM SCROLLBAR STYLES
+       Theme-aware scrollbars with neon accent
+       ============================================================================= */
+
+    /* Firefox */
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: color-mix(in oklch, var(--color-primary) 40%, transparent) transparent;
+    }
+
+    /* Webkit (Chrome, Safari, Edge) */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: color-mix(in oklch, var(--color-primary) 30%, transparent);
+        border-radius: 4px;
+        border: 2px solid transparent;
+        background-clip: content-box;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: color-mix(in oklch, var(--color-primary) 50%, transparent);
+        background-clip: content-box;
+    }
+
+    ::-webkit-scrollbar-corner {
+        background: transparent;
+    }
+
+    /* Light mode scrollbar adjustments */
+    html:not(.dark) {
+        scrollbar-color: color-mix(in oklch, var(--color-primary) 50%, transparent) transparent;
+    }
+
+    html:not(.dark) ::-webkit-scrollbar-thumb {
+        background: color-mix(in oklch, var(--color-primary) 40%, transparent);
+        background-clip: content-box;
+    }
+
+    html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+        background: color-mix(in oklch, var(--color-primary) 60%, transparent);
+        background-clip: content-box;
+    }
+
     /* Links with neon glow effect */
     a {
         @apply underline decoration-primary transition-all duration-300 ease-in-out;
