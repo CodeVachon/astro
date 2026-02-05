@@ -105,15 +105,11 @@ export default function TOCPanel({
             </nav>
             <style>{`
                 .toc-panel {
-                    border: 1px solid oklch(0.75 0.18 195 / 0.2);
+                    border: 1px solid color-mix(in oklch, var(--color-primary) 20%, transparent);
                     border-radius: 0.5rem;
-                    background: oklch(0.15 0.02 260 / 0.5);
+                    background: color-mix(in oklch, var(--color-bg-panel) 50%, transparent);
                     backdrop-filter: blur(4px);
                     overflow: hidden;
-                }
-
-                /* Corner accents */
-                .toc-panel {
                     position: relative;
                 }
 
@@ -123,7 +119,7 @@ export default function TOCPanel({
                     position: absolute;
                     width: 16px;
                     height: 16px;
-                    border: 2px solid var(--color-primary, oklch(0.75 0.18 195));
+                    border: 2px solid var(--color-primary);
                     opacity: 0.4;
                     pointer-events: none;
                 }
@@ -147,18 +143,18 @@ export default function TOCPanel({
                     align-items: center;
                     gap: 0.5rem;
                     padding: 0.5rem 1rem;
-                    border-bottom: 1px solid oklch(0.75 0.18 195 / 0.15);
+                    border-bottom: 1px solid color-mix(in oklch, var(--color-primary) 15%, transparent);
                     font-family: var(--font-family-mono, "JetBrains Mono", monospace);
                     font-size: 0.7rem;
                     letter-spacing: 0.1em;
-                    color: oklch(0.75 0.18 195 / 0.8);
+                    color: color-mix(in oklch, var(--color-primary) 80%, transparent);
                 }
 
                 .status-dot {
                     width: 6px;
                     height: 6px;
                     border-radius: 50%;
-                    background: var(--color-accent, oklch(0.72 0.22 145));
+                    background: var(--color-accent);
                     animation: toc-pulse 2s ease-in-out infinite;
                 }
 
@@ -171,7 +167,7 @@ export default function TOCPanel({
                     max-height: 300px;
                     overflow-y: auto;
                     scrollbar-width: thin;
-                    scrollbar-color: oklch(0.75 0.18 195 / 0.3) transparent;
+                    scrollbar-color: color-mix(in oklch, var(--color-primary) 30%, transparent) transparent;
                 }
 
                 .toc-nav::-webkit-scrollbar {
@@ -183,7 +179,7 @@ export default function TOCPanel({
                 }
 
                 .toc-nav::-webkit-scrollbar-thumb {
-                    background: oklch(0.75 0.18 195 / 0.3);
+                    background: color-mix(in oklch, var(--color-primary) 30%, transparent);
                     border-radius: 2px;
                 }
 
@@ -208,52 +204,52 @@ export default function TOCPanel({
                 }
 
                 .toc-link:hover {
-                    background: oklch(0.75 0.18 195 / 0.1);
+                    background: color-mix(in oklch, var(--color-primary) 10%, transparent);
                     text-shadow: none;
                 }
 
                 .toc-link.active {
-                    background: oklch(0.75 0.18 195 / 0.15);
-                    border-left-color: var(--color-primary, oklch(0.75 0.18 195));
+                    background: color-mix(in oklch, var(--color-primary) 15%, transparent);
+                    border-left-color: var(--color-primary);
                 }
 
                 .toc-index {
                     font-family: var(--font-family-mono, "JetBrains Mono", monospace);
                     font-size: 0.65rem;
-                    color: oklch(0.75 0.18 195 / 0.5);
+                    color: color-mix(in oklch, var(--color-primary) 50%, transparent);
                     flex-shrink: 0;
                     margin-top: 0.15rem;
                 }
 
                 .toc-link.active .toc-index {
-                    color: var(--color-primary, oklch(0.75 0.18 195));
+                    color: var(--color-primary);
                 }
 
                 .toc-text {
                     font-family: var(--font-family-body, "Space Grotesk", system-ui);
                     font-size: 0.8rem;
                     line-height: 1.4;
-                    color: oklch(0.75 0.02 260);
+                    color: var(--color-text-secondary);
                     transition: color 0.2s ease;
                 }
 
                 .toc-link:hover .toc-text,
                 .toc-link.active .toc-text {
-                    color: var(--color-primary, oklch(0.75 0.18 195));
+                    color: var(--color-primary);
                 }
 
                 /* Light mode */
                 :global(html:not(.dark)) .toc-panel {
-                    background: oklch(0.95 0.01 260 / 0.8);
+                    background: color-mix(in oklch, var(--color-bg-light-panel) 80%, transparent);
                 }
 
                 :global(html:not(.dark)) .toc-text {
-                    color: oklch(0.3 0.02 260);
+                    color: var(--color-text-muted);
                 }
 
                 :global(html:not(.dark)) .toc-link:hover .toc-text,
                 :global(html:not(.dark)) .toc-link.active .toc-text {
-                    color: oklch(0.4 0.18 195);
+                    color: var(--color-primary);
                 }
             `}</style>
         </div>
