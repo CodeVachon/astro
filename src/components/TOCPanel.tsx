@@ -178,7 +178,8 @@ export default function TOCPanel({
                     width: 6px;
                     height: 6px;
                     border-radius: 50%;
-                    background: var(--color-accent);
+                    background: var(--color-primary);
+                    box-shadow: 0 0 6px var(--color-primary);
                     animation: toc-pulse 2s ease-in-out infinite;
                 }
 
