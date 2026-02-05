@@ -155,14 +155,44 @@
     html.dark {
         color-scheme: dark;
         --color-bg-base: var(--color-bg-deep);
+        --color-bg-surface: var(--color-bg-dark);
+        --color-bg-panel: oklch(0.15 0.02 260);
+        --color-bg-elevated: oklch(0.18 0.02 260);
         --color-text-base: var(--color-text-primary);
+        --color-text-secondary: oklch(0.75 0.02 260);
+        --color-text-muted: oklch(0.55 0.02 260);
+        --color-border-subtle: oklch(0.25 0.02 260);
+        --color-border-default: oklch(0.35 0.03 260);
+        --color-glow-opacity: 1;
     }
 
-    /* Light mode */
+    /* Light mode - Industrial cyber aesthetic with warm neutrals */
     html:not(.dark) {
         color-scheme: light;
-        --color-bg-base: var(--color-bg-light);
+
+        /* Warm off-white backgrounds with subtle blue undertone */
+        --color-bg-deep: oklch(0.96 0.008 260);
+        --color-bg-dark: oklch(0.93 0.012 260);
+        --color-bg-panel: oklch(0.99 0.004 260);
+        --color-bg-elevated: oklch(1 0 0);
+        --color-bg-base: oklch(0.96 0.008 260);
+        --color-bg-surface: oklch(0.93 0.012 260);
+
+        /* High contrast dark text - deep charcoal with blue tint */
+        --color-text-primary: oklch(0.15 0.02 260);
         --color-text-base: oklch(0.15 0.02 260);
+        --color-text-secondary: oklch(0.32 0.02 260);
+        --color-text-muted: oklch(0.48 0.025 260);
+
+        /* Subtle borders - visible but refined */
+        --color-border-subtle: oklch(0.82 0.015 260);
+        --color-border-default: oklch(0.72 0.02 260);
+
+        /* Reduce glow intensity in light mode */
+        --color-glow-opacity: 0.5;
+
+        /* Saturated primary for light backgrounds */
+        --color-primary-light: oklch(0.50 0.20 195);
     }
 
     body {
@@ -844,4 +874,76 @@ html[data-theme="amber-terminal"] {
     --color-secondary: oklch(0.60 0.15 55);
     --color-accent: oklch(0.80 0.20 80);
     --color-highlight: oklch(0.70 0.22 45);
+}
+
+/* =============================================================================
+   LIGHT MODE COMPONENT OVERRIDES
+   Comprehensive light mode styling for cyber aesthetic
+   ============================================================================= */
+
+/* Light mode body and major containers */
+html:not(.dark) body {
+    background-color: var(--color-bg-base);
+}
+
+/* Links in light mode - use saturated primary */
+html:not(.dark) a:hover {
+    text-shadow: 0 0 6px color-mix(in oklch, var(--color-primary) 40%, transparent);
+}
+
+/* Prose adjustments for light mode */
+html:not(.dark) .prose {
+    --tw-prose-body: var(--color-text-base);
+    --tw-prose-headings: var(--color-text-primary);
+    --tw-prose-code: var(--color-primary);
+}
+
+html:not(.dark) .prose pre {
+    background: var(--color-bg-dark) !important;
+    border-color: color-mix(in oklch, var(--color-primary) 30%, transparent);
+}
+
+html:not(.dark) .prose :not(pre) > code {
+    background: color-mix(in oklch, var(--color-primary) 12%, transparent);
+}
+
+/* Panel and card backgrounds in light mode */
+html:not(.dark) .dashboard-panel {
+    background: color-mix(in oklch, var(--color-bg-panel) 95%, var(--color-primary));
+    border-color: color-mix(in oklch, var(--color-primary) 25%, transparent);
+}
+
+/* Neon effects toned down for light mode */
+html:not(.dark) .neon-glow {
+    box-shadow:
+        0 0 3px color-mix(in oklch, var(--color-primary) 60%, transparent),
+        0 0 6px color-mix(in oklch, var(--color-primary) 40%, transparent);
+}
+
+html:not(.dark) .neon-text {
+    text-shadow: 0 0 4px color-mix(in oklch, var(--color-primary) 50%, transparent);
+}
+
+html:not(.dark) .neon-button:hover {
+    box-shadow:
+        0 0 4px color-mix(in oklch, var(--color-primary) 50%, transparent),
+        0 0 8px color-mix(in oklch, var(--color-primary) 30%, transparent);
+}
+
+/* Hex card adjustments */
+html:not(.dark) .hex-card:hover .hex-card-border {
+    box-shadow:
+        0 0 4px color-mix(in oklch, var(--color-primary) 50%, transparent),
+        0 0 8px color-mix(in oklch, var(--color-primary) 30%, transparent);
+}
+
+/* kg-card (bookmark cards) light mode */
+html:not(.dark) .kg-card {
+    background-color: var(--color-bg-panel);
+    border-color: color-mix(in oklch, var(--color-primary) 25%, transparent);
+}
+
+/* Grid background opacity reduction for light mode */
+html:not(.dark) .grid-background {
+    opacity: calc(var(--grid-opacity, 0.03) * 0.6);
 }

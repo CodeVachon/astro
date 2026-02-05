@@ -105,7 +105,7 @@ const ogImgSrc = await getImage({ src: cardImage, width: 1200, height: 600, form
         <ClientRouter />
     </head>
     <body
-        class="relative min-h-screen min-w-[350px] bg-bg-deep text-text-primary lg:flex lg:flex-row lg:overflow-hidden"
+        class="site-body relative min-h-screen min-w-[350px] lg:flex lg:flex-row lg:overflow-hidden"
     >
         <GridBackground opacity={0.025} size="md" fade={true} class="fixed inset-0 z-0" />
 
@@ -187,6 +187,11 @@ const ogImgSrc = await getImage({ src: cardImage, width: 1200, height: 600, form
 </html>
 
 <style>
+    .site-body {
+        background-color: var(--color-bg-deep);
+        color: var(--color-text-primary);
+    }
+
     .header-image-wrapper {
         position: relative;
     }

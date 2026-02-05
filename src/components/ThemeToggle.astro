@@ -163,16 +163,29 @@ import { themes } from "~lib/themeColors";
 
     /* Light mode adjustments */
     :global(html:not(.dark)) .mode-toggle {
-        border-color: oklch(0.5 0.18 195 / 0.3);
-        color: oklch(0.4 0.18 195);
+        border-color: color-mix(in oklch, var(--color-primary) 40%, transparent);
+        color: var(--color-primary);
+        background: color-mix(in oklch, var(--color-primary) 5%, transparent);
+    }
+
+    :global(html:not(.dark)) .mode-toggle:hover {
+        background: color-mix(in oklch, var(--color-primary) 15%, transparent);
+        border-color: var(--color-primary);
+        box-shadow: 0 0 6px color-mix(in oklch, var(--color-primary) 30%, transparent);
     }
 
     :global(html:not(.dark)) .theme-colors {
-        border-left-color: oklch(0.5 0.18 195 / 0.2);
+        border-left-color: color-mix(in oklch, var(--color-primary) 25%, transparent);
     }
 
     :global(html:not(.dark)) .theme-button.selected {
-        border-color: oklch(0.2 0.01 260);
+        border-color: var(--color-text-primary);
+    }
+
+    :global(html:not(.dark)) .theme-button::after {
+        background: var(--color-bg-panel);
+        border-color: color-mix(in oklch, var(--color-primary) 30%, transparent);
+        color: var(--color-text-primary);
     }
 </style>
 
