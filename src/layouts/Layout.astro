@@ -1,13 +1,14 @@
 ---
 import { Picture, getImage } from "astro:assets";
-import { Icon, HamburgerIcon, CloseIcon } from "~components/Icons";
-import type { IconName } from "~components/Icons";
 import myImage from "../assets/me.png";
-import Glow from "~components/Glow.astro";
 import { ClientRouter } from "astro:transitions";
-import ThemeToggle from "../components/ThemeToggle.astro";
-import GridBackground from "~components/GridBackground.astro";
 import { fade } from "astro:transitions";
+import GridBackground from "~components/GridBackground.astro";
+import Sidebar from "~components/Sidebar.astro";
+import FlyoutMenu from "~components/FlyoutMenu.astro";
+import SiteFooter from "~components/SiteFooter.astro";
+import { siteTitle, siteAuthor, defaultDescription } from "~lib/navigation";
+import "./../styles/global.css";
 
 interface Props {
     title: string;
@@ -23,31 +24,6 @@ interface Props {
     publishDate?: string;
 }
 
-const navItems: Array<{ name: string; href: string; className?: string; icon?: IconName }> = [
-    { name: "Home", href: "/", className: "hidden lg:block", icon: "home" },
-    { name: "Blog", href: "/blog", icon: "blog" },
-    { name: "Uses", href: "/uses", icon: "uses" },
-    { name: "Code", href: "/code", icon: "code" }
-];
-
-const socialMediaItems: Array<{ name: string; href: string; icon: IconName }> = [
-    {
-        name: "Github",
-        href: "https://github.com/CodeVachon",
-        icon: "github"
-    },
-    {
-        name: "LinkedIn",
-        href: "https://www.linkedin.com/in/christophervachon/",
-        icon: "linkedin"
-    },
-    {
-        name: "BlueSky",
-        href: "https://bsky.app/profile/christophervachon.ca",
-        icon: "blueSky"
-    }
-];
-
 const {
     title,
     description,
@@ -57,19 +33,12 @@ const {
     publishDate
 } = Astro.props;
 
-const siteTitle = "Christopher Vachon";
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const cardImage = headerImage ?? myImage;
 const titleTemplate = [title, siteTitle].filter((v) => String(v).trim().length > 0).join(" | ");
-const descriptionTemplate =
-    description ??
-    "Hi, I Christopher Vachon, a Web Application Developer in Canada. I write about web development, programming, and technology.";
+const descriptionTemplate = description ?? defaultDescription;
 
 const ogImgSrc = await getImage({ src: cardImage, width: 1200, height: 600, format: "jpg" });
-const ogAuthor = "Christopher Vachon";
-import "./../styles/global.css";
-import Search from "~components/Search";
-import KeyBoardKey from "~components/KeyBoardKey";
 ---
 
 <html lang="en" class="dark h-full antialiased" style="color-scheme: dark;" data-theme="cool-cyber">
@@ -84,8 +53,8 @@ import KeyBoardKey from "~components/KeyBoardKey";
         <link rel="canonical" href={canonical} />
 
         <meta name="theme-color" content="#00d4ff" />
-        <meta property="author" content={ogAuthor} />
-        <meta name="article:author" content={ogAuthor} />
+        <meta property="author" content={siteAuthor} />
+        <meta name="article:author" content={siteAuthor} />
         <meta name="color-scheme" content="dark light" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
@@ -94,7 +63,7 @@ import KeyBoardKey from "~components/KeyBoardKey";
         <meta property="og:title" content={title} />
         <meta property="og:description" content={descriptionTemplate} />
         <meta property="og:url" content={canonical} />
-        <meta property="og:author" content={ogAuthor} />
+        <meta property="og:author" content={siteAuthor} />
         {publishDate && <meta property="article:published_time" content={publishDate} />}
         {publishDate && <meta property="article:modified_time" content={publishDate} />}
         <meta property="article:publisher" content="https://github.com/CodeVachon" />
@@ -104,7 +73,7 @@ import KeyBoardKey from "~components/KeyBoardKey";
         <meta name="twitter:url" content={canonical} />
 
         <meta name="twitter:label1" content="Written by" />
-        <meta name="twitter:data1" content={ogAuthor} />
+        <meta name="twitter:data1" content={siteAuthor} />
         <meta name="twitter:site" content="@CodeVachon" />
         {
             cardImage && (
@@ -138,122 +107,12 @@ import KeyBoardKey from "~components/KeyBoardKey";
     <body
         class="relative min-h-screen min-w-[350px] bg-bg-deep text-text-primary lg:flex lg:flex-row lg:overflow-hidden"
     >
-        {/* Grid background */}
         <GridBackground opacity={0.025} size="md" fade={true} class="fixed inset-0 z-0" />
 
         <input type="checkbox" id="menu-toggle" title="Toggle the Mobile Navigation" />
 
-        {/* Sidebar / Profile Section */}
-        <section
-            id="sidebar"
-            class:list={[
-                "relative z-50 flex items-center justify-center transition duration-500 bg-bg-deep",
-                "sticky top-0 lg:h-screen lg:flex-shrink-0",
-                sideWidth === "full" ? "lg:w-1/2 sidebar-full" : "lg:w-1/3 sidebar-half"
-            ]}
-        >
-            <Glow />
-            <div
-                id="sidebar-content"
-                class="flex w-full items-center justify-between gap-4 p-4 lg:w-auto lg:flex-col lg:items-start lg:justify-center"
-            >
-                <a
-                    href="/"
-                    class="flex w-full min-w-[115px] items-center gap-4 no-underline sm:w-1/3 lg:w-full lg:flex-col lg:items-start"
-                >
-                    <header class="flex items-center gap-4 lg:flex-col lg:items-start">
-                        {/* Hexagonal profile image */}
-                        <div class="hex-profile-wrapper aspect-square size-8 lg:size-48 flex-shrink-0">
-                            <Picture
-                                id="profile-image"
-                                class="hex-profile-image size-full"
-                                src={myImage}
-                                widths={[32, 100, 200, 300]}
-                                formats={["webp", "jpg"]}
-                                fallbackFormat="jpg"
-                                alt="Christopher Vachon"
-                                loading="eager"
-                            />
-                            <div class="hex-glow" aria-hidden="true"></div>
-                        </div>
-                        <div class="flex flex-col gap-1">
-                            <h1 class="font-display text-lg font-bold tracking-wider text-white lg:text-2xl">
-                                Christopher Vachon
-                            </h1>
-                            <div class="hidden items-center gap-2 font-mono text-xs text-accent lg:flex">
-                                <span class="status-dot"></span>
-                                <span>STATUS: ONLINE</span>
-                            </div>
-                            <div class="hidden font-mono text-xs text-text-secondary lg:block">
-                                <span class="opacity-50">//</span> DEVELOPER
-                            </div>
-                        </div>
-                    </header>
-                </a>
-                <nav class="hidden w-1/3 md:block lg:w-full">
-                    <ul class="flex justify-center gap-6 lg:flex-col lg:gap-2">
-                        {
-                            navItems.map((item) => (
-                                <li class={item.className ?? ""}>
-                                    <a
-                                        href={item.href}
-                                        class:list={[
-                                            "nav-link flex items-center gap-2 text-white no-underline transition duration-200 ease-in-out",
-                                            Astro.url.pathname === item.href ||
-                                            (item.href !== "/" &&
-                                                Astro.url.pathname.startsWith(item.href))
-                                                ? "text-primary"
-                                                : "hover:text-primary"
-                                        ]}
-                                    >
-                                        <span class="font-mono text-xs text-primary/50 lg:inline hidden">
-                                            &gt;
-                                        </span>
-                                        {item.name}
-                                    </a>
-                                </li>
-                            ))
-                        }
-                        <li class="hidden pt-6 lg:block">
-                            <p class="font-mono text-xs text-text-muted">
-                                <KeyBoardKey keyModifier="cmd" client:load>K</KeyBoardKey> to open Command
-                                Pallet
-                            </p>
-                        </li>
-                    </ul>
-                </nav>
-                <nav class="w-auto md:flex md:w-1/3 md:justify-end md:text-right">
-                    <label
-                        for="menu-toggle"
-                        id="menu-open-toggle"
-                        class="flex h-8 w-8 cursor-pointer items-center justify-center rounded border border-primary/30 transition-colors duration-200 ease-in-out hover:border-primary hover:bg-primary/10 lg:hidden"
-                        aria-label="Toggle menu"
-                    >
-                        <HamburgerIcon className={"size-6 text-primary"} />
-                    </label>
-                </nav>
-                <nav class="hidden w-1/3 justify-end lg:flex lg:w-full lg:justify-start">
-                    <ol class="flex items-center gap-2">
-                        {
-                            socialMediaItems.map(({ name, href, icon }) => (
-                                <li>
-                                    <a
-                                        href={href}
-                                        target="_blank"
-                                        title={`Connect on ${name}`}
-                                        class="social-link flex h-9 w-9 items-center justify-center rounded border border-primary/30 text-primary no-underline transition-all duration-200 hover:border-primary hover:bg-primary/10 hover:shadow-[0_0_8px_var(--color-primary)]"
-                                    >
-                                        <Icon name={icon} className="size-5" />
-                                    </a>
-                                </li>
-                            ))
-                        }
-                    </ol>
-                </nav>
-            </div>
-        </section>
+        <Sidebar sideWidth={sideWidth} currentPath={Astro.url.pathname} />
 
-        {/* Main Content Section */}
         <section
             class="relative z-10 flex h-full flex-grow flex-col overflow-x-hidden lg:h-screen lg:overflow-y-auto"
             transition:animate={fade({ duration: "0.5s" })}
@@ -272,126 +131,16 @@ import KeyBoardKey from "~components/KeyBoardKey";
                                 fallbackFormat="jpg"
                                 loading="eager"
                             />
-                            {/* Gradient overlay */}
                             <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg-deep via-transparent to-transparent" />
                         </figure>
                     )
                 }
                 <slot />
             </main>
-            <footer
-                class="flex max-w-[1200px] items-center justify-between gap-6 border-t border-primary/10 px-6 py-4 lg:justify-normal"
-            >
-                <div class="order-2 lg:order-1">
-                    <ThemeToggle />
-                </div>
-                <p class="order-1 font-mono text-xs text-text-muted lg:order-2">
-                    &copy; {new Date().getFullYear()} Christopher Vachon
-                </p>
-            </footer>
+            <SiteFooter />
         </section>
 
-        {/* Flyout Menu */}
-        <section id="flyout-menu" class="z-[1000]">
-            <label id="backdrop" for="menu-toggle">
-                <label for="menu-toggle">
-                    <CloseIcon
-                        className={"size-12 text-white transition-colors duration-200 hover:text-primary"}
-                    />
-                </label>
-            </label>
-            <div
-                id="flyout-menu-content"
-                class="fixed bottom-0 right-0 top-0 h-screen w-[90vw] min-w-[300px] border-l border-primary/30 bg-bg-deep shadow-lg sm:w-[400px]"
-            >
-                {/* Menu glow */}
-                <div
-                    class="absolute -top-[40%] bottom-auto left-0 right-0 -z-10 h-[180%] overflow-hidden"
-                >
-                    <svg
-                        class="absolute bottom-0 left-0 right-0 top-0 h-full w-full text-primary"
-                        aria-hidden="true"
-                    >
-                        <defs>
-                            <radialGradient id={`glow-menu`} cx="0%">
-                                <stop offset="0%" stop-color={"currentcolor"} stop-opacity="0.3"
-                                ></stop>
-                                <stop
-                                    offset="53.95%"
-                                    stop-color={"currentcolor"}
-                                    stop-opacity="0.06"></stop>
-                                <stop offset="100%" stop-color={"currentcolor"} stop-opacity="0"
-                                ></stop>
-                            </radialGradient>
-                        </defs>
-                        <rect width="100%" height="100%" fill={`url(#glow-menu)`}></rect>
-                    </svg>
-                </div>
-
-                <nav
-                    class="flex h-full w-full flex-col justify-between overflow-y-auto"
-                >
-                    <ol>
-                        <li class="p-4">
-                            <Search client:load />
-                        </li>
-                        {
-                            navItems.map((item) => (
-                                <li class={Astro.url.pathname === item.href ? "bg-primary/20" : ""}>
-                                    <a
-                                        href={item.href}
-                                        title={`Go to ${item.name}`}
-                                        class="flex cursor-pointer items-center gap-6 p-4 no-underline transition duration-200 ease-in-out hover:bg-primary/10"
-                                    >
-                                        <Icon
-                                            name={item.icon ?? "link"}
-                                            className="size-10 text-primary"
-                                        />
-                                        <span class="font-display text-lg tracking-wider">
-                                            {item.name}
-                                        </span>
-                                    </a>
-                                </li>
-                            ))
-                        }
-                    </ol>
-
-                    <ol>
-                        {
-                            socialMediaItems.map(({ name, href, icon }) => (
-                                <li>
-                                    <a
-                                        href={href}
-                                        target="_blank"
-                                        title={`Connect on ${name}`}
-                                        class="flex cursor-pointer items-center gap-6 p-4 no-underline transition duration-200 ease-in-out hover:bg-primary/10"
-                                    >
-                                        <Icon name={icon} className="size-10 text-primary" />
-                                        <span class="font-display text-lg tracking-wider">
-                                            {name}
-                                        </span>
-                                    </a>
-                                </li>
-                            ))
-                        }
-
-                        <li>
-                            <label for="menu-toggle">
-                                <div
-                                    class="flex cursor-pointer items-center gap-6 p-4 transition duration-200 ease-in-out hover:bg-primary/10"
-                                >
-                                    <CloseIcon className={"size-10 text-primary"} />
-                                    <span class="font-display text-lg tracking-wider">Close</span>
-                                </div>
-                            </label>
-                        </li>
-                        <li class="p-4">
-                            <ThemeToggle />
-                        </li>
-                    </ol>
-                </nav>
-            </div>
-        </section>
+        <FlyoutMenu currentPath={Astro.url.pathname} />
 
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-RREP1WR95X"></script>
@@ -404,7 +153,7 @@ import KeyBoardKey from "~components/KeyBoardKey";
             gtag("config", "G-RREP1WR95X");
         </script>
         <script is:inline>
-            document.addEventListener("astro:before-swap", (ev) => {
+            document.addEventListener("astro:before-swap", () => {
                 const toggle = document.getElementById("menu-toggle");
                 if (toggle.checked) {
                     toggle.checked = false;
@@ -438,92 +187,6 @@ import KeyBoardKey from "~components/KeyBoardKey";
 </html>
 
 <style>
-    /* Hexagonal profile image styles */
-    .hex-profile-wrapper {
-        position: relative;
-        flex-shrink: 0;
-        transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
-    }
-
-    .hex-profile-image {
-        clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-    }
-
-    @media (min-width: 1024px) {
-        .hex-profile-image {
-            border: 2px solid var(--color-primary);
-            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-        }
-
-        .hex-glow {
-            position: absolute;
-            inset: -4px;
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            background: var(--color-primary);
-            opacity: 0.2;
-            filter: blur(12px);
-            z-index: -1;
-            animation: profile-glow 3s ease-in-out infinite;
-            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out, inset 0.5s ease-in-out;
-        }
-    }
-
-    /* Narrower sidebar (blog posts) at intermediate widths */
-    @media (min-width: 1024px) and (max-width: 1279px) {
-        .sidebar-half .hex-profile-wrapper {
-            position: relative;
-        }
-
-        /* Swap: move glow to the left (behind/outside), keep image centered */
-        .sidebar-half .hex-glow {
-            inset: -4px -4px -4px -80px;
-            opacity: 0.15;
-            filter: blur(20px);
-            z-index: -1;
-        }
-
-        .sidebar-half .hex-profile-image {
-            position: relative;
-            z-index: 1;
-        }
-    }
-
-    @keyframes profile-glow {
-        0%,
-        100% {
-            opacity: 0.15;
-            filter: blur(8px);
-        }
-        50% {
-            opacity: 0.3;
-            filter: blur(16px);
-        }
-    }
-
-    /* Status dot animation */
-    .status-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--color-accent);
-        box-shadow: 0 0 8px var(--color-accent);
-        animation: status-blink 2s ease-in-out infinite;
-    }
-
-    @keyframes status-blink {
-        0%,
-        100% {
-            opacity: 1;
-        }
-        50% {
-            opacity: 0.4;
-        }
-    }
-
-    /* Header image styling */
     .header-image-wrapper {
         position: relative;
     }
@@ -537,25 +200,5 @@ import KeyBoardKey from "~components/KeyBoardKey";
         height: 50%;
         background: linear-gradient(to top, var(--color-bg-deep), transparent);
         pointer-events: none;
-    }
-
-    /* Navigation link hover effect */
-    .nav-link {
-        position: relative;
-    }
-
-    .nav-link::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: -2px;
-        width: 0;
-        height: 1px;
-        background: var(--color-primary);
-        transition: width 0.3s ease;
-    }
-
-    .nav-link:hover::after {
-        width: 100%;
     }
 </style>

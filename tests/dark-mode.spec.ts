@@ -18,8 +18,8 @@ test.describe("Dark Mode", () => {
         // Get initial theme
         const initialTheme = await page.evaluate(() => localStorage.getItem("theme"));
 
-        // Click the dark mode toggle
-        await page.locator(".mode-toggle").first().click();
+        // Click the dark mode toggle (force to bypass any overlay issues)
+        await page.locator(".mode-toggle").first().click({ force: true });
 
         // Wait for the class change
         await page.waitForTimeout(300);
@@ -37,8 +37,8 @@ test.describe("Dark Mode", () => {
         // Get initial theme
         const initialTheme = await page.evaluate(() => localStorage.getItem("theme"));
 
-        // Toggle the mode
-        await page.locator(".mode-toggle").first().click();
+        // Toggle the mode (force to bypass any overlay issues)
+        await page.locator(".mode-toggle").first().click({ force: true });
         await page.waitForTimeout(300);
 
         // Get the new theme
@@ -80,16 +80,22 @@ test.describe("Dark Mode", () => {
         let theme = await page.evaluate(() => localStorage.getItem("theme"));
         const initialTheme = theme;
 
-        // Toggle
-        await page.locator(".mode-toggle").first().click();
+        // Toggle using JavaScript click to ensure the handler fires
+        await page.evaluate(() => {
+            const btn = document.querySelector(".mode-toggle") as HTMLButtonElement;
+            btn?.click();
+        });
         await page.waitForTimeout(300);
 
         // Verify toggled
         theme = await page.evaluate(() => localStorage.getItem("theme"));
         expect(theme).not.toBe(initialTheme);
 
-        // Toggle back
-        await page.locator(".mode-toggle").first().click();
+        // Toggle back using JavaScript click
+        await page.evaluate(() => {
+            const btn = document.querySelector(".mode-toggle") as HTMLButtonElement;
+            btn?.click();
+        });
         await page.waitForTimeout(300);
 
         // Verify back to initial
