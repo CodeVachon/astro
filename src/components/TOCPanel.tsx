@@ -1,19 +1,43 @@
 import { useState, useEffect } from "react";
 
+/**
+ * Represents a single heading item in the table of contents
+ */
 interface TOCItem {
+    /** Unique identifier for the heading (used for anchor links) */
     id: string;
+    /** The heading text content */
     text: string;
+    /** Heading level (2-4 for h2-h4) */
     level: number;
 }
 
+/**
+ * Props for the TOCPanel component
+ */
 interface TOCPanelProps {
+    /** CSS selector to find headings (default: "article h2, article h3, article h4") */
     selector?: string;
+    /** Title displayed in the panel header (default: "TABLE OF CONTENTS") */
     title?: string;
 }
 
 /**
- * TOCPanel - Interactive table of contents panel
- * Automatically generates TOC from headings in the article
+ * Interactive table of contents panel with scroll tracking
+ *
+ * Features:
+ * - Auto-generates TOC from article headings (h2, h3, h4)
+ * - Assigns IDs to headings if missing
+ * - Tracks active section using IntersectionObserver
+ * - Smooth scroll navigation on click
+ * - Styled with cyber theme (corner accents, status dot)
+ *
+ * @example
+ * ```tsx
+ * <TOCPanel client:load />
+ * // or with custom selector
+ * <TOCPanel selector="main h2, main h3" title="ON THIS PAGE" client:load />
+ * ```
  */
 export default function TOCPanel({
     selector = "article h2, article h3, article h4",

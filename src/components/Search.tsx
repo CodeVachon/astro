@@ -2,6 +2,9 @@ import { useCallback, useEffect, useState, useMemo } from "react";
 import type { FC, ReactNode, KeyboardEvent } from "react";
 import { SearchIcon, SpinnerIcon } from "./Icons";
 
+/**
+ * Article data structure from the search index
+ */
 interface IArticle {
     title: string;
     description: string;
@@ -15,11 +18,30 @@ interface ISearchRecordSet {
     articles: Array<IArticle>;
 }
 
+/**
+ * Props for the Search component
+ */
 interface ISearchProps {
+    /** Additional CSS classes to apply to the container */
     className?: string;
+    /** Child elements (currently unused) */
     children?: ReactNode;
 }
 
+/**
+ * Search component for blog posts with keyboard navigation
+ *
+ * Features:
+ * - Loads pre-built search index from /search-core.json
+ * - Supports keyword scoring (title: +10, description: +5, tags: +7, bloom: +1)
+ * - Keyboard navigation with arrow keys and Enter to select
+ * - Shows top 5 results sorted by relevance score
+ *
+ * @example
+ * ```tsx
+ * <Search client:load />
+ * ```
+ */
 const Search: FC<ISearchProps> = ({ className = "" }) => {
     const [term, setTerm] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(true);
