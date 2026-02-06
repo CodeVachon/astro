@@ -1,0 +1,264 @@
+---
+import { Picture } from "astro:assets";
+import { Icon, HamburgerIcon } from "~components/Icons";
+import myImage from "../assets/me.png";
+import Glow from "~components/Glow.astro";
+import KeyBoardKey from "~components/KeyBoardKey";
+import { navItems, socialMediaItems } from "~lib/navigation";
+
+interface Props {
+    sideWidth?: "full" | "half";
+    currentPath: string;
+}
+
+const { sideWidth = "full", currentPath } = Astro.props;
+---
+
+<section
+    id="sidebar"
+    class:list={[
+        "sidebar-section relative z-50 flex items-center justify-center transition duration-500",
+        "sticky top-0 lg:h-screen lg:flex-shrink-0",
+        sideWidth === "full" ? "lg:w-1/2 sidebar-full" : "lg:w-1/3 sidebar-half"
+    ]}
+>
+    <Glow />
+    <div
+        id="sidebar-content"
+        class="flex w-full items-center justify-between gap-4 p-4 lg:w-auto lg:flex-col lg:items-start lg:justify-center"
+    >
+        <a
+            href="/"
+            class="flex w-full min-w-[115px] items-center gap-4 no-underline sm:w-1/3 lg:w-full lg:flex-col lg:items-start"
+        >
+            <header class="flex items-center gap-4 lg:flex-col lg:items-start">
+                <div class="hex-profile-wrapper aspect-square size-8 lg:size-48 flex-shrink-0">
+                    <Picture
+                        id="profile-image"
+                        class="hex-profile-image size-full"
+                        src={myImage}
+                        widths={[32, 100, 200, 300]}
+                        formats={["webp", "jpg"]}
+                        fallbackFormat="jpg"
+                        alt="Christopher Vachon"
+                        loading="eager"
+                    />
+                    <div class="hex-glow" aria-hidden="true"></div>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <h1 class="profile-name font-display text-lg font-bold tracking-wider lg:text-2xl">
+                        Christopher Vachon
+                    </h1>
+                    <div class="hidden items-center gap-2 font-mono text-xs text-primary lg:flex">
+                        <span class="status-dot"></span>
+                        <span>STATUS: ONLINE</span>
+                    </div>
+                    <div class="hidden font-mono text-xs text-text-secondary lg:block">
+                        <span class="opacity-50">//</span> DEVELOPER
+                    </div>
+                </div>
+            </header>
+        </a>
+
+        <nav class="hidden w-1/3 md:block lg:w-full">
+            <ul class="flex justify-center gap-6 lg:flex-col lg:gap-2">
+                {
+                    navItems.map((item) => (
+                        <li class={item.className ?? ""}>
+                            <a
+                                href={item.href}
+                                class:list={[
+                                    "nav-link flex items-center gap-2 no-underline transition duration-200 ease-in-out",
+                                    currentPath === item.href ||
+                                    (item.href !== "/" && currentPath.startsWith(item.href))
+                                        ? "text-primary"
+                                        : "hover:text-primary"
+                                ]}
+                            >
+                                <span class="font-mono text-xs text-primary/50 lg:inline hidden">
+                                    &gt;
+                                </span>
+                                {item.name}
+                            </a>
+                        </li>
+                    ))
+                }
+                <li class="hidden pt-6 lg:block">
+                    <p class="font-mono text-xs text-text-muted">
+                        <KeyBoardKey keyModifier="cmd" client:load>K</KeyBoardKey> to open Command
+                        Pallet
+                    </p>
+                </li>
+            </ul>
+        </nav>
+
+        <nav class="w-auto md:flex md:w-1/3 md:justify-end md:text-right">
+            <label
+                for="menu-toggle"
+                id="menu-open-toggle"
+                class="flex h-8 w-8 cursor-pointer items-center justify-center rounded border border-primary/30 transition-colors duration-200 ease-in-out hover:border-primary hover:bg-primary/10 lg:hidden"
+                aria-label="Toggle menu"
+            >
+                <HamburgerIcon className={"size-6 text-primary"} />
+            </label>
+        </nav>
+
+        <nav class="hidden w-1/3 justify-end lg:flex lg:w-full lg:justify-start">
+            <ol class="flex items-center gap-2">
+                {
+                    socialMediaItems.map(({ name, href, icon }) => (
+                        <li>
+                            <a
+                                href={href}
+                                target="_blank"
+                                title={`Connect on ${name}`}
+                                class="social-link flex h-9 w-9 items-center justify-center rounded border border-primary/30 text-primary no-underline transition-all duration-200 hover:border-primary hover:bg-primary/10 hover:shadow-[0_0_8px_var(--color-primary)]"
+                            >
+                                <Icon name={icon} className="size-5" />
+                            </a>
+                        </li>
+                    ))
+                }
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<style>
+    .hex-profile-wrapper {
+        position: relative;
+        flex-shrink: 0;
+        transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
+    }
+
+    .hex-profile-image {
+        clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+
+    @media (min-width: 1024px) {
+        .hex-profile-image {
+            border: 2px solid var(--color-primary);
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
+
+        .hex-glow {
+            position: absolute;
+            inset: -4px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background: var(--color-primary);
+            opacity: 0.2;
+            filter: blur(12px);
+            z-index: -1;
+            animation: profile-glow 3s ease-in-out infinite;
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out, inset 0.5s ease-in-out;
+        }
+    }
+
+    @media (min-width: 1024px) and (max-width: 1279px) {
+        .sidebar-half .hex-profile-wrapper {
+            position: relative;
+        }
+
+        .sidebar-half .hex-glow {
+            inset: -4px -4px -4px -80px;
+            opacity: 0.15;
+            filter: blur(20px);
+            z-index: -1;
+        }
+
+        .sidebar-half .hex-profile-image {
+            position: relative;
+            z-index: 1;
+        }
+    }
+
+    @keyframes profile-glow {
+        0%,
+        100% {
+            opacity: 0.15;
+            filter: blur(8px);
+        }
+        50% {
+            opacity: 0.3;
+            filter: blur(16px);
+        }
+    }
+
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--color-primary);
+        box-shadow: 0 0 8px var(--color-primary);
+        animation: status-blink 2s ease-in-out infinite;
+    }
+
+    @keyframes status-blink {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.4;
+        }
+    }
+
+    .nav-link {
+        position: relative;
+    }
+
+    .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 0;
+        height: 1px;
+        background: var(--color-primary);
+        transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+        width: 100%;
+    }
+
+    /* Sidebar background - theme aware */
+    .sidebar-section {
+        background-color: var(--color-bg-deep);
+    }
+
+    /* Profile name - white in dark mode, dark in light mode */
+    .profile-name {
+        color: white;
+    }
+
+    /* Nav link default color */
+    .nav-link {
+        color: var(--color-text-primary);
+    }
+
+    /* Light mode adjustments */
+    :global(html:not(.dark)) .profile-name {
+        color: var(--color-text-primary);
+    }
+
+    :global(html:not(.dark)) .nav-link {
+        color: var(--color-text-primary);
+    }
+
+    :global(html:not(.dark)) .terminal-nav {
+        background: color-mix(in oklch, var(--color-bg-dark) 80%, transparent);
+        border-color: color-mix(in oklch, var(--color-primary) 25%, transparent);
+    }
+
+    :global(html:not(.dark)) .social-link {
+        border-color: color-mix(in oklch, var(--color-primary) 40%, transparent);
+    }
+
+    :global(html:not(.dark)) .social-link:hover {
+        box-shadow: 0 0 6px color-mix(in oklch, var(--color-primary) 40%, transparent);
+    }
+</style>

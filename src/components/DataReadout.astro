@@ -1,0 +1,89 @@
+---
+/**
+ * DataReadout - Terminal-style metadata display
+ * Shows key-value pairs in a sci-fi data format
+ */
+
+interface DataItem {
+    label: string;
+    value: string | number;
+}
+
+interface Props {
+    items: DataItem[];
+    inline?: boolean;
+    class?: string;
+}
+
+const { items, inline = false, class: className = "" } = Astro.props;
+---
+
+<div
+    class:list={[
+        "data-readout",
+        inline ? "data-readout-inline" : "data-readout-stack",
+        className
+    ]}
+>
+    {
+        items.map((item, index) => (
+            <div class="data-item">
+                <span class="label">{item.label}:</span>
+                <span class="value">{item.value}</span>
+                {inline && index < items.length - 1 && (
+                    <span class="separator">|</span>
+                )}
+            </div>
+        ))
+    }
+</div>
+
+<style>
+    .data-readout {
+        font-family: var(--font-family-mono, "JetBrains Mono", monospace);
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+
+    .data-readout-inline {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.25rem;
+    }
+
+    .data-readout-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .data-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .label {
+        color: oklch(0.75 0.18 195 / 0.7);
+    }
+
+    .value {
+        color: var(--color-primary, oklch(0.75 0.18 195));
+    }
+
+    .separator {
+        color: oklch(0.75 0.18 195 / 0.3);
+        margin: 0 0.25rem;
+    }
+
+    /* Light mode */
+    :global(html:not(.dark)) .label {
+        color: oklch(0.5 0.15 195);
+    }
+
+    :global(html:not(.dark)) .value {
+        color: oklch(0.4 0.18 195);
+    }
+</style>

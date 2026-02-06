@@ -1,1 +1,44 @@
+# Dependencies
 node_modules
+
+# Build output (built in Docker)
+dist
+
+# Development files
+.git
+.gitignore
+.github
+.vscode
+.idea
+*.log
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Testing
+tests
+playwright.config.ts
+playwright-report
+test-results
+
+# Documentation
+README.md
+CLAUDE.md
+LICENSE
+
+# Docker files (prevent recursive copy)
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Misc
+*.md
+!src/**/*.md
+coverage
+.nyc_output

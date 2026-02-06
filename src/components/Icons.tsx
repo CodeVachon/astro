@@ -1,10 +1,28 @@
+/**
+ * Icon Components Library
+ *
+ * SVG icon components used throughout the site for navigation,
+ * social media links, and UI elements. All icons support custom
+ * sizing via className prop.
+ *
+ * @module Icons
+ */
+
 import { ClassNames } from "@codevachon/classnames";
 import React from "react";
 
+/**
+ * Common props for all icon components
+ */
 interface IIconProps {
+    /** CSS classes for sizing and styling (default: "size-6") */
     className?: string | ClassNames;
 }
 
+/**
+ * Animated loading spinner icon
+ * @example <SpinnerIcon className="size-6 animate-spin text-primary" />
+ */
 export const SpinnerIcon: React.FC<IIconProps> = ({ className = "size-6" }) => (
     <svg
         className={new ClassNames(className).list()}
@@ -27,6 +45,7 @@ export const SpinnerIcon: React.FC<IIconProps> = ({ className = "size-6" }) => (
     </svg>
 );
 
+/** Magnifying glass search icon */
 export const SearchIcon: React.FC<IIconProps> = ({ className = "size-6" }) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -243,6 +262,10 @@ export const CodeIcon: React.FC<IIconProps> = ({ className = "size-6" }) => (
     </svg>
 );
 
+/**
+ * Map of icon names to their components
+ * Used by the Icon component for dynamic icon rendering
+ */
 const icons = {
     blueSky: BlueSkyIcon,
     twitter: TwitterIcon,
@@ -255,7 +278,19 @@ const icons = {
     uses: UsesIcon,
     code: CodeIcon
 } as const;
+
+/** Valid icon names that can be passed to the Icon component */
 export type IconName = keyof typeof icons;
+
+/**
+ * Dynamic icon component that renders an icon by name
+ *
+ * @example
+ * ```tsx
+ * <Icon name="github" className="size-5" />
+ * <Icon name="home" className="size-10 text-primary" />
+ * ```
+ */
 export const Icon: React.FC<{ name: IconName } & IIconProps> = ({ name, className = "" }) => {
     return React.createElement(icons[name], { className });
 };

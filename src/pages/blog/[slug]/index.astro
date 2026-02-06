@@ -1,10 +1,14 @@
 ---
 import dayjs from "dayjs";
 import Layout from "~layouts/Layout.astro";
-import { getCollection, getEntries, getEntry } from "astro:content";
-import ArticleList from "~components/ArticleList.astro";
+import { getCollection, getEntries, getEntry, render } from "astro:content";
+import HexGrid from "~components/HexGrid.astro";
 import MarkdownContent from "~components/MarkdownContent.astro";
 import Badge from "~components/Badge.astro";
+import DashboardPanel from "~components/DashboardPanel.astro";
+import DataReadout from "~components/DataReadout.astro";
+import TerminalHeader from "~components/TerminalHeader.astro";
+import TOCPanel from "~components/TOCPanel";
 import { GithubIcon } from "~components/Icons";
 
 export async function getStaticPaths() {
@@ -14,7 +18,7 @@ export async function getStaticPaths() {
 
     return allBlogPosts.map((blogPost) => ({
         params: {
-            slug: blogPost.slug
+            slug: blogPost.id
         }
     }));
 }
@@ -22,13 +26,14 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 
 const entry = await getEntry("blog", slug);
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 
+// Get related articles
 const bolsterArticles = await Promise.all([
     getCollection("blog", ({ data }) => {
         return data.tags.some(
             (tag) =>
-                entry.data.tags.some((articleTag) => articleTag.slug === tag.slug) &&
+                entry.data.tags.some((articleTag) => articleTag.id === tag.id) &&
                 entry.data.title !== data.title
         );
     }).then((articles) => articles.reverse().slice(0, 3)),
@@ -36,16 +41,15 @@ const bolsterArticles = await Promise.all([
         return (
             !data.tags.some(
                 (tag) =>
-                    entry.data.tags.some((articleTag) => articleTag.slug === tag.slug) &&
+                    entry.data.tags.some((articleTag) => articleTag.id === tag.id) &&
                     entry.data.title !== data.title
             ) && data.title !== entry.data.title
-            // !related.some((related) => related.data.title && data.title)
         );
     }).then((articles) => articles.reverse().slice(0, 3))
 ]).then((recordset) => recordset.flat().slice(0, 3));
 
-const sharedArticles = await getCollection("blog", ({ slug }) => {
-    return (entry.data.relatedPosts ?? []).some((related) => related.slug === slug);
+const sharedArticles = await getCollection("blog", ({ id }) => {
+    return (entry.data.relatedPosts ?? []).some((related) => related.id === id);
 });
 
 while (sharedArticles.length < 3) {
@@ -58,6 +62,10 @@ while (sharedArticles.length < 3) {
 }
 
 const tags = await getEntries(entry.data.tags);
+
+// Calculate reading time (rough estimate)
+const wordCount = entry.body?.split(/\s+/).length ?? 0;
+const readingTime = Math.ceil(wordCount / 200);
 ---
 
 <Layout
@@ -67,45 +75,255 @@ const tags = await getEntries(entry.data.tags);
     headerImage={entry.data.image}
     publishDate={dayjs(entry.data.date).toISOString()}
 >
-    <article class="flex flex-col gap-8 lg:max-w-[750px]">
-        <header class="border-b">
-            <h1 class="font-serif text-4xl font-bold">{entry.data.title}</h1>
-            <p class="text-slate-500">{dayjs(entry.data.date).format("YYYY-MM-DD")}</p>
-        </header>
+    <div class="post-layout">
+        {/* Main Article Panel */}
+        <article class="article-panel">
+            {/* Article Header */}
+            <header class="article-header">
+                <h1 class="article-title">{entry.data.title}</h1>
 
-        <MarkdownContent>
-            <Content />
-        </MarkdownContent>
+                {/* Data readout */}
+                <DataReadout
+                    items={[
+                        { label: "date", value: dayjs(entry.data.date).format("YYYY-MM-DD") },
+                        { label: "read", value: `${readingTime} min` },
+                        { label: "words", value: wordCount.toLocaleString() }
+                    ]}
+                    inline
+                    class="mt-4"
+                />
+            </header>
 
-        <footer class="flex flex-col gap-4 border-t pt-4">
-            {
-                tags.length > 0 && (
-                    <div class="flex items-center gap-4">
-                        <p class="font-bold">Tags:</p>
-                        <ul class="flex gap-2">
-                            {tags.map((tag) => (
-                                <li class="">
-                                    <Badge href={`/blog/tags/${tag.slug}`}>{tag.data.name}</Badge>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )
-            }
-            <div>
+            {/* Article Content */}
+            <div class="article-content">
+                <MarkdownContent>
+                    <Content />
+                </MarkdownContent>
+            </div>
+
+            {/* Article Footer */}
+            <footer class="article-footer">
+                {/* Tags */}
+                {
+                    tags.length > 0 && (
+                        <div class="tags-section">
+                            <span class="section-label">Tags:</span>
+                            <div class="tags-list">
+                                {tags.map((tag) => (
+                                    <Badge href={`/blog/tags/${tag.id}`} variant="glow" size="sm">
+                                        {tag.data.name}
+                                    </Badge>
+                                ))}
+                            </div>
+                        </div>
+                    )
+                }
+
+                {/* GitHub link */}
                 <a
                     href={`https://github.com/CodeVachon/astro/blob/main/src/content/blog/${slug}.md`}
                     target="_blank"
-                    class="inline-flex items-center gap-2"
+                    class="github-link"
                 >
                     <GithubIcon className="size-4" />
-                    <span>View on GitHub</span>
+                    <span>View source on GitHub</span>
                 </a>
+            </footer>
+        </article>
+
+        {/* Sidebar Panels */}
+        <aside class="sidebar-panels">
+            {/* Table of Contents */}
+            <div class="toc-wrapper">
+                <TOCPanel client:load />
             </div>
-        </footer>
-    </article>
-    <aside class="space-y-6 py-12">
-        <h2 class="-mx-6 bg-slate-900 px-6 py-2 text-2xl font-bold text-white">Related Articles</h2>
-        <ArticleList articles={sharedArticles.slice(0, 3)} grid />
-    </aside>
+
+            {/* Metadata Panel */}
+            <DashboardPanel title="Metadata" status="active">
+                <div class="metadata-content">
+                    <div class="metadata-item">
+                        <span class="meta-label">Published</span>
+                        <span class="meta-value">{dayjs(entry.data.date).format("MMMM D, YYYY")}</span>
+                    </div>
+                    <div class="metadata-item">
+                        <span class="meta-label">Reading Time</span>
+                        <span class="meta-value">{readingTime} minutes</span>
+                    </div>
+                    <div class="metadata-item">
+                        <span class="meta-label">Word Count</span>
+                        <span class="meta-value">{wordCount.toLocaleString()}</span>
+                    </div>
+                    {
+                        tags.length > 0 && (
+                            <div class="metadata-item">
+                                <span class="meta-label">Categories</span>
+                                <span class="meta-value">{tags.length} tags</span>
+                            </div>
+                        )
+                    }
+                </div>
+            </DashboardPanel>
+        </aside>
+    </div>
+
+    {/* Related Articles */}
+    {
+        sharedArticles.length > 0 && (
+            <section class="related-section">
+                <TerminalHeader level={2}>Related Articles</TerminalHeader>
+                <div class="mt-6">
+                    <HexGrid posts={sharedArticles.slice(0, 3)} columns={3} variant="rounded" />
+                </div>
+            </section>
+        )
+    }
 </Layout>
+
+<style>
+    .post-layout {
+        display: grid;
+        gap: 2rem;
+        max-width: 1200px;
+    }
+
+    /* Only show 2-column layout at xl (1280px+) */
+    @media (min-width: 1280px) {
+        .post-layout {
+            grid-template-columns: 1fr 280px;
+            gap: 3rem;
+        }
+    }
+
+    /* Article Panel */
+    .article-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .article-header {
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid oklch(0.75 0.18 195 / 0.15);
+    }
+
+    .article-title {
+        font-family: var(--font-family-display);
+        font-size: 2rem;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: 0.02em;
+        color: var(--color-primary);
+    }
+
+    @media (min-width: 768px) {
+        .article-title {
+            font-size: 2.5rem;
+        }
+    }
+
+    .article-content {
+        max-width: 750px;
+    }
+
+    .article-footer {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid oklch(0.75 0.18 195 / 0.15);
+    }
+
+    .tags-section {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .section-label {
+        font-family: var(--font-family-mono);
+        font-size: 0.75rem;
+        color: var(--color-text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+
+    .tags-list {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .github-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--font-family-mono);
+        font-size: 0.875rem;
+        color: var(--color-text-secondary);
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .github-link:hover {
+        color: var(--color-primary);
+        text-shadow: 0 0 8px var(--color-primary);
+    }
+
+    /* Sidebar */
+    .sidebar-panels {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    @media (min-width: 1280px) {
+        .sidebar-panels {
+            position: sticky;
+            top: 6rem;
+            align-self: start;
+        }
+    }
+
+    .toc-wrapper {
+        display: none;
+    }
+
+    @media (min-width: 1280px) {
+        .toc-wrapper {
+            display: block;
+        }
+    }
+
+    /* Metadata */
+    .metadata-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .metadata-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-family: var(--font-family-mono);
+        font-size: 0.75rem;
+    }
+
+    .meta-label {
+        color: var(--color-text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .meta-value {
+        color: var(--color-primary);
+    }
+
+    /* Related Section */
+    .related-section {
+        margin-top: 4rem;
+        padding-top: 2rem;
+        border-top: 1px solid oklch(0.75 0.18 195 / 0.1);
+    }
+</style>

@@ -1,29 +1,54 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
+import type { FC, ReactNode, KeyboardEvent } from "react";
 import { SearchIcon, SpinnerIcon } from "./Icons";
-// import * as pkg from "bloom-filters";
-// const { BloomFilter } = pkg;
 
-interface ISearchProps {
-    className?: string;
-    children?: React.ReactNode;
+/**
+ * Article data structure from the search index
+ */
+interface IArticle {
+    title: string;
+    description: string;
+    image?: { width: number; height: number; src: string };
+    link: string;
+    tags: Array<string>;
+    bloom: Array<string>;
 }
 
-const Search: React.FC<ISearchProps> = ({ className = "" }) => {
+interface ISearchRecordSet {
+    articles: Array<IArticle>;
+}
+
+/**
+ * Props for the Search component
+ */
+interface ISearchProps {
+    /** Additional CSS classes to apply to the container */
+    className?: string;
+    /** Child elements (currently unused) */
+    children?: ReactNode;
+}
+
+/**
+ * Search component for blog posts with keyboard navigation
+ *
+ * Features:
+ * - Loads pre-built search index from /search-core.json
+ * - Supports keyword scoring (title: +10, description: +5, tags: +7, bloom: +1)
+ * - Keyboard navigation with arrow keys and Enter to select
+ * - Shows top 5 results sorted by relevance score
+ *
+ * @example
+ * ```tsx
+ * <Search client:load />
+ * ```
+ */
+const Search: FC<ISearchProps> = ({ className = "" }) => {
     const [term, setTerm] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [recordSet, setRecordSet] = useState<{
-        articles: Array<{
-            title: string;
-            description: string;
-            image?: { width: number; height: number; src: string };
-            link: string;
-            tags: Array<string>;
-            bloom: Array<string>;
-        }>;
-    }>({ articles: [] });
+    const [recordSet, setRecordSet] = useState<ISearchRecordSet>({ articles: [] });
     const [selectedElementIndex, setSelectedElementIndex] = useState<number>(-1);
 
-    const onKeyDown = useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
+    const onKeyDown = useCallback((event: KeyboardEvent<HTMLInputElement>) => {
         if (event.code === "ArrowDown" || event.code === "ArrowUp" || event.code === "Enter") {
             event.preventDefault();
             event.stopPropagation();
@@ -62,12 +87,12 @@ const Search: React.FC<ISearchProps> = ({ className = "" }) => {
             });
     }, []);
 
-    const results = React.useMemo(() => {
+    const results = useMemo(() => {
         if (term.trim().length === 0) {
             return [];
         }
 
-        const found: Array<{ article: any; score: number }> = [];
+        const found: Array<{ article: IArticle; score: number }> = [];
         const searchTerms = term.split(new RegExp("[\\s]{1,}", "g"));
         for (const article of recordSet.articles) {
             // const filter = BloomFilter.fromJSON(article.bloom);
@@ -116,7 +141,7 @@ const Search: React.FC<ISearchProps> = ({ className = "" }) => {
     }, [selectedElementIndex, results]);
 
     return (
-        <div className={className}>
+        <div className={`min-h-[56px] ${className}`}>
             <div className="relative">
                 <input
                     name="blog-search"
@@ -127,7 +152,7 @@ const Search: React.FC<ISearchProps> = ({ className = "" }) => {
                         setTerm(e.target.value);
                         setSelectedElementIndex(-1);
                     }}
-                    className="w-full rounded-none bg-white py-4 pl-14 pr-4 text-slate-950 outline outline-1 outline-transparent ring-0 focus:outline-primary focus:ring-primary dark:bg-slate-900 dark:text-white"
+                    className="w-full rounded border border-primary/30 bg-bg-panel py-4 pl-14 pr-4 text-text-primary outline-none ring-0 placeholder:text-text-muted focus:border-primary focus:ring-1 focus:ring-primary"
                     placeholder="Search Blog Posts..."
                     autoComplete="off"
                     autoCapitalize="off"
@@ -143,29 +168,32 @@ const Search: React.FC<ISearchProps> = ({ className = "" }) => {
                 </div>
             </div>
             {term.length > 0 && (
-                <ul className="my-2" id="BlogSearchResult">
-                    {results.map((result: any, index) => (
+                <ul className="my-2 rounded border border-primary/20 bg-bg-panel" id="BlogSearchResult">
+                    {results.map((result, index) => (
                         <li
                             key={result.title}
                             className={
-                                index === selectedElementIndex ? "selected bg-primary/50" : ""
+                                index === selectedElementIndex ? "selected bg-primary/30" : "hover:bg-primary/10"
                             }
                         >
                             <a
                                 href={result.link}
-                                className="flex gap-4 px-4 py-2 decoration-transparent  hover:decoration-transparent"
+                                className="flex gap-4 px-4 py-3 text-text-primary no-underline hover:no-underline"
                             >
-                                <figure className="shrink-0">
-                                    <img
-                                        src={result.image.src}
-                                        alt={result.title}
-                                        width={result.image.width}
-                                        height={result.image.height}
-                                    />
-                                </figure>
+                                {result.image && (
+                                    <figure className="shrink-0">
+                                        <img
+                                            src={result.image.src}
+                                            alt={result.title}
+                                            width={result.image.width}
+                                            height={result.image.height}
+                                            className="rounded"
+                                        />
+                                    </figure>
+                                )}
                                 <div>
-                                    <p className="text-xl">{result.title}</p>
-                                    <p className="line-clamp-3 overflow-hidden text-ellipsis">
+                                    <p className="text-lg font-medium text-primary">{result.title}</p>
+                                    <p className="line-clamp-2 overflow-hidden text-ellipsis text-sm text-text-secondary">
                                         {result.description}
                                     </p>
                                 </div>

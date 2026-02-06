@@ -1,12 +1,11 @@
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
-import tailwind from "@astrojs/tailwind";
+import tailwindcss from "@tailwindcss/vite";
 import remarkToc from "remark-toc";
 import a11yEmoji from "@fec/remark-a11y-emoji";
 import { remarkReadingTime } from "./src/lib/readingTime";
 import sitemap from "@astrojs/sitemap";
 import metaTags from "astro-meta-tags";
-import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 
 const runningPort = 4006;
 
@@ -25,32 +24,10 @@ export default defineConfig({
     redirects: {
         "/old-page": "/new-page"
     },
-    // Required to Add Buffer Polyfill to the Browser for Bloom Filters
-    // vite: {
-    //     optimizeDeps: {
-    //         esbuildOptions: {
-    //             // Node.js global to browser globalThis
-    //             define: {
-    //                 global: "globalThis"
-    //             },
-    //             // Enable esbuild polyfill plugins
-    //             plugins: [
-    //                 NodeGlobalsPolyfillPlugin({
-    //                     buffer: true
-    //                 })
-    //             ]
-    //         }
-    //     }
-    // },
-    integrations: [
-        sitemap(),
-        react(),
-        tailwind({
-            nesting: true,
-            applyBaseStyles: false
-        }),
-        metaTags()
-    ],
+    vite: {
+        plugins: [tailwindcss()]
+    },
+    integrations: [sitemap(), react(), metaTags()],
     markdown: {
         // Applied to .md and .mdx files
         remarkPlugins: [remarkReadingTime, remarkToc, a11yEmoji],

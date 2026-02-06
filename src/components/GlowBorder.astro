@@ -1,0 +1,138 @@
+---
+/**
+ * GlowBorder - Neon border effect wrapper component
+ * Wraps content with an animated glowing border
+ */
+
+interface Props {
+    color?: "primary" | "secondary" | "accent" | "highlight";
+    intensity?: "sm" | "md" | "lg";
+    animated?: boolean;
+    class?: string;
+}
+
+const {
+    color = "primary",
+    intensity = "md",
+    animated = false,
+    class: className = ""
+} = Astro.props;
+
+const colorVars = {
+    primary: "--color-primary",
+    secondary: "--color-secondary",
+    accent: "--color-accent",
+    highlight: "--color-highlight"
+};
+
+const intensityClasses = {
+    sm: "glow-sm",
+    md: "glow-md",
+    lg: "glow-lg"
+};
+---
+
+<div
+    class:list={[
+        "glow-border",
+        intensityClasses[intensity],
+        animated && "glow-animated",
+        className
+    ]}
+    style={`--glow-color: var(${colorVars[color]}, oklch(0.75 0.18 195));`}
+>
+    <div class="glow-inner">
+        <slot />
+    </div>
+</div>
+
+<style>
+    .glow-border {
+        position: relative;
+        border-radius: 0.5rem;
+    }
+
+    .glow-inner {
+        position: relative;
+        z-index: 1;
+        border: 1px solid var(--glow-color);
+        border-radius: 0.5rem;
+        background: var(--color-bg-panel, oklch(0.15 0.02 260));
+        overflow: hidden;
+    }
+
+    /* Glow effect */
+    .glow-border::before {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        border-radius: 0.6rem;
+        background: var(--glow-color);
+        opacity: 0;
+        filter: blur(8px);
+        transition: opacity 0.3s ease;
+    }
+
+    .glow-border:hover::before {
+        opacity: 0.3;
+    }
+
+    /* Intensity levels */
+    .glow-sm::before {
+        filter: blur(4px);
+    }
+
+    .glow-sm:hover::before {
+        opacity: 0.2;
+    }
+
+    .glow-md::before {
+        filter: blur(8px);
+    }
+
+    .glow-md:hover::before {
+        opacity: 0.3;
+    }
+
+    .glow-lg::before {
+        filter: blur(16px);
+    }
+
+    .glow-lg:hover::before {
+        opacity: 0.5;
+    }
+
+    /* Animated glow */
+    .glow-animated::before {
+        animation: glow-pulse 2s ease-in-out infinite;
+    }
+
+    .glow-animated:hover::before {
+        animation-play-state: paused;
+        opacity: 0.4;
+    }
+
+    @keyframes glow-pulse {
+        0%,
+        100% {
+            opacity: 0.1;
+            filter: blur(8px);
+        }
+        50% {
+            opacity: 0.25;
+            filter: blur(12px);
+        }
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+        .glow-animated::before {
+            animation: none;
+        }
+    }
+
+    /* Light mode adjustments */
+    :global(html:not(.dark)) .glow-inner {
+        background: var(--color-bg-light-panel, oklch(0.95 0.01 260));
+    }
+</style>

@@ -7,41 +7,45 @@ import { ForkIcon, EyeIcon, StarIcon, GithubIcon } from "~components/Icons";
 
 import missingPeices from "../../assets/code.png";
 
-const record: {
-    data: { user: IGithubUser };
-} = await fetch("https://api.github.com/graphql", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-        Authorization: `bearer ${import.meta.env.GHCR_TOKEN}`
-    },
-    body: JSON.stringify({
-        query: print(gql`
-            query GetUserDetails($user: String!) {
-                user(login: $user) {
-                    name
-                    login
-                    company
-                    avatarUrl
-                    url
-                    pinnedItems(first: 6, types: REPOSITORY) {
-                        nodes {
-                            ... on Repository {
-                                name
-                                description
-                                url
-                                sshUrl
-                                homepageUrl
-                                forkCount
-                                stargazerCount
-                                watchers {
-                                    totalCount
-                                }
-                                languages(first: 5) {
-                                    nodes {
-                                        ... on Language {
-                                            color
-                                            name
+let user: IGithubUser | null = null;
+
+if (import.meta.env.GHCR_TOKEN) {
+    const record: {
+        data?: { user: IGithubUser };
+    } = await fetch("https://api.github.com/graphql", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `bearer ${import.meta.env.GHCR_TOKEN}`
+        },
+        body: JSON.stringify({
+            query: print(gql`
+                query GetUserDetails($user: String!) {
+                    user(login: $user) {
+                        name
+                        login
+                        company
+                        avatarUrl
+                        url
+                        pinnedItems(first: 6, types: REPOSITORY) {
+                            nodes {
+                                ... on Repository {
+                                    name
+                                    description
+                                    url
+                                    sshUrl
+                                    homepageUrl
+                                    forkCount
+                                    stargazerCount
+                                    watchers {
+                                        totalCount
+                                    }
+                                    languages(first: 5) {
+                                        nodes {
+                                            ... on Language {
+                                                color
+                                                name
+                                            }
                                         }
                                     }
                                 }
@@ -49,11 +53,12 @@ const record: {
                         }
                     }
                 }
-            }
-        `),
-        variables: { user: "CodeVachon" }
-    })
-}).then((res) => res.json());
+            `),
+            variables: { user: "CodeVachon" }
+        })
+    }).then((res) => res.json());
+    user = record.data?.user ?? null;
+}
 ---
 
 <Layout
@@ -69,52 +74,54 @@ const record: {
             <a href="https://github.com/CodeVachon"> GitHub</a>
         </p>
     </div>
-    <div class="flex flex-col gap-4">
-        <h2 class="text-2xl font-bold">Favorite Repos</h2>
-        <ol class="flex flex-col gap-8">
-            {
-                record.data.user.pinnedItems.nodes.map((node) => (
-                    <li class="flex justify-between">
-                        <div>
-                            <div class="flex items-end gap-2">
-                                <ForkIcon className={"size-6"} />
-                                <a href={node.url} class="text-2xl font-semibold" target="_blank">
-                                    {node.name}
-                                </a>
+    {user && (
+        <div class="flex flex-col gap-4">
+            <h2 class="text-2xl font-bold">Favorite Repos</h2>
+            <ol class="flex flex-col gap-8">
+                {
+                    user.pinnedItems.nodes.map((node) => (
+                        <li class="flex justify-between">
+                            <div>
+                                <div class="flex items-end gap-2">
+                                    <ForkIcon className={"size-6"} />
+                                    <a href={node.url} class="text-2xl font-semibold" target="_blank">
+                                        {node.name}
+                                    </a>
+                                </div>
+                                <p class="mt">{node.description}</p>
+                                <ul class="mt-2 flex flex-wrap gap-2">
+                                    {node.languages.nodes.map((lang) => (
+                                        <li class="flex items-center gap-1">
+                                            <p
+                                                class="h-4 w-4 rounded-full"
+                                                style={{ backgroundColor: lang.color }}
+                                            />
+                                            <p>{lang.name}</p>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
-                            <p class="mt">{node.description}</p>
-                            <ul class="mt-2 flex flex-wrap gap-2">
-                                {node.languages.nodes.map((lang) => (
-                                    <li class="flex items-center gap-1">
-                                        <p
-                                            class="h-4 w-4 rounded-full"
-                                            style={{ backgroundColor: lang.color }}
-                                        />
-                                        <p>{lang.name}</p>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
 
-                        <ul class="flex gap-2">
-                            <li class="text-center">
-                                <ForkIcon className={"size-6"} />
-                                <p>{node.forkCount}</p>
-                            </li>
-                            <li class="text-center">
-                                <StarIcon className={"size-6"} />
-                                <p>{node.stargazerCount}</p>
-                            </li>
-                            <li class="text-center">
-                                <EyeIcon className="size-6" />
-                                <p>{node.watchers.totalCount}</p>
-                            </li>
-                        </ul>
-                    </li>
-                ))
-            }
-        </ol>
-    </div>
+                            <ul class="flex gap-2">
+                                <li class="text-center">
+                                    <ForkIcon className={"size-6"} />
+                                    <p>{node.forkCount}</p>
+                                </li>
+                                <li class="text-center">
+                                    <StarIcon className={"size-6"} />
+                                    <p>{node.stargazerCount}</p>
+                                </li>
+                                <li class="text-center">
+                                    <EyeIcon className="size-6" />
+                                    <p>{node.watchers.totalCount}</p>
+                                </li>
+                            </ul>
+                        </li>
+                    ))
+                }
+            </ol>
+        </div>
+    )}
     <footer class="mt-12 flex flex-col gap-4 border-t pt-4">
         <div>
             <a

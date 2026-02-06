@@ -1,12 +1,14 @@
 ---
 import { Picture, getImage } from "astro:assets";
-import { Icon, HamburgerIcon, CloseIcon } from "~components/Icons";
-import type { IconName } from "~components/Icons";
 import myImage from "../assets/me.png";
-import Glow from "~components/Glow.astro";
-import { ViewTransitions } from "astro:transitions";
-import ThemeToggle from "../components/ThemeToggle.astro";
+import { ClientRouter } from "astro:transitions";
 import { fade } from "astro:transitions";
+import GridBackground from "~components/GridBackground.astro";
+import Sidebar from "~components/Sidebar.astro";
+import FlyoutMenu from "~components/FlyoutMenu.astro";
+import SiteFooter from "~components/SiteFooter.astro";
+import { siteTitle, siteAuthor, defaultDescription } from "~lib/navigation";
+import "./../styles/global.css";
 
 interface Props {
     title: string;
@@ -22,31 +24,6 @@ interface Props {
     publishDate?: string;
 }
 
-const navItems: Array<{ name: string; href: string; className?: string; icon?: IconName }> = [
-    { name: "Home", href: "/", className: "hidden lg:block", icon: "home" },
-    { name: "Blog", href: "/blog", icon: "blog" },
-    { name: "Uses", href: "/uses", icon: "uses" },
-    { name: "Code", href: "/code", icon: "code" }
-];
-
-const socialMediaItems: Array<{ name: string; href: string; icon: IconName }> = [
-    {
-        name: "Github",
-        href: "https://github.com/CodeVachon",
-        icon: "github"
-    },
-    {
-        name: "LinkedIn",
-        href: "https://www.linkedin.com/in/christophervachon/",
-        icon: "linkedin"
-    },
-    {
-        name: "BlueSky",
-        href: "https://bsky.app/profile/christophervachon.ca",
-        icon: "blueSky"
-    }
-];
-
 const {
     title,
     description,
@@ -56,22 +33,15 @@ const {
     publishDate
 } = Astro.props;
 
-const siteTitle = "Christopher Vachon";
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const cardImage = headerImage ?? myImage;
 const titleTemplate = [title, siteTitle].filter((v) => String(v).trim().length > 0).join(" | ");
-const descriptionTemplate =
-    description ??
-    "Hi, I Christopher Vachon, a Web Application Developer in Canada. I write about web development, programming, and technology.";
+const descriptionTemplate = description ?? defaultDescription;
 
 const ogImgSrc = await getImage({ src: cardImage, width: 1200, height: 600, format: "jpg" });
-const ogAuthor = "Christopher Vachon";
-import "./../styles/global.css";
-import Search from "~components/Search";
-import KeyBoardKey from "~components/KeyBoardKey";
 ---
 
-<html lang="en" class="dark h-full antialiased" style="color-scheme: dark;">
+<html lang="en" class="dark h-full antialiased" style="color-scheme: dark;" data-theme="cool-cyber">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -82,10 +52,10 @@ import KeyBoardKey from "~components/KeyBoardKey";
         <meta name="referrer" content="no-referrer-when-downgrade" />
         <link rel="canonical" href={canonical} />
 
-        <meta name="theme-color" content="#0ea5e9" />
-        <meta property="author" content={ogAuthor} />
-        <meta name="article:author" content={ogAuthor} />
-        <meta name="color-scheme" content="dark" />
+        <meta name="theme-color" content="#00d4ff" />
+        <meta property="author" content={siteAuthor} />
+        <meta name="article:author" content={siteAuthor} />
+        <meta name="color-scheme" content="dark light" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta property="og:site_name" content="All About Christopher Vachon" />
@@ -93,7 +63,7 @@ import KeyBoardKey from "~components/KeyBoardKey";
         <meta property="og:title" content={title} />
         <meta property="og:description" content={descriptionTemplate} />
         <meta property="og:url" content={canonical} />
-        <meta property="og:author" content={ogAuthor} />
+        <meta property="og:author" content={siteAuthor} />
         {publishDate && <meta property="article:published_time" content={publishDate} />}
         {publishDate && <meta property="article:modified_time" content={publishDate} />}
         <meta property="article:publisher" content="https://github.com/CodeVachon" />
@@ -103,7 +73,7 @@ import KeyBoardKey from "~components/KeyBoardKey";
         <meta name="twitter:url" content={canonical} />
 
         <meta name="twitter:label1" content="Written by" />
-        <meta name="twitter:data1" content={ogAuthor} />
+        <meta name="twitter:data1" content={siteAuthor} />
         <meta name="twitter:site" content="@CodeVachon" />
         {
             cardImage && (
@@ -132,103 +102,25 @@ import KeyBoardKey from "~components/KeyBoardKey";
             title={siteTitle}
             href={`${Astro.site}rss.xml`}
         />
-        <ViewTransitions />
+        <ClientRouter />
     </head>
     <body
-        class="absolute inset-0 flex h-screen min-w-[350px] flex-col bg-white text-slate-900 lg:flex-row lg:overflow-hidden dark:bg-gray-950 dark:text-slate-50"
+        class="site-body relative min-h-screen min-w-[350px] lg:flex lg:flex-row lg:overflow-hidden"
     >
+        <GridBackground opacity={0.025} size="md" fade={true} class="fixed inset-0 z-0" />
+
         <input type="checkbox" id="menu-toggle" title="Toggle the Mobile Navigation" />
+
+        <Sidebar sideWidth={sideWidth} currentPath={Astro.url.pathname} />
+
         <section
-            id="sidebar"
-            class:list={[
-                "relative sticky top-0 z-[100] flex items-center justify-center transition duration-500 lg:flex-shrink-0",
-                sideWidth === "full" ? "lg:w-1/2" : "lg:w-1/3",
-                "text-slate-50"
-            ]}
-        >
-            <Glow />
-            <div
-                id="sidebar-content"
-                class="flex w-full items-center justify-between gap-4 p-4 lg:w-auto lg:flex-col lg:items-start lg:justify-center"
-            >
-                <a
-                    href="/"
-                    class="flex w-full min-w-[115px] items-center gap-4 decoration-transparent sm:w-1/3 lg:w-full lg:flex-col lg:items-start"
-                >
-                    <header class="flex items-center gap-4 lg:flex-col lg:items-start">
-                        <Picture
-                            id="profile-image"
-                            class="size-6 min-h-[24px] min-w-[24px] flex-shrink-0 flex-grow-0 rounded-full lg:size-64 lg:rounded-2xl"
-                            src={myImage}
-                            widths={[24, 100, 300, 450]}
-                            formats={["webp", "jpg"]}
-                            fallbackFormat="jpg"
-                            alt="Christopher Vachon"
-                            loading="eager"
-                        />
-                        <h1 class="text-lg font-bold lg:text-2xl">Christopher Vachon</h1>
-                    </header>
-                </a>
-                <nav class="hidden w-1/3 md:block lg:w-full">
-                    <ul class="flex justify-center gap-6 lg:flex-col lg:gap-2">
-                        {
-                            navItems.map((item) => (
-                                <li class={item.className ?? ""}>
-                                    <a
-                                        href={item.href}
-                                        class="text-white decoration-transparent transition duration-200 ease-in-out hover:text-white hover:decoration-primary"
-                                    >
-                                        {item.name}
-                                    </a>
-                                </li>
-                            ))
-                        }
-                        <li class="hidden pt-6 lg:block">
-                            <p class="text-xs text-slate-500">
-                                <KeyBoardKey keyModifier="cmd" client:load>K</KeyBoardKey> to open Command
-                                Pallet
-                            </p>
-                        </li>
-                    </ul>
-                </nav>
-                <nav class="w-auto md:flex md:w-1/3 md:justify-end md:text-right">
-                    <label
-                        for="menu-toggle"
-                        id="menu-open-toggle"
-                        class="flex h-8 w-8 cursor-pointer items-center justify-center rounded transition-colors duration-200 ease-in-out hover:bg-primary lg:hidden dark:bg-slate-800 dark:text-white"
-                        aria-label="Toggle menu"
-                    >
-                        <HamburgerIcon className={"size-8"} />
-                    </label>
-                </nav>
-                <nav class="hidden w-1/3 justify-end lg:flex lg:w-full lg:justify-start">
-                    <ol class="flex items-center gap-2">
-                        {
-                            socialMediaItems.map(({ name, href, icon }) => (
-                                <li>
-                                    <a
-                                        href={href}
-                                        target="_blank"
-                                        title={`Check me out on ${name}`}
-                                        class="text-primary hover:text-white"
-                                    >
-                                        <Icon name={icon} className="size-8 lg:size-5" />
-                                    </a>
-                                </li>
-                            ))
-                        }
-                    </ol>
-                </nav>
-            </div>
-        </section>
-        <section
-            class="z-[90] flex h-full flex-grow flex-col lg:overflow-y-auto"
-            transition:animate={fade({ duration: "0.8s" })}
+            class="relative z-10 flex h-full flex-grow flex-col overflow-x-hidden lg:h-screen lg:overflow-y-auto"
+            transition:animate={fade({ duration: "0.5s" })}
         >
             <main class:list={["flex-grow p-6 lg:py-24", className]} data-pagefind-body>
                 {
                     headerImage && (
-                        <figure class="-mx-6 -mt-6 mb-6 max-w-[1200px] overflow-hidden lg:-mt-24">
+                        <figure class="header-image-wrapper -mx-6 -mt-6 mb-6 max-w-[1200px] overflow-hidden lg:-mt-24">
                             <Picture
                                 inferSize={true}
                                 src={headerImage as any}
@@ -239,116 +131,16 @@ import KeyBoardKey from "~components/KeyBoardKey";
                                 fallbackFormat="jpg"
                                 loading="eager"
                             />
+                            <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg-deep via-transparent to-transparent" />
                         </figure>
                     )
                 }
                 <slot />
             </main>
-            <footer
-                class="flex max-w-[1200px] items-center justify-between gap-6 px-6 py-4 lg:justify-normal"
-            >
-                <div class="order-2 lg:order-1">
-                    <ThemeToggle />
-                </div>
-                <p class="order-1 text-center text-xs text-gray-500 lg:order-2 dark:text-gray-400">
-                    &copy; {new Date().getFullYear()} Christopher Vachon. All rights reserved.
-                </p>
-            </footer>
+            <SiteFooter />
         </section>
-        <section id="flyout-menu">
-            <label id="backdrop" for="menu-toggle">
-                <label for="menu-toggle">
-                    <CloseIcon
-                        className={"size-12 text-white transition-colors duration-200 hover:text-primary dark:text-white"}
-                    />
-                </label>
-            </label>
-            <div
-                id="flyout-menu-content"
-                class="fixed bottom-0 right-0 top-0 h-screen w-[90vw] min-w-[300px] bg-white shadow-md sm:w-[400px] dark:bg-slate-800"
-            >
-                <!-- GLOW:START -->
-                <div
-                    class="absolute -top-[40%] bottom-auto left-0 right-0 -z-10 h-[180%] overflow-hidden dark:bg-gray-950"
-                >
-                    <svg
-                        class="absolute bottom-0 left-0 right-0 top-0 h-full w-full text-primary"
-                        aria-hidden="true"
-                    >
-                        <defs>
-                            <radialGradient id={`glow-command-pallet`} cx="0%">
-                                <stop offset="0%" stop-color={"currentcolor"} stop-opacity="0.4"
-                                ></stop>
-                                <stop
-                                    offset="53.95%"
-                                    stop-color={"currentcolor"}
-                                    stop-opacity="0.09"></stop>
-                                <stop offset="100%" stop-color={"currentcolor"} stop-opacity="0"
-                                ></stop>
-                            </radialGradient>
-                        </defs>
-                        <rect width="100%" height="100%" fill={`url(#glow-command-pallet)`} class=""
-                        ></rect>
-                    </svg>
-                </div>
-                <!-- GLOW:END -->
-                <nav
-                    class="flex h-full w-full flex-col justify-between overflow-y-auto border-l-2 border-l-primary/50"
-                >
-                    <ol class="">
-                        <li>
-                            <Search client:visible />
-                        </li>
-                        {
-                            navItems.map((item) => (
-                                <li class={Astro.url.pathname === item.href ? "bg-primary/50" : ""}>
-                                    <a
-                                        href={item.href}
-                                        title={`Check me out on ${item.name}`}
-                                        class="flex cursor-pointer items-center gap-6 p-4 decoration-transparent transition duration-200 ease-in-out hover:bg-primary hover:text-white"
-                                    >
-                                        <Icon name={item.icon ?? "link"} className="size-12" />
-                                        <span class="text-xl">{item.name}</span>
-                                    </a>
-                                </li>
-                            ))
-                        }
-                    </ol>
 
-                    <ol>
-                        {
-                            socialMediaItems.map(({ name, href, icon }) => (
-                                <li>
-                                    <a
-                                        href={href}
-                                        target="_blank"
-                                        title={`Check me out on ${name}`}
-                                        class=" flex cursor-pointer items-center gap-6 p-4 decoration-transparent transition duration-200 ease-in-out hover:bg-primary hover:text-white"
-                                    >
-                                        <Icon name={icon} className="size-12" />
-                                        <span class="text-xl">{name}</span>
-                                    </a>
-                                </li>
-                            ))
-                        }
-
-                        <li>
-                            <label for="menu-toggle">
-                                <div
-                                    class="flex cursor-pointer items-center gap-6 p-4 transition duration-200 ease-in-out hover:bg-primary hover:text-white"
-                                >
-                                    <CloseIcon className={"size-12"} />
-                                    <span class="text-xl">Close</span>
-                                </div>
-                            </label>
-                        </li>
-                        <li class="p-4">
-                            <ThemeToggle />
-                        </li>
-                    </ol>
-                </nav>
-            </div>
-        </section>
+        <FlyoutMenu currentPath={Astro.url.pathname} />
 
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-RREP1WR95X"></script>
@@ -358,11 +150,10 @@ import KeyBoardKey from "~components/KeyBoardKey";
                 dataLayer.push(arguments);
             }
             gtag("js", new Date());
-
             gtag("config", "G-RREP1WR95X");
         </script>
         <script is:inline>
-            document.addEventListener("astro:before-swap", (ev) => {
+            document.addEventListener("astro:before-swap", () => {
                 const toggle = document.getElementById("menu-toggle");
                 if (toggle.checked) {
                     toggle.checked = false;
@@ -394,3 +185,25 @@ import KeyBoardKey from "~components/KeyBoardKey";
         </script>
     </body>
 </html>
+
+<style>
+    .site-body {
+        background-color: var(--color-bg-deep);
+        color: var(--color-text-primary);
+    }
+
+    .header-image-wrapper {
+        position: relative;
+    }
+
+    .header-image-wrapper::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 50%;
+        background: linear-gradient(to top, var(--color-bg-deep), transparent);
+        pointer-events: none;
+    }
+</style>

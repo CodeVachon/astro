@@ -1,33 +1,113 @@
 ---
 import Layout from "~layouts/Layout.astro";
-
-import H1 from "~components/H1.astro";
 import { getCollection } from "astro:content";
-import ArticleList from "~components/ArticleList.astro";
+import HexGrid from "~components/HexGrid.astro";
+import TerminalHeader from "~components/TerminalHeader.astro";
+import NeonButton from "~components/NeonButton.astro";
+import DataReadout from "~components/DataReadout.astro";
 
-// Get all entries from a collection.
-// Requires the name of the collection as an argument.
-// Example: retrieve `src/content/blog/**`
+// Get all blog posts
 const allBlogPosts = await getCollection("blog", ({ data }) => {
     return !data.draft;
 });
 
-import deafultImage from "./../../assets/default-1.png";
+// Sort by date (newest first)
+const sortedPosts = allBlogPosts.sort(
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+// Stats for data readout
+const totalPosts = sortedPosts.length;
+const latestPost = sortedPosts[0];
+const latestDate = new Date(latestPost.data.date).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric"
+});
+
+import defaultImage from "./../../assets/default-1.png";
 ---
 
 <Layout
     title="Blog Posts"
     sideWidth="full"
-    className="flex flex-col gap-12"
-    headerImage={deafultImage}
+    className="flex flex-col gap-8"
+    headerImage={defaultImage}
 >
-    <header>
-        <H1>Recent Posts</H1>
-        <p>
-            Here are some of my latest blog posts. <a href="/blog/tags"
-                >Click Here to see a list of all tags</a
-            >.
+    {/* Header Section */}
+    <header class="blog-header">
+        <TerminalHeader level={1}>Blog Archive</TerminalHeader>
+
+        <p class="blog-description">
+            Thoughts, tutorials, and discoveries from my adventures in web development.
+            <a href="/blog/tags" class="tags-link">Browse by tags</a>
         </p>
+
+        {/* Stats readout */}
+        <DataReadout
+            items={[
+                { label: "total", value: `${totalPosts} posts` },
+                { label: "latest", value: latestDate },
+                { label: "status", value: "active" }
+            ]}
+            inline
+            class="mt-4"
+        />
     </header>
-    <ArticleList articles={allBlogPosts.reverse()} />
+
+    {/* Honeycomb Grid */}
+    <section class="posts-grid">
+        <HexGrid posts={sortedPosts} columns={3} variant="rounded" />
+    </section>
+
+    {/* Footer actions */}
+    <footer class="blog-footer">
+        <div class="footer-actions">
+            <NeonButton href="/blog/tags" variant="outline">
+                Browse Tags
+            </NeonButton>
+            <NeonButton href="/" variant="outline">
+                Back Home
+            </NeonButton>
+        </div>
+    </footer>
 </Layout>
+
+<style>
+    .blog-header {
+        max-width: 800px;
+    }
+
+    .blog-description {
+        color: var(--color-text-secondary);
+        font-size: 1.125rem;
+        line-height: 1.7;
+        margin-top: 1rem;
+    }
+
+    .tags-link {
+        color: var(--color-primary);
+        text-decoration: underline;
+        text-decoration-color: var(--color-primary);
+        transition: all 0.2s ease;
+    }
+
+    .tags-link:hover {
+        text-shadow: 0 0 8px var(--color-primary);
+    }
+
+    .posts-grid {
+        max-width: 1200px;
+    }
+
+    .blog-footer {
+        padding-top: 2rem;
+        border-top: 1px solid oklch(0.75 0.18 195 / 0.1);
+    }
+
+    .footer-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+</style>

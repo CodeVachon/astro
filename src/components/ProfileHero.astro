@@ -1,0 +1,353 @@
+---
+/**
+ * ProfileHero - Personal brand section with hexagonal photo frame
+ * Used on the home page sidebar
+ */
+import { Picture } from "astro:assets";
+import { Icon } from "~components/Icons";
+import type { IconName } from "~components/Icons";
+import myImage from "../assets/me.png";
+
+interface Props {
+    compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+
+const socialLinks: Array<{ name: string; href: string; icon: IconName }> = [
+    { name: "Github", href: "https://github.com/CodeVachon", icon: "github" },
+    {
+        name: "LinkedIn",
+        href: "https://www.linkedin.com/in/christophervachon/",
+        icon: "linkedin"
+    },
+    { name: "BlueSky", href: "https://bsky.app/profile/christophervachon.ca", icon: "blueSky" }
+];
+
+const navItems = [
+    { name: "Blog", href: "/blog", command: "cd ~/blog" },
+    { name: "Uses", href: "/uses", command: "cat uses.md" },
+    { name: "Code", href: "/code", command: "ls -la ~/projects" }
+];
+---
+
+<div class:list={["profile-hero", compact && "profile-hero-compact"]}>
+    {/* Hexagonal photo frame */}
+    <div class="hex-photo-wrapper">
+        <div class="hex-photo-frame">
+            <Picture
+                src={myImage}
+                widths={[100, 200, 300]}
+                formats={["webp", "jpg"]}
+                fallbackFormat="jpg"
+                alt="Christopher Vachon"
+                class="hex-photo"
+                loading="eager"
+            />
+        </div>
+        <div class="hex-glow" aria-hidden="true"></div>
+    </div>
+
+    {/* Name and status */}
+    <div class="profile-info">
+        <h1 class="profile-name">Christopher Vachon</h1>
+        <div class="status-line">
+            <span class="status-indicator"></span>
+            <span class="status-text">STATUS: ONLINE</span>
+        </div>
+        <div class="role-line">
+            <span class="role-prefix">//</span>
+            <span class="role-text">DEVELOPER</span>
+        </div>
+    </div>
+
+    {/* Terminal-style navigation */}
+    {
+        !compact && (
+            <nav class="terminal-nav">
+                <div class="terminal-prompt">
+                    <span class="prompt-user">guest</span>
+                    <span class="prompt-at">@</span>
+                    <span class="prompt-host">vachon.dev</span>
+                    <span class="prompt-symbol">$</span>
+                </div>
+                <ul class="nav-commands">
+                    {navItems.map((item) => (
+                        <li>
+                            <a href={item.href} class="nav-command">
+                                <span class="command-text">{item.command}</span>
+                                <span class="command-label">{item.name}</span>
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </nav>
+        )
+    }
+
+    {/* Social icons */}
+    <div class="social-links">
+        {
+            socialLinks.map(({ name, href, icon }) => (
+                <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={`Connect on ${name}`}
+                    class="social-link"
+                >
+                    <Icon name={icon} className="size-5" />
+                </a>
+            ))
+        }
+    </div>
+</div>
+
+<style>
+    .profile-hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        text-align: center;
+    }
+
+    @media (min-width: 1024px) {
+        .profile-hero {
+            align-items: flex-start;
+            text-align: left;
+        }
+    }
+
+    .profile-hero-compact {
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .profile-hero-compact .hex-photo-wrapper {
+        width: 48px;
+        height: 48px;
+    }
+
+    .profile-hero-compact .profile-info {
+        flex: 1;
+    }
+
+    .profile-hero-compact .terminal-nav,
+    .profile-hero-compact .social-links {
+        display: none;
+    }
+
+    /* Hexagonal photo */
+    .hex-photo-wrapper {
+        position: relative;
+        width: 120px;
+        height: 120px;
+    }
+
+    @media (min-width: 1024px) {
+        .hex-photo-wrapper {
+            width: 200px;
+            height: 200px;
+        }
+    }
+
+    .hex-photo-frame {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        overflow: hidden;
+        border: 2px solid var(--color-primary, oklch(0.75 0.18 195));
+    }
+
+    .hex-photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .hex-glow {
+        position: absolute;
+        inset: -4px;
+        clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        background: var(--color-primary, oklch(0.75 0.18 195));
+        opacity: 0.3;
+        filter: blur(8px);
+        z-index: -1;
+        animation: glow-pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes glow-pulse {
+        0%,
+        100% {
+            opacity: 0.2;
+            filter: blur(8px);
+        }
+        50% {
+            opacity: 0.4;
+            filter: blur(12px);
+        }
+    }
+
+    /* Profile info */
+    .profile-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .profile-name {
+        font-family: var(--font-family-display, "Orbitron", system-ui);
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        color: white;
+    }
+
+    @media (min-width: 1024px) {
+        .profile-name {
+            font-size: 1.5rem;
+        }
+    }
+
+    .status-line {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--font-family-mono, "JetBrains Mono", monospace);
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        color: var(--color-primary);
+    }
+
+    .status-indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--color-primary);
+        box-shadow: 0 0 8px var(--color-primary);
+        animation: status-blink 2s ease-in-out infinite;
+    }
+
+    @keyframes status-blink {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.4;
+        }
+    }
+
+    .role-line {
+        font-family: var(--font-family-mono, "JetBrains Mono", monospace);
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        color: var(--color-text-secondary, oklch(0.75 0.02 260));
+    }
+
+    .role-prefix {
+        opacity: 0.5;
+        margin-right: 0.25rem;
+    }
+
+    /* Terminal navigation */
+    .terminal-nav {
+        width: 100%;
+        padding: 1rem;
+        background: oklch(0.1 0.01 260 / 0.5);
+        border: 1px solid oklch(0.75 0.18 195 / 0.2);
+        border-radius: 0.5rem;
+        font-family: var(--font-family-mono, "JetBrains Mono", monospace);
+    }
+
+    .terminal-prompt {
+        font-size: 0.75rem;
+        margin-bottom: 0.75rem;
+        color: var(--color-text-secondary, oklch(0.75 0.02 260));
+    }
+
+    .prompt-user {
+        color: var(--color-accent, oklch(0.72 0.22 145));
+    }
+
+    .prompt-at {
+        color: var(--color-text-muted, oklch(0.55 0.02 260));
+    }
+
+    .prompt-host {
+        color: var(--color-secondary, oklch(0.65 0.2 250));
+    }
+
+    .prompt-symbol {
+        color: var(--color-primary, oklch(0.75 0.18 195));
+        margin-left: 0.25rem;
+    }
+
+    .nav-commands {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .nav-command {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.5rem 0.75rem;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .nav-command:hover {
+        background: oklch(0.75 0.18 195 / 0.1);
+        border-color: oklch(0.75 0.18 195 / 0.3);
+        text-shadow: none;
+    }
+
+    .command-text {
+        font-size: 0.75rem;
+        color: var(--color-primary, oklch(0.75 0.18 195));
+    }
+
+    .command-label {
+        font-size: 0.65rem;
+        color: var(--color-text-muted, oklch(0.55 0.02 260));
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+
+    /* Social links */
+    .social-links {
+        display: flex;
+        gap: 0.75rem;
+    }
+
+    .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border: 1px solid oklch(0.75 0.18 195 / 0.3);
+        border-radius: 0.375rem;
+        color: var(--color-primary, oklch(0.75 0.18 195));
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .social-link:hover {
+        background: oklch(0.75 0.18 195 / 0.1);
+        border-color: var(--color-primary, oklch(0.75 0.18 195));
+        box-shadow: 0 0 8px oklch(0.75 0.18 195 / 0.5);
+        text-shadow: none;
+    }
+</style>

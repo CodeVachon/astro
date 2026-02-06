@@ -1,0 +1,113 @@
+---
+/**
+ * DashboardPanel - Sci-fi styled panel with header and status indicator
+ * Used for sidebar sections like metadata, TOC, and related posts
+ */
+
+interface Props {
+    title: string;
+    status?: "online" | "active" | "idle" | "offline";
+    class?: string;
+}
+
+const { title, status = "active", class: className = "" } = Astro.props;
+
+const statusColors = {
+    online: "bg-accent",
+    active: "bg-primary",
+    idle: "bg-highlight",
+    offline: "bg-text-muted"
+};
+---
+
+<aside class:list={["dashboard-panel", className]}>
+    <header class="panel-header">
+        <span class:list={["status-indicator", statusColors[status]]} aria-hidden="true"></span>
+        <span class="text-primary/80">{title}</span>
+    </header>
+    <div class="panel-content">
+        <slot />
+    </div>
+</aside>
+
+<style>
+    .dashboard-panel {
+        position: relative;
+        border-radius: 0.5rem;
+        border: 1px solid oklch(0.75 0.18 195 / 0.2);
+        background: oklch(0.15 0.02 260 / 0.5);
+        backdrop-filter: blur(4px);
+    }
+
+    /* Corner accents */
+    .dashboard-panel::before,
+    .dashboard-panel::after {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        border: 2px solid var(--color-primary);
+        opacity: 0.4;
+        pointer-events: none;
+    }
+
+    .dashboard-panel::before {
+        top: -1px;
+        left: -1px;
+        border-right: none;
+        border-bottom: none;
+    }
+
+    .dashboard-panel::after {
+        bottom: -1px;
+        right: -1px;
+        border-left: none;
+        border-top: none;
+    }
+
+    .panel-header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-bottom: 1px solid oklch(0.75 0.18 195 / 0.15);
+        font-family: var(--font-family-mono, "JetBrains Mono", monospace);
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+
+    .panel-header::before {
+        content: "//";
+        opacity: 0.4;
+    }
+
+    .status-indicator {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        animation: status-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes status-pulse {
+        0%,
+        100% {
+            opacity: 1;
+            box-shadow: 0 0 4px currentColor;
+        }
+        50% {
+            opacity: 0.5;
+            box-shadow: 0 0 8px currentColor;
+        }
+    }
+
+    .panel-content {
+        padding: 1rem;
+    }
+
+    /* Light mode adjustments */
+    :global(html:not(.dark)) .dashboard-panel {
+        background: oklch(0.95 0.01 260 / 0.8);
+        border-color: oklch(0.75 0.18 195 / 0.3);
+    }
+</style>

@@ -1,0 +1,138 @@
+---
+/**
+ * HexCard - Hexagonal blog post card with glow border effect
+ * Used in the honeycomb grid layout for blog listings
+ */
+import { Picture } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+    post: CollectionEntry<"blog">;
+    index?: number;
+    variant?: "hex" | "rounded";
+}
+
+const { post, index = 0, variant = "hex" } = Astro.props;
+const delayClass = `hex-entrance-delay-${Math.min(index % 6, 5)}`;
+const isHex = variant === "hex";
+---
+
+<article
+    class:list={[
+        "hex-card group hex-entrance",
+        delayClass,
+        isHex ? "hex-shape" : "rounded-shape"
+    ]}
+>
+    <a
+        href={`/blog/${post.id}`}
+        class="block h-full no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+    >
+        {/* Glow border */}
+        <div class="hex-card-border" aria-hidden="true"></div>
+
+        {/* Background gradient */}
+        <div
+            class="absolute inset-0 bg-gradient-to-br from-bg-panel via-bg-dark to-bg-deep opacity-90 transition-opacity duration-300 group-hover:opacity-100"
+            aria-hidden="true"
+        >
+        </div>
+
+        {/* Image */}
+        {
+            post.data.image && (
+                <div class="relative aspect-video overflow-hidden">
+                    <Picture
+                        inferSize={true}
+                        src={post.data.image as any}
+                        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        alt={post.data.title}
+                        formats={["webp", "jpeg"]}
+                        fallbackFormat="jpeg"
+                        widths={[320, 480, 640]}
+                        loading="lazy"
+                    />
+                    {/* Scanline overlay on image */}
+                    <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg-deep via-transparent to-transparent" />
+                </div>
+            )
+        }
+
+        {/* Content */}
+        <div class="hex-card-content">
+            {/* Category/Tag badge */}
+            {
+                post.data.tags?.[0] && (
+                    <span class="mb-2 inline-block rounded bg-primary/20 px-2 py-0.5 font-mono text-xs uppercase tracking-wider text-primary">
+                        {post.data.tags[0].id}
+                    </span>
+                )
+            }
+
+            {/* Title */}
+            <h3
+                class="mb-2 font-display text-lg font-bold leading-tight text-text-primary transition-colors duration-300 group-hover:text-primary group-hover:neon-text-sm"
+            >
+                {post.data.title}
+            </h3>
+
+            {/* Description */}
+            <p class="line-clamp-2 text-sm text-text-secondary">
+                {post.data.description}
+            </p>
+
+            {/* Data readout footer */}
+            <div class="data-readout mt-4 flex items-center gap-2 border-t border-primary/10 pt-3">
+                <span class="label">date:</span>
+                <span class="value">
+                    {
+                        new Date(post.data.date).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric"
+                        })
+                    }
+                </span>
+            </div>
+        </div>
+    </a>
+</article>
+
+<style>
+    @reference "tailwindcss";
+
+    .hex-shape {
+        /* Hex clip-path only on larger screens */
+        @media (min-width: 768px) {
+            clip-path: polygon(
+                50% 0%,
+                100% 25%,
+                100% 75%,
+                50% 100%,
+                0% 75%,
+                0% 25%
+            );
+        }
+    }
+
+    .hex-shape .hex-card-border {
+        @media (min-width: 768px) {
+            clip-path: polygon(
+                50% 0%,
+                100% 25%,
+                100% 75%,
+                50% 100%,
+                0% 75%,
+                0% 25%
+            );
+        }
+    }
+
+    .rounded-shape {
+        @apply rounded-lg;
+    }
+
+    .rounded-shape .hex-card-border {
+        @apply rounded-lg;
+    }
+</style>

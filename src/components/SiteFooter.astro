@@ -1,0 +1,15 @@
+---
+import ThemeToggle from "~components/ThemeToggle.astro";
+import { siteAuthor } from "~lib/navigation";
+---
+
+<footer
+    class="flex max-w-[1200px] items-center justify-between gap-6 border-t border-primary/10 px-6 py-4 lg:justify-normal"
+>
+    <div class="order-2 lg:order-1">
+        <ThemeToggle />
+    </div>
+    <p class="order-1 font-mono text-xs text-text-muted lg:order-2">
+        &copy; {new Date().getFullYear()} {siteAuthor}
+    </p>
+</footer>

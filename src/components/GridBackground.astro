@@ -1,0 +1,57 @@
+---
+/**
+ * GridBackground - Wireframe grid background pattern
+ * Creates a subtle sci-fi grid overlay
+ */
+
+interface Props {
+    opacity?: number;
+    size?: "sm" | "md" | "lg";
+    fade?: boolean;
+    class?: string;
+}
+
+const { opacity = 0.03, size = "md", fade = true, class: className = "" } = Astro.props;
+
+const sizeMap = {
+    sm: 20,
+    md: 40,
+    lg: 60
+};
+
+const gridSize = sizeMap[size];
+---
+
+<div
+    class:list={["grid-background", fade && "grid-fade", className]}
+    style={`--grid-opacity: ${opacity}; --grid-size: ${gridSize}px;`}
+    aria-hidden="true"
+>
+</div>
+
+<style>
+    .grid-background {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        background-image: linear-gradient(
+                var(--color-primary, oklch(0.75 0.18 195)) 1px,
+                transparent 1px
+            ),
+            linear-gradient(90deg, var(--color-primary, oklch(0.75 0.18 195)) 1px, transparent 1px);
+        background-size: var(--grid-size, 40px) var(--grid-size, 40px);
+        opacity: var(--grid-opacity, 0.03);
+    }
+
+    .grid-fade {
+        mask-image: linear-gradient(to bottom, black 0%, black 20%, transparent 80%);
+        -webkit-mask-image: linear-gradient(to bottom, black 0%, black 20%, transparent 80%);
+    }
+
+    /* Radial fade from center */
+    .grid-fade-radial {
+        mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+        -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+    }
+</style>
