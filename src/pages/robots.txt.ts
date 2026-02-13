@@ -7,5 +7,5 @@ export const GET: APIRoute = async (context) => {
 const content = (site: URL) => `
 User-agent: *
 Allow: /
-Sitemap: ${site.origin}/sitemap.xml
+Sitemap: ${site.origin}/sitemap-index.xml
 `;
