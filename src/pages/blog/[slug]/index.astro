@@ -66,6 +66,7 @@ const tags = await getEntries(entry.data.tags);
     sideWidth="half"
     headerImage={entry.data.image}
     publishDate={dayjs(entry.data.date).toISOString()}
+    ogType="article"
 >
     <article class="flex flex-col gap-8 lg:max-w-[750px]">
         <header class="border-b">
