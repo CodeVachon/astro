@@ -20,7 +20,7 @@ export const GET: APIRoute = async (context) => {
         articles: []
     };
 
-    const blog = await getCollection("blog");
+    const blog = await getCollection("blog", ({ data }) => !data.draft);
     let maxSize = 0;
     for (const post of blog) {
         const title = post.data.title;
