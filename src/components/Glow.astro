@@ -1,7 +1,9 @@
 ---
-const { className } = Astro.props;
+interface Props {
+    className?: string;
+}
 
-const highlightColor = "rgba(256, 89, 248, 0.4)";
+const { className } = Astro.props;
 ---
 
 <!-- GLOW START -->
