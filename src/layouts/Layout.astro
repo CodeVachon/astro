@@ -20,6 +20,7 @@ interface Props {
     };
     className?: string;
     publishDate?: string;
+    ogType?: "website" | "article";
 }
 
 const navItems: Array<{ name: string; href: string; className?: string; icon?: IconName }> = [
@@ -53,7 +54,8 @@ const {
     sideWidth = "full",
     headerImage,
     className = "",
-    publishDate
+    publishDate,
+    ogType = "website"
 } = Astro.props;
 
 const siteTitle = "Christopher Vachon";
@@ -89,14 +91,14 @@ import KeyBoardKey from "~components/KeyBoardKey";
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta property="og:site_name" content="All About Christopher Vachon" />
-        <meta property="og:type" content="article" />
+        <meta property="og:type" content={ogType} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={descriptionTemplate} />
         <meta property="og:url" content={canonical} />
         <meta property="og:author" content={ogAuthor} />
-        {publishDate && <meta property="article:published_time" content={publishDate} />}
-        {publishDate && <meta property="article:modified_time" content={publishDate} />}
-        <meta property="article:publisher" content="https://github.com/CodeVachon" />
+        {ogType === "article" && publishDate && <meta property="article:published_time" content={publishDate} />}
+        {ogType === "article" && publishDate && <meta property="article:modified_time" content={publishDate} />}
+        {ogType === "article" && <meta property="article:publisher" content="https://github.com/CodeVachon" />}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={descriptionTemplate} />
