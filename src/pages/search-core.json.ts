@@ -31,7 +31,7 @@ export const GET: APIRoute = async (context) => {
         const link = `/blog/${post.slug}/`;
 
         const uniqueWords = new Set<string>();
-        for (const word of post.body.split(new RegExp("[\\s]{1,}", "g"))) {
+        for (const word of (post.body ?? "").split(new RegExp("[\\s]{1,}", "g"))) {
             const cleanedWords = word
                 .replace(/[^a-zA-Z0-9]/g, " ")
                 .trim()
