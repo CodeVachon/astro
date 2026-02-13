@@ -74,6 +74,19 @@ import KeyBoardKey from "~components/KeyBoardKey";
 <html lang="en" class="dark h-full antialiased" style="color-scheme: dark;">
     <head>
         <meta charset="utf-8" />
+        <script is:inline>
+            (function () {
+                const theme = localStorage.getItem("theme");
+                const color = localStorage.getItem("theme-color");
+                if (theme === "light") {
+                    document.documentElement.classList.remove("dark");
+                    document.documentElement.style.colorScheme = "light";
+                }
+                if (color) {
+                    document.documentElement.setAttribute("data-theme", color);
+                }
+            })();
+        </script>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <link rel="icon" href={`${Astro.site}me-300.png`} type="image/png" />
         <title>{titleTemplate}</title>
