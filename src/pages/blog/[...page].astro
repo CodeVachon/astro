@@ -1,0 +1,64 @@
+---
+import type { GetStaticPaths } from "astro";
+import Layout from "~layouts/Layout.astro";
+import H1 from "~components/H1.astro";
+import { getCollection } from "astro:content";
+import ArticleList from "~components/ArticleList.astro";
+import deafultImage from "./../../assets/default-1.png";
+
+export const getStaticPaths = (async ({ paginate }) => {
+    const posts = await getCollection("blog", ({ data }) => !data.draft);
+    const sorted = posts.sort(
+        (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+    );
+    return paginate(sorted, { pageSize: 12 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+---
+
+<Layout
+    title={page.currentPage === 1 ? "Blog Posts" : `Blog Posts - Page ${page.currentPage}`}
+    sideWidth="full"
+    className="flex flex-col gap-12"
+    headerImage={deafultImage}
+>
+    <header>
+        <H1>Recent Posts</H1>
+        <p>
+            Here are some of my latest blog posts. <a href="/blog/tags"
+                >Click Here to see a list of all tags</a
+            >.
+        </p>
+    </header>
+    <ArticleList articles={page.data} />
+    {
+        (page.url.prev || page.url.next) && (
+            <nav class="flex items-center justify-between border-t pt-6" aria-label="Pagination">
+                {page.url.prev ? (
+                    <a
+                        href={page.url.prev}
+                        class="rounded px-4 py-2 text-sm font-medium transition hover:bg-gray-100 dark:hover:bg-gray-800"
+                    >
+                        &larr; Newer Posts
+                    </a>
+                ) : (
+                    <span />
+                )}
+                <span class="text-sm text-gray-500 dark:text-gray-400">
+                    Page {page.currentPage} of {page.lastPage}
+                </span>
+                {page.url.next ? (
+                    <a
+                        href={page.url.next}
+                        class="rounded px-4 py-2 text-sm font-medium transition hover:bg-gray-100 dark:hover:bg-gray-800"
+                    >
+                        Older Posts &rarr;
+                    </a>
+                ) : (
+                    <span />
+                )}
+            </nav>
+        )
+    }
+</Layout>
