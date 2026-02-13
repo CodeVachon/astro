@@ -12,7 +12,9 @@ const allBlogPosts = await getCollection("blog", ({ data }) => {
     return !data.draft;
 });
 
-const recentBlogPosts = allBlogPosts.reverse().slice(0, 5);
+const recentBlogPosts = allBlogPosts
+    .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+    .slice(0, 5);
 const homepageData = await getEntry("page", "homepage");
 const { Content } = await homepageData.render();
 ---
