@@ -1,5 +1,5 @@
 ---
-import { Picture } from "astro:assets";
+import { Picture, type ImageMetadata } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 interface Props {
     articles: Array<CollectionEntry<"blog">>;
@@ -20,7 +20,7 @@ const { articles = [], grid = false } = Astro.props;
                     <figure class="w-full flex-shrink-0 overflow-hidden md:mr-6 md:w-64 lg:w-full">
                         <Picture
                             inferSize={true}
-                            src={post.data.image as any}
+                            src={post.data.image as ImageMetadata}
                             class="rounded-md object-cover md:aspect-video lg:aspect-auto lg:rounded-none"
                             alt={post.data.title}
                             formats={["webp", "jpeg"]}
