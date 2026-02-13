@@ -22,9 +22,6 @@ export default defineConfig({
     },
     site: url,
     prefetch: true,
-    redirects: {
-        "/old-page": "/new-page"
-    },
     // Required to Add Buffer Polyfill to the Browser for Bloom Filters
     // vite: {
     //     optimizeDeps: {
