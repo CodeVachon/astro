@@ -132,6 +132,38 @@ import KeyBoardKey from "~components/KeyBoardKey";
             title={siteTitle}
             href={`${Astro.site}rss.xml`}
         />
+        {publishDate ? (
+            <script type="application/ld+json" set:html={JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "BlogPosting",
+                "headline": title,
+                "description": descriptionTemplate,
+                "datePublished": publishDate,
+                "dateModified": publishDate,
+                "author": {
+                    "@type": "Person",
+                    "name": ogAuthor,
+                    "url": String(Astro.site)
+                },
+                "publisher": {
+                    "@type": "Person",
+                    "name": ogAuthor
+                },
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": String(canonical)
+                },
+                ...(cardImage ? { "image": String(new URL(ogImgSrc.src, Astro.site)) } : {})
+            })} />
+        ) : (
+            <script type="application/ld+json" set:html={JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "name": siteTitle,
+                "description": descriptionTemplate,
+                "url": String(Astro.site)
+            })} />
+        )}
         <ViewTransitions />
     </head>
     <body
