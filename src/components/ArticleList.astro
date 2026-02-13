@@ -23,8 +23,8 @@ const { articles = [], grid = false } = Astro.props;
                             src={post.data.image as any}
                             class="rounded-md object-cover md:aspect-video lg:aspect-auto lg:rounded-none"
                             alt={post.data.title}
-                            formats={["webp", "jpeg"]}
-                            fallbackFormat="jpeg"
+                            formats={["webp", "jpg"]}
+                            fallbackFormat="jpg"
                             widths={[320, 640, 1280, 1920]}
                         />
                     </figure>
