@@ -1,5 +1,5 @@
 ---
-import { Picture, getImage } from "astro:assets";
+import { Picture, getImage, type ImageMetadata } from "astro:assets";
 import { Icon, HamburgerIcon, CloseIcon } from "~components/Icons";
 import type { IconName } from "~components/Icons";
 import myImage from "../assets/me.png";
@@ -231,7 +231,7 @@ import KeyBoardKey from "~components/KeyBoardKey";
                         <figure class="-mx-6 -mt-6 mb-6 max-w-[1200px] overflow-hidden lg:-mt-24">
                             <Picture
                                 inferSize={true}
-                                src={headerImage as any}
+                                src={headerImage as ImageMetadata}
                                 class="w-full object-cover md:aspect-video"
                                 alt={titleTemplate}
                                 widths={[320, 640, 1280, 1920]}
